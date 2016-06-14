@@ -1,40 +1,30 @@
-<!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
             </div>
             <div class="pull-left info">
             </div>
         </div>
-
-        <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Menu</li>
-            <li>
-
+            <li class="{{ $active_users or '' }}">
+                <a href="{{ route('admin.user.index') }}">
+                    <i class="fa fa-users"></i>
+                    <span>Manage Users</span>
+                </a>
             </li>
-            <li>
-
-            </li>
-
-            <li>
-
-            </li>
-
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-users"></i>
-                    <span>Users</span>
+                    <i class="fa fa-files-o"></i>
+                    <span>Manage Pages</span>
                 </a>
-
-                <ul class="treeview-menu">
-
-                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-briefcase"></i>
+                    <span>Manage Events</span>
+                </a>
             </li>
             <li class="treeview">
                 <a href="#">
@@ -42,12 +32,14 @@
                     <span>Customisation</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-
                 <ul class="treeview-menu">
-
+                    <li class="{{ $active_faqs or '' }}">
+                        <a href="{{ route('admin.faq.index') }}">
+                            <i class="fa fa-question"></i> <span>FAQ</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
-        </ul><!-- /.sidebar-menu -->
+        </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>

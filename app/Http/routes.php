@@ -20,10 +20,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
     Route::post('sign-in', ['as' => 'admin.sign-in.post', 'uses' => 'Auth@sign_in_post']);
 
 
-    Route::group(["middleware" => 'auth'], function () {
+    Route::group(["middleware" => 'auth','admin'], function () {
         Route::get('', ['as' => 'admin.index', function () {
             return view('admin.layout');
         }]);
         Route::get('sign-out', ['as' => 'admin.sign-out', 'uses' => 'Auth@sign_out']);
+
+
+        Route::resource('user', 'Users');
+        Route::resource('faq', 'Faqs', ['except' => ['show']]);
     });
 });

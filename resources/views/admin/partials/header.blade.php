@@ -22,7 +22,7 @@
                     <!-- Menu Toggle Button -->
                     <a href="#">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">{!! auth()->user()->name !!}</span>
+                        <span class="hidden-xs">{!! auth()->user()->full_name !!}</span>
                     </a>
                 </li>
                 <li>
