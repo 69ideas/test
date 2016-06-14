@@ -9,7 +9,7 @@
 
                 <div class="form-group">
                     <label>Answer</label>
-                    {!! Form::textarea('answer', null, ['class'=>'form-control', 'placeholder'=>'Type answer']) !!}
+                    {!! Form::textarea('answer', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Type answer']) !!}
                 </div>
                 <div class="form-group">
                     <label>Sort Order</label>

@@ -222,4 +222,6 @@ $(function () {
     jQuery(".image-box").colorbox({width: "75%", height: "75%"});
 
 });
+tinymce.init(BA.Options.wysiwyg);
+
 //# sourceMappingURL=admin.js.map
