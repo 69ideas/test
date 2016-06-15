@@ -8,14 +8,14 @@
         </div>
         <ul class="sidebar-menu">
             <li class="header">Menu</li>
-            <li class="{{ $active_users or '' }}">
+            <li class="treeview {{ $active_users or '' }}">
                 <a href="{{ route('admin.user.index') }}">
                     <i class="fa fa-users"></i>
                     <span>Manage Users</span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
+            <li class="treeview {{ $active_pages or '' }}">
+                <a href="{{ route('admin.page.index') }}">
                     <i class="fa fa-files-o"></i>
                     <span>Manage Pages</span>
                 </a>
@@ -26,14 +26,14 @@
                     <span>Manage Events</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview {{ $active_menu or '' }}">
                 <a href="#">
                     <i class="fa fa-gears"></i>
                     <span>Customisation</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li class="{{ $active_faqs or '' }}">
+                <ul class="treeview-menu {{ $open_menu or '' }}">
+                    <li class="treeview {{ $active_faqs or '' }}">
                         <a href="{{ route('admin.faq.index') }}">
                             <i class="fa fa-question"></i> <span>FAQ</span>
                         </a>

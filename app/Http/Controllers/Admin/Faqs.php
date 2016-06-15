@@ -13,6 +13,8 @@ class Faqs extends Controller
     public function __construct()
     {
         view()->share('active_faqs', 'active');
+        view()->share('active_menu', 'active');
+        view()->share('open_menu', 'menu-open');
     }
     public function index()
     {

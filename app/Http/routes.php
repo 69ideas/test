@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
 
         Route::resource('user', 'Users');
         Route::resource('faq', 'Faqs', ['except' => ['show']]);
+        Route::resource('page', 'Pages', ['except' => ['show']]);
         
     });
 });
