@@ -70,7 +70,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="bg-info text-center text-bold">
+                                <td colspan="7" class="bg-info text-center text-bold">
                                     Events not found
                                 </td>
                             </tr>
