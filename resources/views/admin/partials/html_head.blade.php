@@ -12,6 +12,7 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="/css/AdminLTE.css">
 <link rel="stylesheet" href="/plugins/jQuery-treegrid/css/jquery.treegrid.css">
+<link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

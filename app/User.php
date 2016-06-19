@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -41,6 +42,14 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
     public function getFullNameAttribute(){
-        return $this->first_name.' '.$this->last_name;
+        $full_name=$this->first_name.' '.$this->last_name;
+        return $full_name;
+    }
+
+    public function scopeOrderByName(Builder $builder)
+    {
+        return $builder
+            ->orderBy('first_name')
+            ->orderBy('last_name');
     }
 }

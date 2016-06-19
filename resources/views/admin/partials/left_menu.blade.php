@@ -20,8 +20,8 @@
                     <span>Manage Pages</span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
+            <li class="treeview {{ $active_events or '' }}">
+                <a href="{{ route('admin.event.index') }}">
                     <i class="fa fa-briefcase"></i>
                     <span>Manage Events</span>
                 </a>

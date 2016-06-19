@@ -24,7 +24,7 @@ class Users extends Controller
             ->paginate(\Config::get('pagination.admin.user', 15));
 
 
-        $page_title = 'News';
+        $page_title = 'Users';
 
         return view('admin.users.index', compact('users', 'page_title'));
     }

@@ -18,15 +18,63 @@ BA.Actions = {
         $('.related-product', context).change(BA.Events.RelatedProduct);
         $('.related-location', context).change(BA.Events.RelatedLocation);
 
+        $(".add-participant", context).click(BA.Events.TabContentManage);
+        $(".edit-participant", context).click(BA.Events.TabContentManage);
 
+        console.log($('.datepicker',context));
+        $('.datepicker',context).datepicker({
+            autoclose: true,
+            format: 'mm/dd/yyyy',
+            zIndex:100000
+        });
+
+        $("form").submit(function(){
+            $(this).find('[type="submit"]').prop('disabled', true);
+        });
         tinymce.init(BA.Options.wysiwyg);
 
         log('GCA inited on');
         log(context);
     },
+    
+    OpenModal: function (title, content) {
+
+        console.log('try to open modal');
+
+        var template = '<div class="modal" tabindex="-1" role="dialog">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+            '<h4 class="modal-title"></h4>' +
+            '</div>' +
+            '<div class="modal-body">' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+
+        if (BA.Bindings.CurrentWindow != null)
+            BA.Bindings.CurrentWindow.find('.close').click();
+
+        var wnd = $(template);
+
+        wnd.find('.modal-title').html(title);
+        wnd.find('.modal-body').append(content);
+
+        $("body").append(wnd);
+
+
+
+        wnd.modal('show');
+        wnd.on('hidden.bs.modal', BA.Events.ModalClosed);
+        wnd.on('hide.bs.modal', BA.Events.ModalClosing);
+        BA.Bindings.CurrentWindow = wnd;
+    }
 };
 BA.Bindings = {
-
+    CurrentWindow : null
 };
 BA.Events = {
 
@@ -46,7 +94,7 @@ BA.Events = {
     RelatedType: function(e)
     {
         $('#data_holder_type').slideUp();
-        //$(this).val() - значение из селекта
+        //$(this).val() - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         $.get('/admin/type?related=' + $(this).val(), null, function(data){
 
             var content = $(data.content);
@@ -56,25 +104,28 @@ BA.Events = {
             console.log(data);
         }, 'json');
     },
-    RelatedCategory: function(e)
+    TabContentManage: function(e)
     {
-        //$(this).val() - значение из селекта
-        if($(this).val() != '')
-            location.href=$(this).data('url')+'/' + $(this).val();
-    },
-    RelatedProduct: function(e)
-    {
-        //$(this).val() - значение из селекта
-        if($(this).val() != '')
-            location.href='/gallery/manufacturer/' + $(this).val();
-    },
-    RelatedLocation: function(e)
-    {
-        //$(this).val() - значение из селекта
-        if($(this).val() != '')
-            location.href='/gallery/location/' + $(this).val();
+        e.preventDefault();
+        var href = $(this).prop('href');
+        $.get(href, null, BA.Events.TabContentManageLoaded, 'json');
     },
 
+    TabContentManageLoaded:function(data)
+    {
+        if(data.error_code != 0)
+        {
+            alert('Error happened');
+            return ;
+        }
+
+        var content = $(data.content);
+        BA.Actions.init(content);
+
+        var title = data.title || "";
+
+        BA.Actions.OpenModal(title, content);
+    },
     MoveUpBlockClick: function (e) {
         var block = $(this).parents('.media');
         var line_block = block.prev();
@@ -178,6 +229,79 @@ BA.Events = {
         $.get($(this).prop('href') + '/' + ($('table.carusel-rows tr').length - 1), null, BA.Events.NewCaruselRowResponse, 'json');
         e.preventDefault();
 
+    }, ModalClosed: function(e) {
+        $(this).remove();
+        e.preventDefault();
+    },
+
+    ModalClosing: function(e) {
+        BA.Bindings.CurrentWindow = null;
+    },
+
+    SubmitAjaxForm: function(e)
+    {
+        e.preventDefault();
+
+        var _form = $(this);
+        _form.find('.error_desc').remove();
+        _form.find('.form-group').removeClass('has-error');
+
+        $.ajax({
+            type: "POST",
+            url: $(this).prop('action'),
+            data: $(this).serialize(),
+            success: function(data, status){BA.Events.AjaxFormHandler(data, status, _form)},
+            error: function(response, status){BA.Events.AjaxFormHandlerFailed(response, status, _form)},
+            dataType: 'json'
+        });
+    },
+
+    AjaxFormHandler: function(data, status, _form)
+    {
+        if(data.error_code == 0)
+        {
+            data = data.data;
+            $.get(data.url, null, ERP.Events.TabContentLoaded, 'json');
+        }
+    },
+
+    TabContentLoaded: function(data, type)
+    {
+        if(data.error_code == 0)
+        {
+            data = data.data;
+            var tab = $('#tab_' + data.type);
+            tab.html('');
+            var content = $(data.content);
+            BA.Actions.init(content);
+            tab.append(content);
+
+            if(BA.Bindings.CurrentWindow != null)
+                BA.Bindings.CurrentWindow.find('.close').click();
+        }
+
+    },
+
+    AjaxFormHandlerFailed: function(response, status, _form)
+    {
+        if(response.status == 422)
+        {
+            for(var i in response.responseJSON)
+            {
+                var block = _form.find("[name='" + i + "']").parents('.form-group');
+
+                block.addClass('has-error');
+                block.append('<p class="help-block error_desc">' + response.responseJSON[i].join('<br/>') + '</p>')
+            }
+        }
+        console.log(response);
+    },
+
+    SubmitMainForm: function(e)
+    {
+        e.preventDefault();
+
+        $('.main_form_'+$(this).data('form')).submit();
     },
 
     NewCaruselRowResponse: function(data)
@@ -219,8 +343,6 @@ function log(msg) {
 
 $(function () {
     BA.Actions.init($('body'))
-    jQuery(".image-box").colorbox({width: "75%", height: "75%"});
-
 });
 tinymce.init(BA.Options.wysiwyg);
 

@@ -28,6 +28,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
 
 
         Route::resource('user', 'Users');
+        Route::resource('event', 'Events');
+        Route::resource('participant', 'Participants');
+        Route::get('participant/entity_list', ['as' => 'admin.participant.entity_list', 'uses' => 'Participants@entity_list']);
+        Route::get('/event/{participant}/detach', ['as' => 'admin.participant.detach', 'uses' => 'Participants@detach']);
         Route::resource('faq', 'Faqs', ['except' => ['show']]);
         Route::resource('page', 'Pages', ['except' => ['show']]);
         

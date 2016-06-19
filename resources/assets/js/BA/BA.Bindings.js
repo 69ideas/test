@@ -1,3 +1,3 @@
 BA.Bindings = {
-
+    CurrentWindow : null
 };

@@ -16,5 +16,6 @@
 <script src="/tinymce/plugins/responsivefilemanager/plugin.min.js" type="text/javascript"></script>
 <script src="/js/admin.js" type="text/javascript"></script>
 <script src="/js/vue-admin.js" type="text/javascript"></script>
+<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
 
 
