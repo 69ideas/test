@@ -13,11 +13,6 @@
 Route::get('/', [function () {
     return view('welcome');
 }]);
-Route::group(["middleware" => 'auth'], function () {
-    Route::get('/', ['as' => 'frontend.index', function () {
-        return 'LOGIN';
-    }]);
-});
 Route::get('login', ['as' => 'login', 'uses' => 'Frontend\Auth@sign_in']);
 Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\Auth@sign_in_post']);
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
