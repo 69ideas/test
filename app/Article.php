@@ -114,7 +114,7 @@ class Article extends Model implements SluggableInterface
                 if($new_image != null)
                 {
                     $this->resource_path = $new_image;
-                    \Intervention\Image\Image::make($this->image)
+                    \Image::make($this->image)
                         ->widen(400)
                         ->save();
                 }
