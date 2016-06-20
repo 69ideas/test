@@ -28,12 +28,12 @@
 <body class="hold-transition login-page" style="">
 <div class="login-box">
     <div class="login-logo">
-        <a href="/">Vault-X. Control Panel</a>
+        <a href="/">Vault-X. Login/Register</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         @include('admin.validation.all')
-        {!! Form::open(['route'=>'admin.sign-in.post']) !!}
+        {!! Form::open(['route'=>'login.post']) !!}
         <div class="form-group has-feedback">
             {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Email']) !!}
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -53,6 +53,7 @@
             <!-- /.col -->
             <div class="col-xs-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign in</button>
+                <a href="#"><i class="fa fa-facebook-official"></i></a>
             </div>
             <!-- /.col -->
         </div>

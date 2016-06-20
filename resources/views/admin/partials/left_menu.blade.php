@@ -14,6 +14,12 @@
                     <span>Manage Users</span>
                 </a>
             </li>
+            <li class="treeview {{ $active_articles or '' }}">
+                <a href="{{ route('admin.article.index') }}">
+                    <i class="fa fa-users"></i>
+                    <span>Blog</span>
+                </a>
+            </li>
             <li class="treeview {{ $active_pages or '' }}">
                 <a href="{{ route('admin.page.index') }}">
                     <i class="fa fa-files-o"></i>

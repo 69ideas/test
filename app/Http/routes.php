@@ -10,17 +10,21 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
+Route::get('/', [function () {
     return view('welcome');
+}]);
+Route::group(["middleware" => 'auth'], function () {
+    Route::get('/', ['as' => 'frontend.index', function () {
+        return 'LOGIN';
+    }]);
 });
+Route::get('login', ['as' => 'login', 'uses' => 'Frontend\Auth@sign_in']);
+Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\Auth@sign_in_post']);
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
 
     Route::get('sign-in', ['as' => 'admin.sign-in', 'uses' => 'Auth@sign_in']);
     Route::post('sign-in', ['as' => 'admin.sign-in.post', 'uses' => 'Auth@sign_in_post']);
-
-
-    Route::group(["middleware" => 'auth','admin'], function () {
+    Route::group(["middleware" => 'auth', 'admin'], function () {
         Route::get('', ['as' => 'admin.index', function () {
             return view('admin.layout');
         }]);
@@ -30,10 +34,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
         Route::resource('user', 'Users');
         Route::resource('event', 'Events');
         Route::resource('participant', 'Participants');
+        Route::get('article/{article}/destroy', ['as' => 'admin.article.destroy', 'uses' => 'Articles@destroy']);
         Route::get('participant/entity_list', ['as' => 'admin.participant.entity_list', 'uses' => 'Participants@entity_list']);
         Route::get('/event/{participant}/detach', ['as' => 'admin.participant.detach', 'uses' => 'Participants@detach']);
         Route::resource('faq', 'Faqs', ['except' => ['show']]);
+        Route::resource('article', 'Articles', ['except' => ['show', 'destroy']]);
         Route::resource('page', 'Pages', ['except' => ['show']]);
-        
+
     });
 });
