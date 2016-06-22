@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ImageCast;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
