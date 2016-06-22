@@ -49,26 +49,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Coordinator</label>
-                            {!! Form::select('user_id', $coordinators,null, ['class'=>'form-control']) !!}
-                        </div>
-                        <div class="form-group">
-                            <label>SEO Title</label>
-                            {!! Form::text('seo_title', null, ['class'=>'form-control', 'placeholder'=>'SEO Title']) !!}
-                        </div>
-                        <div class="form-group">
-                            <label>SEO Description</label>
-                            {!! Form::text('seo_description', null, ['class'=>'form-control', 'placeholder'=>'Enter SEO Description']) !!}
-                        </div>
-                        <div class="form-group">
-                            <label>SEO Keywords</label>
-                            {!! Form::text('seo_keywords', null, ['class'=>'form-control', 'placeholder'=>'Enter SEO Keywords']) !!}
-                        </div>
-                        <div class="form-group">
-                            <label>Sort Order</label>
-                            {!! Form::text('sort_order', null, ['class'=>'form-control', 'placeholder'=>'Enter Sort Order']) !!}
-                        </div>
+
                         <div class="form-group">
                             <label>Required amount</label>
                             {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
@@ -77,10 +58,15 @@
                             {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('is_show') !!} Show on main page?
+                            {!!  Form::checkbox('is_close') !!} Close?
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('is_close') !!} Close?
+                            <label>Image</label>
+                            {!! Form::file('image') !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Image title</label>
+                            {!! Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter Image title']) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -92,20 +78,13 @@
                             <label>Description</label>
                             {!! Form::textarea('description', null, ['class'=>'form-control', 'placeholder'=>'Enter Description']) !!}
                         </div>
-                        <div class="form-group">
-                            <label>Image</label>
-                            {!! Form::file('image') !!}
-                        </div>
-                        <div class="form-group">
-                            <label>Image title</label>
-                            {!! Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter Image title']) !!}
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
         {!! Form::submit($submit_text, ['class'=>'btn btn-primary']) !!}
-        <a href="{{ route('admin.event.show',$event->id) }}" class="btn btn-primary"><i
+        <a href="{{ route('event.show',$event->id) }}" class="btn btn-primary"><i
                     class="fa fa-angle-double-left"></i>
             Back
         </a>

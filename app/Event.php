@@ -3,15 +3,17 @@
 namespace App;
 
 use App\Traits\ImageCast;
+use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Event extends Model implements SluggableInterface
 {
     use ImageCast;
     use SluggableTrait;
     protected $sluggable = [
         'build_from' => 'title',
+        'on_update'=>true
     ];
     public function getRouteKeyName(){
         return 'slug';
@@ -26,7 +28,7 @@ class Event extends Model
         return $path;
     }
     protected $fillable = [
-        'title','deadline', 'description', 'sort_order', 'seo_keywords', 'seo_description', 'seo_title', 'user_id',
+        'is_close','needable_sum','title','deadline', 'description', 'sort_order', 'seo_keywords', 'seo_description', 'seo_title', 'user_id',
         'start_date','closed_date','short_description','is_show','allow_anonymous'
     ];
     public function user()

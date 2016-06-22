@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,36 +27,31 @@
 <body class="hold-transition login-page" style="">
 <div class="login-box">
     <div class="login-logo">
-        <a href="/">Vault-X. Login</a>
+        <a href="/">Vault-X. Register</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         @include('frontend.validation.all')
-        {!! Form::open(['route'=>'login.post']) !!}
+        {!! Form::open(['route'=>'register.post']) !!}
         <div class="form-group has-feedback">
-            {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Email']) !!}
+            {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Email','required'=>'required']) !!}
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Password']) !!}
+            {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Password','required'=>'required']) !!}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            {!! Form::password('password_confirmation', ['class'=>'form-control', 'placeholder'=>'Confirm Password','required'=>'required']) !!}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
             <div class="col-xs-8">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox" name="remember-me"> Remember Me
-                    </label>
-                </div>
+                <a href="/login">I've already had account</a>
             </div>
             <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign up</button>
                 <!--a href="#"><i class="fa fa-facebook-official"></i></a-->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-8">
-                <a href="/register">Registration</a>
             </div>
         </div>
         {!! Form::close() !!}

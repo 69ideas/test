@@ -23,6 +23,7 @@ class Events extends Controller
      */
     public function index()
     {
+   
         $events = \App\Event::orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.admin.events', 15));
 
@@ -36,7 +37,7 @@ class Events extends Controller
     {
         $page_title = 'Adding event';
         $event = new Event();
-        $coordinators=[0 => '--Not set--'] + User::where('is_admin',1)->orderByName()->get()->pluck('full_name','id')->all();
+        $coordinators=[0 => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Add event";
 
         return view('admin.events.add', compact('event', 'page_title', 'submit_text','coordinators'));
@@ -56,14 +57,16 @@ class Events extends Controller
             'seo_title',
             'start_date',
             'closed_date',
+            'needable_sum',
             'short_description',
             'is_show',
+            'is_close',
             'allow_anonymous'));
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
         $event->save();
 
-        return redirect()->route('admin.event.show',$event->id)->with('success_message', 'Event was added');
+        return redirect()->route('admin.event.show',$event)->with('success_message', 'Event was added');
     }
 
     /**
@@ -73,11 +76,10 @@ class Events extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
         $page_title = 'Editing event';
-        $event=Event::find($id);
-        $coordinators=[null => '--Not set--'] + User::where('is_admin',1)->orderByName()->get()->pluck('full_name','id')->all();
+        $coordinators=[null => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Save changes";
 
         return view('admin.events.edit', compact('coordinators','event', 'page_title', 'submit_text', 'page_second_title'));
@@ -90,9 +92,9 @@ class Events extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id,Requests\Admin\ManageEvent $request)
+    public function update(Requests\Admin\ManageEvent $request,Event $event)
     {
-        $event = Event::find($id);
+        //$event = Event::find($id);
         if ($request->get('user_id')!=0) {$event->user_id=$request->get('user_id');};
         $event->fill($request->only(
             'title',
@@ -106,11 +108,13 @@ class Events extends Controller
             'closed_date',
             'short_description',
             'is_show',
+            'needable_sum',
+            'is_close',
             'allow_anonymous'));
         $event->save();
-        $event->replace_image('image', 'image', $request, $event->id);
+            $event->replace_image('image', 'image', $request, $event->id);
         $event->save();
-        return redirect()->route('admin.event.show',$event->id)->with('success_message', 'Event was updated');
+        return redirect()->route('admin.event.show',$event)->with('success_message', 'Event was updated');
     }
 
     /**
@@ -121,15 +125,21 @@ class Events extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        $event=Event::find($id);
+        //$event=Event::find($id);
         $event->delete();
         return redirect()->route('admin.event.index')->with('success_message', 'Event was deleted');
 
     }
-    public function show($id){
-        $event=Event::find($id);
+    public function show(Event $event){
+        //$event=Event::find($id);
         return view('admin.events.show', compact('event'));
+    }
+    public function close(Event $event){
+        //$event=Event::find($id);
+        $event->is_close=true;
+        $event->save();
+        return redirect()->route('admin.event.index');
     }
 }

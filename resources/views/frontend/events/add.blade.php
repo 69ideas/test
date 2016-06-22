@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('frontend.index')
 
 @section('content')
 
@@ -11,7 +11,9 @@
     <div class="row">
         &nbsp;
     </div>
-    {!! Form::model($event, ['route'=>['admin.event.update', $event], 'method'=>'PATCH', 'files' => true]) !!}
-    @include('admin.events._form')
+    {!! Form::open(['route'=>['event.store'], 'files' => true]) !!}
+
+    @include('frontend.events._form')
+
     {!! Form::close() !!}
 @stop

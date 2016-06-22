@@ -37,6 +37,7 @@
     </head>
     <body>
         <div class="container">
+            @include('frontend.validation.all')
             <div class="content">
                 <div class="title">Laravel 5</div>
             </div>

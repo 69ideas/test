@@ -1,10 +1,9 @@
-@extends('admin.layout')
-
+@extends('frontend.index')
 @section('content')
 
     <div class="row">
         <div class="col-sm-4 col-sm-offset-8">
-            {{ link_to_route('admin.event.create', 'New event', [], ['class'=>'btn btn-block btn-success pull-right']) }}
+            {{ link_to_route('event.create', 'New event', [], ['class'=>'btn btn-block btn-success pull-right']) }}
         </div>
     </div>
     <div class="row">
@@ -30,44 +29,32 @@
                             <th>Short Description</th>
                             <th>Deadline</th>
                             <th>Allow Anonymous?</th>
-                            <th>Show on main page?</th>
-                            <th>Close?</th>
                             <th>Action</th>
                         </tr>
                         @forelse($events as $event)
                             <tr>
-                                <td>{{ $event->id }}</td>
+                                <td>@if($event->is_close)<span class="label label-danger">{{ $event->id }}</span> @else
+                                        <span class="label label-success">{{ $event->id }}</span>@endif</td>
                                 <td>{{ $event->title }}</td>
                                 <td>{{ $event->short_description }}</td>
                                 <td>@if(isset($event->deadline)){{ $event->deadline->format('d/m/Y')}}@endif</td>
                                 <td>@if( $event->allow_anonymous)  <i
                                             class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
-                                <td>@if( $event->is_show)  <i
-                                            class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
-                                <td>@if( $event->is_close ) <i
-                                            class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                                 <td>
-                                    <a href="{{ route('admin.event.show', $event) }}"
+                                    <a href="{{ route('event.show', $event) }}"
                                        class="btn btn-xs btn-success"
                                        data-toggle="tooltip" data-placement="top"
                                        title="Show&Add Participant"
                                     >
                                         <i class="fa fa-desktop"></i>
                                     </a>
-                                    <a href="{{ route('admin.event.edit', $event) }}"
+                                    <a href="{{ route('event.edit', $event) }}"
                                        class="btn btn-xs btn-primary"
                                        data-toggle="tooltip" data-placement="top"
                                        title="Edit"
                                     >
                                         <i class="fa fa-pencil"></i>
                                     </a>
-
-                                    {!! Form::open(['route'=>['admin.event.destroy', $event], 'method'=>'DELETE', 'style'=>'display:inline-block'])!!}
-                                    <button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top"
-                                            title="Delete">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    {!! Form::close() !!}
 
                                 </td>
                             </tr>
@@ -93,4 +80,4 @@
         </div>
     </div>
 
-@stop
+@endsection

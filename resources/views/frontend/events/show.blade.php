@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('frontend.index')
 
 @section('content')
     <div class="row">
@@ -47,28 +47,7 @@
                                 <p class="form-control-static">@if (isset($event->deadline)){{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                             <div class="form-group">
-                                <label>Coordinator</label>
-                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->full_name}}@else
-                                        Not set @endif</p>
-                            </div>
-                            <div class="form-group">
-                                <label>SEO Title</label>
-                                <p class="form-control-static">{{$event->seo_title}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>SEO Description</label>
-                                <p class="form-control-static">{{$event->seo_description}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>SEO Keywords</label>
-                                <p class="form-control-static">{{$event->seo_keywords}}</p>
-                            </div>
-                            <div class="form-group">
                                 Allow Anonymous? @if( $event->allow_anonymous)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
-                            </div>
-                            <div class="form-group">
-                                Show on main page? @if( $event->is_show)  <i
                                         class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
                             </div>
                         </div>
@@ -89,7 +68,7 @@
                             </div>
                             <div class="form-group">
                                 @if(isset($event->image))
-                                    <img src="/{{$event->image}}" style="width: 100%">
+                                    <img src="/{{$event->image}}" style="width: 100%"/>
                                 @endif
                             </div>
                         </div>
@@ -98,12 +77,12 @@
 
 
             </div>
-            @include('admin.events._tabs')
-            <a href="{{ route('admin.event.edit',$event->id) }}" class="btn btn-primary"><i
+            @include('frontend.events._tabs')
+            <a href="{{ route('event.edit',$event) }}" class="btn btn-primary"><i
                         class="fa fa-pencil"></i>
                 Edit
             </a>
-            <a href="{{ route('admin.event.index') }}" class="btn btn-primary"><i
+            <a href="{{ route('event.index') }}" class="btn btn-primary"><i
                         class="fa fa-angle-double-left"></i>
                 Back
             </a>
