@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -51,5 +52,10 @@ class User extends Authenticatable
         return $builder
             ->orderBy('first_name')
             ->orderBy('last_name');
+    }
+
+    public function getIsCloseAttribute()
+    {
+        return $this->closed_date < new Carbon();
     }
 }
