@@ -84,7 +84,7 @@
             </div>
         </div>
         {!! Form::submit($submit_text, ['class'=>'btn btn-primary']) !!}
-        <a href="{{ route('event.show',$event->id) }}" class="btn btn-primary"><i
+        <a href="{{ route('event.show',$event) }}" class="btn btn-primary"><i
                     class="fa fa-angle-double-left"></i>
             Back
         </a>
