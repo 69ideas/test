@@ -139,6 +139,7 @@ class Events extends Controller
     public function close(Event $event){
         //$event=Event::find($id);
         $event->is_close=true;
+        $event->closed_date=Carbon::now();
         $event->save();
         return redirect()->route('admin.event.index');
     }

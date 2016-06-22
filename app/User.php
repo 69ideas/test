@@ -53,9 +53,5 @@ class User extends Authenticatable
             ->orderBy('first_name')
             ->orderBy('last_name');
     }
-
-    public function getIsCloseAttribute()
-    {
-        return $this->closed_date < new Carbon();
-    }
+    
 }

@@ -69,4 +69,8 @@ class Event extends Model implements SluggableInterface
         return $this->morphMany(Participant::class, 'participantable');
 
     }
+    public function getIsCloseAttribute()
+    {
+        return $this->closed_date < new Carbon();
+    }
 }

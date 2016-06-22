@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Event;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,8 +15,6 @@ class Events extends Controller
     public function index(){
         $events = \App\Event::where('user_id',\Auth::user()->id)->orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.frontend.events', 15));
-
-
         $page_title = 'Events';
         return view('frontend.events.index',compact('events','page_title'));
     }
@@ -77,5 +76,12 @@ class Events extends Controller
     }
     public function show(Event $event){
         return view('frontend.events.show', compact('event'));
+    }
+    public function close(Event $event){
+        //$event=Event::find($id);
+        $event->is_close=true;
+        $event->closed_date=Carbon::now();
+        $event->save();
+        return redirect()->route('event.index');
     }
 }
