@@ -16,6 +16,7 @@
     Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\AuthController@sign_in_post']);
     Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@register']);
     Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
+    Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthController@activate']);
 
 Route::group(["middleware" => ['auth']], function () {
      Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);

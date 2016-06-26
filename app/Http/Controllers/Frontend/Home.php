@@ -11,9 +11,9 @@ use App\Http\Controllers\Controller;
 class Home extends Controller
 {
     public function index(){
-        return view ('frontend.index');
+        return view ('frontend.home');
     }
-    public function index1(){
+    public function activate(){
         return view ('frontend.index');
     }
     public function profile(){
