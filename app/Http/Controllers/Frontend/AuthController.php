@@ -81,7 +81,7 @@ class AuthController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            \DB::transaction(function ($request) {
+            \DB::transaction(function () use ($request) {
                 $user = User::create([
                     'email' => $request->input('email'),
                     'password' => $request->input('password'),
@@ -97,9 +97,8 @@ class AuthController extends Controller
                     $message->to($user->email)
                         ->subject('Contact form was field');
                 });
-                $text=' You are successfully registered. Please, check your email and confirm your location';
-                return view('frontend.success_registration',compact('text'));
             });
+            return redirect()->route('success');
         }
     }
 
@@ -109,7 +108,11 @@ class AuthController extends Controller
         abort_if($device == null, 404);
         \Auth::login($device->user);
         $device->hash = null;
-        $device->confirned = 1;
+        $device->confirmed = 1;
         return redirect('/');
+    }
+    public function success(){
+        $text=' You are successfully registered. Please, check your email and confirm your location';
+        return view('frontend.success_registration',compact('text'));
     }
 }

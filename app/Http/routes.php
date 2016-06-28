@@ -13,6 +13,7 @@
 
 Route::get('/', ['as' => 'home', 'uses' => 'Frontend\Pages@home']);
 Route::get('login', ['as' => 'login', 'uses' => 'Frontend\AuthController@sign_in']);
+Route::get('success', ['as' => 'success', 'uses' => 'Frontend\AuthController@success']);
 Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\AuthController@sign_in_post']);
 Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@register']);
 Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
