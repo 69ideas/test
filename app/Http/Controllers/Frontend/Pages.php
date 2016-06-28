@@ -20,6 +20,7 @@ class Pages extends Controller
         return view('frontend.home',compact('events','active','page'));
     }
     public function page($url){
+        dd($url);
         $page=Page::where('seo_url',$url)->first();
         if (!is_null($page)){
         if ($page->hidden_name=='faq'){
@@ -36,8 +37,9 @@ class Pages extends Controller
     }
     public function event($slug){
         $event=Event::findBySlug($slug);
+        $page=null;
         $prev = Event::orderBy('created_at', 'decs')->where('created_at', '<', $event->created_at)->first();
         $next = Event::orderBy('created_at', 'asc')->where('created_at', '>', $event->created_at)->first();
-        return view('frontend.event',compact('event','prev','next'));
+        return view('frontend.event',compact('event','prev','next','page'));
     }
 }

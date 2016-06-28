@@ -8,7 +8,7 @@
         <nav>
             <ul class="text-right list-inline">
                 @foreach($top_pages as $top_page)
-                <li @if ($page->seo_url==$top_page->seo_url) class="active" @endif><a href="{{route('page',$top_page->seo_url)}}">{{$top_page->menu_name}} </a></li>
+                <li @if($page!=null) @if($page->seo_url==$top_page->seo_url) class="active" @endif @endif><a href="{{route('page',$top_page->seo_url)}}">{{$top_page->menu_name}} </a></li>
                 @endforeach
                 <li class="{{$active_login or ''}}"> @if (!\Auth::user()) <a href="/login">Login/Register</a>@endif</li>
                 <li><a href="#">Find  an Event </a></li>
