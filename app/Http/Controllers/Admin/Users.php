@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Device;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\User;
@@ -115,6 +116,10 @@ class Users extends Controller
      */
     public function destroy(User $user)
     {
+        $devices=Device::where('user_id',$user->id)->get();
+        foreach ($devices as $device){
+            $device->delete();
+        }
         $user->delete();
         return redirect()->route('admin.user.index')->with('success_message', 'User was deleted');
 
