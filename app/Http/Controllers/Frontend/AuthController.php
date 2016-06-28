@@ -16,6 +16,10 @@ class AuthController extends Controller
     public function __construct()
     {
         view()->share('active_login', 'active');
+        $top_pages=Page::where('manage_pages',1)->where('on_top',1)->get();
+        $bottom_pages=Page::where('manage_pages',1)->where('on_bottom',1)->get();
+        view()->share('top_pages', $top_pages);
+        view()->share('bottom_pages', $bottom_pages);
     }
     public function sign_in()
     {
