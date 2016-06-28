@@ -2,6 +2,12 @@
     &nbsp;
 </div>
 <div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
     @foreach($bottom_pages as $bottom_page)
         @if(count($bottom_page->pages))
             <div class="col-md-3 col-sm-3 col-xs-12">
