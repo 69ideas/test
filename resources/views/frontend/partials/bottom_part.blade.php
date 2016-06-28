@@ -4,6 +4,10 @@
 <div class="row">
     &nbsp;
 </div>
+<hr style="border: none; /* Убираем границу */
+    background-color: #bb0000; /* Цвет линии */
+    color: #bb0000; /* Цвет линии для IE6-7 */
+    height: 5px;">
 <div class="row">
     &nbsp;
 </div>
