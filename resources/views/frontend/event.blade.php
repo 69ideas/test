@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <img src="/{{$event->image}}"/>
+            <img src="/{{$event->image}}" style="width: 100%"/>
         </div>
     </div>
     <div class="row">
