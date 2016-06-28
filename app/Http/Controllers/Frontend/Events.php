@@ -30,10 +30,9 @@ class Events extends Controller
     public function create(){
         $page_title = 'Adding event';
         $event = new Event();
-        $coordinators=[0 => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Add event";
 
-        return view('frontend.events.add', compact('event', 'page_title', 'submit_text','coordinators'));
+        return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){
         $event = new Event();;
