@@ -22,8 +22,10 @@ class Users extends Controller
             'city',
             'state',
             'zip_code',
-            'email',
-            'password'));
+            'email'));
+        if ($request->get('password')!=null){
+            $user->password=$request->get('password');
+        }
         $user->save();
         return redirect()->route('home')->with('success_message', 'User was updated');
     }
