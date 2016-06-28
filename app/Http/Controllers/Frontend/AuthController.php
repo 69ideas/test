@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        view()->share('active_login', 'active');
+    }
     public function sign_in()
     {
         return view('frontend.auth');

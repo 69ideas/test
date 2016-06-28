@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Event;
+use App\Page;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,14 @@ use App\Http\Controllers\Controller;
 
 class Events extends Controller
 {
+    public function __construct()
+    {
+        $top_pages=Page::where('manage_pages',1)->where('on_top',1)->get();
+        $bottom_pages=Page::where('manage_pages',1)->where('on_bottom',1)->get();
+        view()->share('top_pages', $top_pages);
+        view()->share('bottom_pages', $bottom_pages);
+        view()->share('active_event', 'active');
+    }
     public function index(){
         $events = \App\Event::where('user_id',\Auth::user()->id)->orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.frontend.events', 15));

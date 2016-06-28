@@ -19,8 +19,7 @@ class Pages extends Controller
     {
         $pages = \App\Page::orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.admin.page', 15));
-
-
+        
         $page_title = 'Pages';
 
         return view('admin.pages.index', compact('pages', 'page_title'));
@@ -38,7 +37,7 @@ class Pages extends Controller
     public function store(Requests\Admin\ManagePage $request)
     {
         $page = new Page();
-        $page->fill($request->only('parent_id', 'title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name', 'seo_url'
+        $page->fill($request->only('brief','on_top','on_bottom','parent_id', 'title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name', 'seo_url'
         ));
         $this->validate($request, [
             'seo_url' => 'required|unique:pages',
@@ -63,7 +62,7 @@ class Pages extends Controller
 
     public function update(Page $page,Requests\Admin\ManagePage $request)
     {
-        $page->fill($request->only('parent_id', 'title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name'
+        $page->fill($request->only('brief','on_top','on_bottom','parent_id', 'title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name'
         ));
         if ($request->get('parent_id') == '0') {
             $page->parent_id = null;

@@ -11,19 +11,21 @@
 |
 */
 
-    Route::get('/', ['as' => 'home', 'uses' => 'Frontend\Home@index']);
-    Route::get('login', ['as' => 'login', 'uses' => 'Frontend\AuthController@sign_in']);
-    Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\AuthController@sign_in_post']);
-    Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@register']);
-    Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
-    Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthController@activate']);
+Route::get('/', ['as' => 'home', 'uses' => 'Frontend\Pages@home']);
+Route::get('login', ['as' => 'login', 'uses' => 'Frontend\AuthController@sign_in']);
+Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\AuthController@sign_in_post']);
+Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@register']);
+Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
+Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthController@activate']);
+Route::get('/event/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Pages@event']);
+
 
 Route::group(["middleware" => ['auth']], function () {
-     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
-     Route::get('event', ['as' => 'profile', 'uses' => 'Frontend\Home@event']);
-     Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
-     Route::resource('event', 'Frontend\Events');
-     Route::get('logout', 'Frontend\AuthController@sign_out');
+    Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
+    Route::get('event', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
+    Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
+    Route::resource('event', 'Frontend\Events');
+    Route::get('logout', 'Frontend\AuthController@sign_out');
 });
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
 
@@ -48,3 +50,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
 
     });
 });
+Route::get('{url}', ['as' => 'page', 'uses' => 'Frontend\Pages@page']);

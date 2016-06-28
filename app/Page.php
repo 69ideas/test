@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     protected $fillable = [
-        'parent_id','title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name', 'seo_url'
+        'brief','on_top','on_bottom','parent_id','title', 'content', 'seo_title', 'seo_description', 'seo_keywords', 'sort_order', 'manage_pages', 'menu_name', 'seo_url'
     ];
     public function page()
     {

@@ -1,4 +1,4 @@
-@extends('frontend.index')
+@extends('frontend.layout')
 
 @section('content')
 
@@ -14,6 +14,8 @@
     {!! Form::open(['route'=>['event.store'], 'files' => true]) !!}
 
     @include('frontend.events._form')
-
+    <div class="row">
+        &nbsp;
+    </div>
     {!! Form::close() !!}
 @stop

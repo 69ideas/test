@@ -1,4 +1,4 @@
-@extends('frontend.index')
+@extends('frontend.layout')
 
 @section('content')
     <div class="row">
@@ -78,15 +78,18 @@
 
             </div>
             @include('frontend.events._tabs')
-            <a href="{{ route('event.edit',$event) }}" class="btn btn-primary"><i
+            <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
                         class="fa fa-pencil"></i>
                 Edit
             </a>
-            <a href="{{ route('event.index') }}" class="btn btn-primary"><i
+            <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
                         class="fa fa-angle-double-left"></i>
                 Back
             </a>
         </div>
+    </div>
+    <div class="row">
+        &nbsp;
     </div>
 
 

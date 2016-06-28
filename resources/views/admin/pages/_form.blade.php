@@ -27,11 +27,21 @@
                     {!! Form::text('sort_order', null, ['class'=>'form-control', 'placeholder'=>'Enter sort order']) !!}
                 </div>
                 <div class="form-group">
+                    <label>Brief</label>
+                    {!! Form::text('brief', null, ['class'=>'form-control', 'placeholder'=>'Enter brief']) !!}
+                </div>
+                <div class="form-group">
                     <label>Parent</label>
                     {!! Form::select('parent_id',$pages, null,['class'=>"form-control"])!!}
                 </div>
                 <div class="form-group">
                     {!!  Form::checkbox('manage_pages') !!} Show on menu?
+                </div>
+                <div class="form-group">
+                    {!!  Form::checkbox('on_top') !!} Show on top menu?
+                </div>
+                <div class="form-group">
+                    {!!  Form::checkbox('on_bottom') !!} Show on bottom menu?
                 </div>
                 <div class="form-group">
                     <label>Menu name</label>

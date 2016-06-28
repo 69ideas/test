@@ -99,7 +99,7 @@
 
             </div>
             @include('admin.events._tabs')
-            <a href="{{ route('admin.event.edit',$event->id) }}" class="btn btn-primary"><i
+            <a href="{{ route('admin.event.edit',$event) }}" class="btn btn-primary"><i
                         class="fa fa-pencil"></i>
                 Edit
             </a>

@@ -1,4 +1,4 @@
-@extends('frontend.index')
+@extends('frontend.layout')
 @include('frontend.validation.all')
 @section('content')
     <section class="content">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
+                    {!! Form::submit('Save', ['class'=>'btn btn-primary','style'=>"background: #49658A;"]) !!}
                 </div>
             </div>
             {!! Form::close() !!}
