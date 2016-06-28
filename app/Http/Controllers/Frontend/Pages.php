@@ -20,7 +20,6 @@ class Pages extends Controller
         return view('frontend.home',compact('events','active','page'));
     }
     public function page($url){
-        dd($url);
         $page=Page::where('seo_url',$url)->first();
         if (!is_null($page)){
         if ($page->hidden_name=='faq'){
