@@ -73,6 +73,7 @@ class Pages extends Controller
 
     public function destroy(Page $page)
     {
+        $page->parent_id=null;
         $page->delete();
         return redirect()->route('admin.page.index')->with('success_message', 'Page was deleted');
 
