@@ -27,3 +27,10 @@
     @endforeach
 
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center start_now">
+            <a href="{{route('login')}}">Get Started Now</a>
+        </div>
+    </div>
+</div>
