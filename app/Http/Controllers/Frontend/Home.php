@@ -18,6 +18,7 @@ class Home extends Controller
         view()->share('top_pages', $top_pages);
         view()->share('bottom_pages', $bottom_pages);
         view()->share('active_profile', 'active');
+
     }
     public function index(){
         $page=Page::where('hidden_name','home')->first();
@@ -29,7 +30,8 @@ class Home extends Controller
     public function profile(){
         $user=\Auth::user();
         $active='active';
-        return view('frontend.profile',compact('user','active'));
+        $page=null;
+        return view('frontend.profile',compact('user','active','page'));
     }
   
 }
