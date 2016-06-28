@@ -36,7 +36,6 @@ class Events extends Controller
     }
     public function store(Requests\Admin\ManageEvent $request){
         $event = new Event();;
-        if ($request->get('user_id')!=0) {$event->user_id=$request->get('user_id');};
         $event->fill($request->only(
             'title',
             'deadline',
