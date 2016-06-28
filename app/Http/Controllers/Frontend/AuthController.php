@@ -95,7 +95,7 @@ class AuthController extends Controller
                 $device->save();
                 \Mail::queue('frontend.emails.auth', compact('request', 'user', 'device'), function (Message $message) use ($user) {
                     $message->to($user->email)
-                        ->subject('Contact form was field');
+                        ->subject('Confirm registration');
                 });
             });
             return redirect()->route('success');
