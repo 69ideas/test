@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Device;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Page;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
