@@ -20,6 +20,7 @@ class Events extends Controller
         view()->share('top_pages', $top_pages);
         view()->share('bottom_pages', $bottom_pages);
         view()->share('active_event', 'active');
+        view()->share('page', null);
     }
     public function index(){
         $events = \App\Event::where('user_id',\Auth::user()->id)->orderBy('created_at', 'DESC')
