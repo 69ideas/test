@@ -62,7 +62,9 @@ nav ul li a:hover, nav ul li a:focus{
 	text-align: center;
 	position: relative;
 	top: -100px;
+	height: 40px;
 	z-index: 2;
+	padding-top: 5px;
 	background: rgba(255,255,255,.6);
 }
 .sec_top h3 {
