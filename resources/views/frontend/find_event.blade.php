@@ -20,7 +20,7 @@
                 <div class="col-md-3">
                     <h3><a href="{{route('show.event',[$event])}}">{{$event->title}}</a></h3>
                     <hr>
-                    @if (isset($event->image))
+                    @if (($event->image)=='')
                         <a href="{{route('show.event',[$event])}}"><img src="{{$event->image}}" style="width: 100%"></a>
                     @endif
                     <div class="row">
