@@ -4,7 +4,7 @@
     <div class="input-group">
         <input type="text" class="form-control pull-right" name="q" value="{{ $q }}">
         <span class="input-group-btn">
-            <button  class="btn btn-primary" type="submit" style="background: #49658A">
+            <button class="btn btn-primary" type="submit" style="background: #49658A">
                 &nbsp;<i class="fa fa-search"></i>&nbsp;
             </button>
         </span>
@@ -18,9 +18,11 @@
 
             @foreach($chunk as $event)
                 <div class="col-md-3">
-                    <h3>{{$event->title}}</h3>
+                    <h3><a href="{{route('show.event',[$event])}}">{{$event->title}}</a></h3>
                     <hr>
-                    <a href="{{route('show.event',[$event])}}"><img src="{{$event->image}}" style="width: 100%"></a>
+                    @if (isset($event->image))
+                        <a href="{{route('show.event',[$event])}}"><img src="{{$event->image}}" style="width: 100%"></a>
+                    @endif
                     <div class="row">
                         &nbsp;
                     </div>
