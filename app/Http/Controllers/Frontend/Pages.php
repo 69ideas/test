@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Article;
 use App\Event;
 use App\Faq;
 use App\Http\Controllers\Controller;
@@ -26,6 +27,8 @@ class Pages extends Controller
         $actions = [
             'faq' => 'faq',
             'find event' => 'find_event',
+            'secure'=>'home',
+            'blog'=>'blog'
         ];
 
         if (isset($actions[$page->hidden_name])) {
@@ -56,6 +59,18 @@ class Pages extends Controller
         $prev = Event::orderBy('created_at', 'decs')->where('created_at', '<', $event->created_at)->first();
         $next = Event::orderBy('created_at', 'asc')->where('created_at', '>', $event->created_at)->first();
         return view('frontend.event', compact('event', 'prev', 'next', 'page'));
+    }
+    public function blog($page, Request $request, $url){
+        $articles=Article::orderBy('created_at', 'DESC')
+            ->paginate(\Config::get('pagination.frontend.articles', 15));
+        return view('frontend.blog', compact('page','articles'));
+    }
+    public function article ($slug){
+        $article = Article::findBySlug($slug);
+        $page = null;
+        $prev = Article::orderBy('created_at', 'decs')->where('created_at', '<', $article->created_at)->first();
+        $next = Article::orderBy('created_at', 'asc')->where('created_at', '>', $article->created_at)->first();
+        return view('frontend.article', compact('article', 'prev', 'next', 'page'));
     }
 
 

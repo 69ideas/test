@@ -55,6 +55,14 @@ class AuthController extends Controller
                 });
                 return redirect()->route('repeat');
             }
+            else{
+                if (!$device->confirmed){
+                    return redirect()
+                        ->back()
+                        ->withInput($request->only('email'))
+                        ->with('error_message', 'Please, activate your account');
+                }
+            }
             return redirect()->route('home');
         }
 
@@ -114,7 +122,8 @@ class AuthController extends Controller
         abort_if($device == null, 404);
         \Auth::login($device->user);
         $device->hash = null;
-        $device->confirmed = 1;
+        $device->confirmed = true;
+        $device->save();
         return redirect('/');
     }
 

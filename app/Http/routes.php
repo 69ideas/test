@@ -20,6 +20,7 @@ Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@r
 Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
 Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthController@activate']);
 Route::get('/event/show/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Pages@event']);
+Route::get('/article/show/{slug}', ['as' => 'show.article', 'uses' => 'Frontend\Pages@article']);
 
 
 Route::group(["middleware" => ['auth']], function () {

@@ -57,7 +57,6 @@ class Articles extends Controller
     {
         $article = new Article();
         $article->fill($request->only('title', 'text', 'resource_type'));
-
         $response = $article->apply_resource('create', $request);
 
         if($response !== null)

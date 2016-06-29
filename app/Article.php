@@ -93,7 +93,7 @@ class Article extends Model implements SluggableInterface
             {
                 return redirect()->back()
                     ->withInput($request->all())
-                    ->withErrors(['youtube' => 'Разрешено указывать ссылки только на youtube.com']);
+                    ->withErrors(['youtube' => 'Permitted point links only on youtube.com']);
             }
             else
             {
@@ -104,8 +104,8 @@ class Article extends Model implements SluggableInterface
         {
             if(($this->resource_path == null || str_contains($this->resource_path, 'youtube.com')) && (!$request->file('image') || $request->file('image')->getError() != UPLOAD_ERR_OK))
             {
-                $this->resource_path = null;
-                $this->resource_type = null;
+                $this->resource_path = '';
+                $this->resource_type = '';
             }
             else
             {
