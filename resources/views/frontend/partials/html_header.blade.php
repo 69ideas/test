@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/responsive.css"/>
     <link rel="stylesheet" href="/css/AdminLTE.css">
     <link rel="stylesheet" href="/plugins/jQuery-treegrid/css/jquery.treegrid.css">
+    <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
 
     <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -25,6 +26,7 @@
 
 
     <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/plugins/select2/select2.full.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- iCheck -->
@@ -43,7 +45,11 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
+            $('.select2').select2();
         });
+    </script>
+    <script>
+
     </script>
     <script src="/js/admin.js" type="text/javascript"></script>
     <script src="/js/vue-admin.js" type="text/javascript"></script>

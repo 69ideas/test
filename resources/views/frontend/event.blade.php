@@ -13,11 +13,22 @@
         </div>
     </div>
     <div class="row">
-        @if($next!= null)
-            <a href="{{route('show.event',[$next])}}" style="float: right">Next</a>
-        @endif
-        @if($prev != null)
-            <a href="{{route('show.event',[$prev])}}" style="float: left">Previous</a>
-        @endif
+        <div class="col-sm-4">
+
+            @if($prev != null)
+                <a href="{{route('show.event',[$prev])}}">Previous</a>
+            @endif
+        </div>
+
+        <div class="col-sm-4" style="text-align: center">
+
+            <a href="{{route('show.event',[$next])}}">Make Payment</a>
+        </div>
+
+        <div class="col-sm-4" style="text-align: right">
+            @if($next!= null)
+                <a href="{{route('show.event',[$next])}}">Next</a>
+            @endif
+        </div>
     </div>
 @endsection
