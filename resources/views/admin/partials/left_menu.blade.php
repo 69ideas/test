@@ -16,7 +16,7 @@
             </li>
             <li class="treeview {{ $active_articles or '' }}">
                 <a href="{{ route('admin.article.index') }}">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-list-alt"></i>
                     <span>Blog</span>
                 </a>
             </li>
