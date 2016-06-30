@@ -37,30 +37,37 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Required amount</label>
+                            <label>Enter Amount per Participant</label>
                             {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
+                            <label>Enter Number of Participants</label>
+                            {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
 
                         <div class="form-group">
                             <label>Image</label>
                             {!! Form::file('image') !!}
                         </div>
-                        <div class="form-group">
-                            <label>Image title</label>
-                            {!! Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter Image title']) !!}
-                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Short Description</label>
-                            {!! Form::textarea('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
+                            {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             {!! Form::textarea('description', null, ['class'=>'form-control', 'placeholder'=>'Enter Description']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
+                        </div>
+                        <div class="form-group">
+                            {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?
+                        </div>
+                        <div class="form-group">
+                            {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
                         </div>
 
                     </div>

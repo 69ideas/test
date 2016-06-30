@@ -38,15 +38,14 @@ class Events extends Controller
     public function store(Requests\Admin\ManageEvent $request){
         $event = new Event();;
         $event->fill($request->only(
-            'title',
+            'vxp_fees',
+            'cc_fees',
+            'number_participants',
             'deadline',
             'description',
-            'sort_order',
             'start_date',
-            'closed_date',
             'needable_sum',
             'short_description',
-            'is_close',
             'allow_anonymous'));
         $event->user_id=\Auth::user()->id;
         $event->sort_order=0;
@@ -65,14 +64,13 @@ class Events extends Controller
     }
     public function update(Requests\Admin\ManageEvent $request,Event $event){
         $event->fill($request->only(
-            'title',
+            'vxp_fees',
+            'cc_fees',
+            'number_participants',
             'deadline',
             'description',
-            'sort_order',
             'start_date',
-            'closed_date',
             'short_description',
-            'is_close',
             'needable_sum',
             'allow_anonymous'));
         $event->save();

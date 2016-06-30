@@ -48,7 +48,6 @@ class Events extends Controller
         $event = new Event();;
         if ($request->get('user_id')!=0) {$event->user_id=$request->get('user_id');};
         $event->fill($request->only(
-            'title',
             'deadline',
             'description',
             'sort_order',
@@ -56,11 +55,11 @@ class Events extends Controller
             'seo_description',
             'seo_title',
             'start_date',
-            'closed_date',
             'needable_sum',
             'short_description',
-            'is_show',
-            'is_close',
+            'vxp_fees',
+            'cc_fees',
+            'number_participants',
             'allow_anonymous'));
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
@@ -97,7 +96,9 @@ class Events extends Controller
         //$event = Event::find($id);
         if ($request->get('user_id')!=0) {$event->user_id=$request->get('user_id');};
         $event->fill($request->only(
-            'title',
+            'vxp_fees',
+            'cc_fees',
+            'number_participants',
             'deadline',
             'description',
             'sort_order',
@@ -105,11 +106,8 @@ class Events extends Controller
             'seo_description',
             'seo_title',
             'start_date',
-            'closed_date',
             'short_description',
-            'is_show',
             'needable_sum',
-            'is_close',
             'allow_anonymous'));
         $event->save();
             $event->replace_image('image', 'image', $request, $event->id);

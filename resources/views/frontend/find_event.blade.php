@@ -18,10 +18,12 @@
 
             @foreach($chunk as $event)
                 <div class="col-md-3">
-                    <h3><a href="{{route('show.event',[$event])}}">{{$event->title}}</a></h3>
+                    <h3><a href="{{route('show.event',[$event])}}">{{$event->short_description}}</a></h3>
                     <hr>
                     @if (($event->image)!='')
                         <a href="{{route('show.event',[$event])}}"><img src="{{$event->image}}" style="width: 100%"></a>
+                    @else
+                        <img src="/images/no-image.png" style="width: 100%"/>
                     @endif
                     <div class="row">
                         &nbsp;

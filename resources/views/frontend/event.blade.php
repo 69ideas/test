@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h3>{{$event->title}}</h3>
+            <h3>{{$event->short_description}}</h3>
             <hr>
             <div class="form-group">
                 {!! $event->description !!}

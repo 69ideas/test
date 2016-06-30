@@ -13,7 +13,7 @@ class Event extends Model implements SluggableInterface
     use ImageCast;
     use SluggableTrait;
     protected $sluggable = [
-        'build_from' => 'title',
+        'build_from' => 'short_description',
         'on_update'=>true
     ];
     public function getRouteKeyName(){
@@ -29,8 +29,10 @@ class Event extends Model implements SluggableInterface
         return $path;
     }
     protected $fillable = [
-        'is_close','needable_sum','title','deadline', 'description', 'sort_order', 'seo_keywords', 'seo_description', 'seo_title', 'user_id',
-        'start_date','closed_date','short_description','is_show','allow_anonymous'
+        'vxp_fees',
+        'cc_fees',
+        'number_participants','is_close','needable_sum','deadline', 'description', 'sort_order', 'seo_keywords', 'seo_description', 'seo_title', 'user_id',
+        'start_date','short_description','allow_anonymous'
     ];
     public function user()
     {

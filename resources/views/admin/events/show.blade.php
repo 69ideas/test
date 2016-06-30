@@ -2,11 +2,7 @@
 
 @section('content')
     <div class="row">
-        @if (!$event->is_close)
-            <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('admin.event.close', 'Close Event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
-            </div>
-        @else
+        @if ($event->is_close)
             <div class="col-sm-12">
                 <h1><span class="label label-danger">CLOSED</span></h1>
             </div>
@@ -63,7 +59,15 @@
                                 <p class="form-control-static">{{$event->seo_keywords}}</p>
                             </div>
                             <div class="form-group">
-                                Allow Anonymous? @if( $event->allow_anonymous)  <i
+                                Allow Anonymous? @if( !$event->allow_anonymous)  <i
+                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                            </div>
+                            <div class="form-group">
+                                Fee taken out of Total? @if( $event->vxp_fees)  <i
+                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                            </div>
+                            <div class="form-group">
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)  <i
                                         class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
                             </div>
                         </div>
@@ -79,8 +83,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Image Title</label>
-                                <p class="form-control-static">{{$event->title}}</p>
+                                <label>Number of Participants</label>
+                                <p class="form-control-static">{{$event->number_participants}}</p>
                             </div>
                             <div class="form-group">
                                 @if(!empty($event->image))
