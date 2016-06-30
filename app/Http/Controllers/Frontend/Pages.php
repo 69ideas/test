@@ -50,7 +50,7 @@ class Pages extends Controller
     {
         $q = $request->get('q', '');
 
-        $events = Event::where('title', 'LIKE', '%' . $q . '%')->get();
+        $events = Event::where('short_description', 'LIKE', '%' . $q . '%')->get();
         return view('frontend.find_event', compact('events', 'q', 'page'));
     }
 
