@@ -53,15 +53,33 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Short Description</label>
+                            <label>Short Description  <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="In this area you enter up to x characters that explains to your participants the purpose of the event."
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Description<small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="In this area you enter up to x characters that explains to your participants the purpose of the event."
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             {!! Form::textarea('description', null, ['class'=>'form-control', 'placeholder'=>'Enter Description']) !!}
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
+                            {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous? <small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="If you type “check” each participant will be able to list themselves as anonymous on the Event ."
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
                         </div>
                         <div class="form-group">
                             {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?

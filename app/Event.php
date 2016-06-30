@@ -65,6 +65,6 @@ class Event extends Model implements SluggableInterface
     }
     public function getIsCloseAttribute()
     {
-        return $this->closed_date < new Carbon();
+        return $this->deadline < new Carbon();
     }
 }
