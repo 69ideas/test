@@ -43,6 +43,13 @@
                                 <p class="form-control-static">@if (isset($event->deadline)){{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                             <div class="form-group">
+                                <label>Event Coordinator</label>
+                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->full_name}}@else
+                                        Not set @endif</p>
+                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->email}}@else
+                                        Not set @endif</p>
+                            </div>
+                            <div class="form-group">
                                 Allow Anonymous? @if( $event->allow_anonymous)  <i
                                         class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
                             </div>
