@@ -66,10 +66,6 @@
                                 Allow Anonymous? @if( $event->allow_anonymous)  <i
                                         class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
                             </div>
-                            <div class="form-group">
-                                Show on main page? @if( $event->is_show)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
-                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">

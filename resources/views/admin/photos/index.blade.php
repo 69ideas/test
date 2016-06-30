@@ -3,9 +3,11 @@
 @section('content')
 
     <div class="row">
+        @if(count($photos)<3)
         <div class="col-sm-4 col-sm-offset-8">
-            {{ link_to_route('admin.faq.create', 'New Question', [], ['class'=>'btn btn-block btn-success pull-right']) }}
+            {{ link_to_route('admin.photo.create', 'New Photo', [], ['class'=>'btn btn-block btn-success pull-right']) }}
         </div>
+        @endif
     </div>
     <div class="row">
         &nbsp;
@@ -25,28 +27,24 @@
                 <div class="box-body table-responsive">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <th>ID</th>
-                            <th>Question</th>
-                            <th>Answer</th>
+                            <th>Name</th>
                             <th>Created at</th>
                             <th>Action</th>
                         </tr>
-                        @forelse($faqs as $faq)
+                        @forelse($photos as $photo)
                             <tr>
-                                <td>{{ $faq->id }}</td>
-                                <td>{{ $faq->question }}</td>
-                                <td>{!!  $faq->answer  !!}</td>
-                                <td>{{ $faq->created_at }}</td>
+                                <td>{{ $photo->name }}</td>
+                                <td>{{ $photo->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('admin.faq.edit', [$faq]) }}"
+                                    <a href="{{ route('admin.photo.edit', [$photo]) }}"
                                        class="btn btn-xs btn-primary"
                                        data-toggle="tooltip" data-placement="top"
                                        title="Edit"
-                                    >
+                                            >
                                         <i class="fa fa-pencil"></i>
                                     </a>
 
-                                    {!! Form::open(['route'=>['admin.faq.destroy', $faq], 'method'=>'DELETE', 'style'=>'display:inline-block'])!!}
+                                    {!! Form::open(['route'=>['admin.photo.destroy', $photo], 'method'=>'DELETE', 'style'=>'display:inline-block'])!!}
                                     <button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top"
                                             title="Delete">
                                         <i class="fa fa-trash"></i>
@@ -58,7 +56,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="bg-info text-center text-bold">
-                                   Questions not found
+                                    Images not found
                                 </td>
                             </tr>
                         @endforelse
@@ -72,7 +70,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="pull-right">
-                {!! $faqs->render() !!}
+                {!! $photos->render() !!}
             </div>
         </div>
     </div>

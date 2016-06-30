@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ArtileRequest extends Request
+class ManagePhoto extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ArtileRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class ArtileRequest extends Request
     public function rules()
     {
         return [
-            //
-        ];
+            'name' => 'required',
+            'image' => 'image'
+        ]; 
     }
 }

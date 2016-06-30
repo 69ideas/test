@@ -8,13 +8,13 @@
         </div>
     </div>
     <div class="row">
-        @foreach($events as $event)
+        @foreach($photos as $photo)
         <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="in_img">
-                @if (!empty($event->image))
-                <img src="{{$event->image}}"/>
+                @if (!empty($photo->image))
+                <img src="{{$photo->image}}"/>
                 @endif
-                <div class="desc"><a href="{{route('show.event',$event)}}" style="color: black; font-family: MyriadPro-Bold;"> {{$event->title}}</a></div>
+                <div class="desc" style="color: black; font-family: MyriadPro-Bold;">{{$photo->name}}</div>
             </div>
         </div>
         @endforeach

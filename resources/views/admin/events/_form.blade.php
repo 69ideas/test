@@ -62,12 +62,6 @@
                         <div class="form-group">
                             {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
                         </div>
-                        <div class="form-group">
-                            {!!  Form::checkbox('is_show') !!} Show on main page?
-                        </div>
-                        <div class="form-group">
-                            {!!  Form::checkbox('is_close') !!} Close?
-                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

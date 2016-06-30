@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
         Route::resource('faq', 'Faqs', ['except' => ['show']]);
         Route::resource('article', 'Articles', ['except' => ['show', 'destroy']]);
         Route::resource('page', 'Pages', ['except' => ['show']]);
+        Route::resource('photo', 'Photos', ['except' => ['show']]);
 
     });
 });

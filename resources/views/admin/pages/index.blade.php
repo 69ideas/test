@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-sm-4 col-sm-offset-8">
-            {{ link_to_route('admin.page.create', 'New page', [], ['class'=>'btn btn-block btn-success pull-right']) }}
+            {{ link_to_route('admin.page.create', 'New Page', [], ['class'=>'btn btn-block btn-success pull-right']) }}
         </div>
     </div>
     <div class="row">

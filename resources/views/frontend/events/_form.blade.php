@@ -43,9 +43,7 @@
                         <div class="form-group">
                             {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
                         </div>
-                        <div class="form-group">
-                            {!!  Form::checkbox('is_close') !!} Close?
-                        </div>
+
                         <div class="form-group">
                             <label>Image</label>
                             {!! Form::file('image') !!}

@@ -34,7 +34,6 @@
                                 </small>
 
                             </th>
-                            <th>Title</th>
                             <th>Short Description</th>
                             <th>Deadline</th>
                             <th>Allow Anonymous?</th>
@@ -49,7 +48,6 @@
                                         <span class="label label-success">{{ $event->id }}</span>
                                     @endif
                                 </td>
-                                <td>{{ $event->title }}</td>
                                 <td>{{ $event->short_description }}</td>
                                 <td>@if(isset($event->deadline)){{ $event->deadline->format('d/m/Y')}}@endif</td>
                                 <td>@if( $event->allow_anonymous)  <i

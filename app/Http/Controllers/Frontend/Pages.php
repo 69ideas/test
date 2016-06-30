@@ -8,16 +8,18 @@ use App\Faq;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Page;
+use App\Photo;
 use Illuminate\Http\Request;
 
 class Pages extends Controller
 {
     public function home()
     {
-        $events = Event::where('is_show', 1)->get();
+        //$events = Event::where('is_show', 1)->get();
         $active = 'active';
+        $photos=Photo::orderBy('sort_order')->get();
         $page = Page::where('hidden_name', 'home')->first();
-        return view('frontend.home', compact('events', 'active', 'page'));
+        return view('frontend.home', compact('photos', 'active', 'page'));
     }
 
     public function page(Request $request, $url)

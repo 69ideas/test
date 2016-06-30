@@ -44,6 +44,11 @@
                             <i class="fa fa-question"></i> <span>FAQ</span>
                         </a>
                     </li>
+                    <li class="treeview {{ $active_photos or '' }}">
+                        <a href="{{ route('admin.photo.index') }}">
+                            <i class="fa fa-camera"></i> <span>Homepage Image</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
