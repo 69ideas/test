@@ -61,7 +61,7 @@ class Participants extends Controller
 
     public function edit(Participant $participant)
     {
-        $page_title = 'Editing participant';
+        $page_title = 'Editing Participant';
         $event = Event::find(\Request::get('id'));
         if ($event->allow_anonymous) {
             $users = [null => '--Not set--'] + User:: orderByName()->get()->pluck('full_name', 'id')->all();

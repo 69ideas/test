@@ -22,20 +22,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!!  Form::label('closed_date','Closed Date:') !!}
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                @if (isset($event->closed_date))
-                                    <input type="text" class="form-control pull-right datepicker" name="closed_date"
-                                           value="{{$event->closed_date->format('m/d/Y')}}">
-                                @else
-                                    <input type="text" class="form-control pull-right datepicker" name="closed_date">
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group">
                             {!!  Form::label('deadline','Deadline:') !!}
                             <div class="input-group date">
                                 <div class="input-group-addon">

@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-sm-4 col-sm-offset-8">
-            {{ link_to_route('event.create', 'New event', [], ['class'=>'btn btn-block btn-success pull-right']) }}
+            {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right']) }}
         </div>
     </div>
     <div class="row">

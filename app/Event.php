@@ -47,15 +47,6 @@ class Event extends Model implements SluggableInterface
     {
         return $value->format('m/d/Y');
     }
-    public function setClosedDateAttribute($value = null)
-    {
-        $this->attributes['closed_date'] = is_object($value) ? $value : \Carbon\Carbon::createFromFormat('m/d/Y', $value);
-    }
-
-    public function formClosedDateAttribute($value)
-    {
-        return $value->format('m/d/Y');
-    }
     public function setDeadlineAttribute($value = null)
     {
         $this->attributes['deadline'] = is_object($value) ? $value : \Carbon\Carbon::createFromFormat('m/d/Y', $value);

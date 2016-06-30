@@ -102,7 +102,8 @@ class Article extends Model implements SluggableInterface
         }
         else
         {
-            if(($this->resource_path == null || str_contains($this->resource_path, 'youtube.com')) && (!$request->file('image') || $request->file('image')->getError() != UPLOAD_ERR_OK))
+
+            if(($this->resource_path == null || str_contains($this->resource_path, 'youtube.com')) && (!$request->hasFile('image') || $request->file('image')->getError() != UPLOAD_ERR_OK))
             {
                 $this->resource_path = '';
                 $this->resource_type = '';

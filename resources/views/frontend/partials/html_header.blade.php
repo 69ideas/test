@@ -26,6 +26,7 @@
 
 
     <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/js/jquery.maskedinput.js" type="text/javascript"></script>
     <script src="/plugins/select2/select2.full.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -49,7 +50,15 @@
         });
     </script>
     <script>
-
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        jQuery(function($){
+            $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
+            $(".phone").mask("999-999-9999");
+            $("#tin").mask("99-9999999");
+            $("#ssn").mask("999-99-9999");
+        });
     </script>
     <script src="/js/admin.js" type="text/javascript"></script>
     <script src="/js/vue-admin.js" type="text/javascript"></script>

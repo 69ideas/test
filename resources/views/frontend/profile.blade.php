@@ -35,7 +35,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Phone</label>
-                            {!! Form::text('phone', null, ['class'=>'form-control', 'placeholder'=>'Enter Phone']) !!}
+                            {!! Form::text('phone', null, ['class'=>'form-control phone', 'placeholder'=>'Enter Phone']) !!}
                         </div>
                         <div class="form-group">
                             <label>Address 1</label>

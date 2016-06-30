@@ -39,16 +39,14 @@
                                 <p class="form-control-static">@if (isset($event->start_date)){{$event->start_date->format('m/d/Y')}}@endif</p>
                             </div>
                             <div class="form-group">
-                                <label>Closed Date</label>
-                                <p class="form-control-static">@if (isset($event->closed_date)){{$event->closed_date->format('m/d/Y')}}@endif</p>
-                            </div>
-                            <div class="form-group">
                                 <label>Deadline</label>
                                 <p class="form-control-static">@if (isset($event->deadline)){{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                             <div class="form-group">
-                                <label>Coordinator</label>
+                                <label>Event Coordinator</label>
                                 <p class="form-control-static">@if (isset($event->user_id)){{$event->user->full_name}}@else
+                                        Not set @endif</p>
+                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->email}}@else
                                         Not set @endif</p>
                             </div>
                             <div class="form-group">
@@ -75,11 +73,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Short Description</label>
-                                <p class="form-control-static">{{$event->shor_decription}}</p>
+                                <p class="form-control-static">{{$event->short_description}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <p class="form-control-static">{{$event->decription}}</p>
+                                <p class="form-control-static">{{$event->description}}</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -88,7 +86,7 @@
                                 <p class="form-control-static">{{$event->title}}</p>
                             </div>
                             <div class="form-group">
-                                @if(isset($event->image))
+                                @if(!empty($event->image))
                                     <img src="/{{$event->image}}" style="width: 100%">
                                 @endif
                             </div>

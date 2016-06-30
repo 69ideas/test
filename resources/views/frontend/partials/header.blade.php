@@ -14,7 +14,7 @@
                 @if (\Auth::user())
                     <li><a href="/logout">Logout</a></li>
                     <li class="{{$active_profile or ''}}"><a href="/profile">Profile</a></li>
-                    <li class="{{$active_event or ''}}"><a href="/event">My Events</a></li>
+                    <li class="{{$active_event or ''}}"><a href="/event">Member Page</a></li>
                 @endif
             </ul>
             <div class="bars text-right">

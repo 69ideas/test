@@ -35,10 +35,10 @@ class Events extends Controller
 
     public function create()
     {
-        $page_title = 'Adding event';
+        $page_title = 'Adding Event';
         $event = new Event();
         $coordinators=[0 => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
-        $submit_text = "Add event";
+        $submit_text = "Add Event";
 
         return view('admin.events.add', compact('event', 'page_title', 'submit_text','coordinators'));
     }
@@ -78,7 +78,7 @@ class Events extends Controller
      */
     public function edit(Event $event)
     {
-        $page_title = 'Editing event';
+        $page_title = 'Editing Event';
         $coordinators=[null => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Save changes";
 

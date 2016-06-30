@@ -17,7 +17,7 @@
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Password','required'=>'required']) !!}
+                {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Password','required'=>'required','data-toggle'=>"popover", 'title'=>"Password Rules", 'data-content'=>"&middot;8&nbsp;characters \n &middot;special&nbsp;characters\n &middot;numbers \n &middot;letters \n &middot;change&nbsp;in&nbsp;case"]) !!}
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Event;
 use App\Page;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class Events extends Controller
+class TIFASEvents extends Controller
 {
     public function __construct()
     {
@@ -23,15 +21,14 @@ class Events extends Controller
         view()->share('page', null);
     }
     public function index(){
-        $events = \App\Event::where('user_id',\Auth::user()->id)->orderBy('created_at', 'DESC')
-            ->paginate(\Config::get('pagination.frontend.events', 15));
+        $events = \App\Event::paginate(\Config::get('pagination.frontend.events', 15));
         $page_title = 'Events';
-        return view('frontend.events.index',compact('events','page_title'));
+        return view('frontend.tifas_events.index',compact('events','page_title'));
     }
     public function create(){
-        $page_title = 'Adding Event';
+        $page_title = 'Adding event';
         $event = new Event();
-        $submit_text = "Add Event";
+        $submit_text = "Add event";
 
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
@@ -57,7 +54,7 @@ class Events extends Controller
         return redirect()->route('event.show',$event)->with('success_message', 'Event was added');
     }
     public function edit(Event $event){
-        $page_title = 'Editing Event';
+        $page_title = 'Editing event';
         $coordinators=[null => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Save changes";
 

@@ -26,7 +26,6 @@ class ManageEvent extends Request
         return [
             'title' => 'required|max:255',
             'start_date' => 'required',
-            'closed_date' => 'required',
             'deadline' => 'required',
         ];
     }

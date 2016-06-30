@@ -39,10 +39,6 @@
                                 <p class="form-control-static">@if (isset($event->start_date)){{$event->start_date->format('m/d/Y')}}@endif</p>
                             </div>
                             <div class="form-group">
-                                <label>Closed Date</label>
-                                <p class="form-control-static">@if (isset($event->closed_date)){{$event->closed_date->format('m/d/Y')}}@endif</p>
-                            </div>
-                            <div class="form-group">
                                 <label>Deadline</label>
                                 <p class="form-control-static">@if (isset($event->deadline)){{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
@@ -54,11 +50,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Short Description</label>
-                                <p class="form-control-static">{{$event->shor_decription}}</p>
+                                <p class="form-control-static">{{$event->short_description}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <p class="form-control-static">{{$event->decription}}</p>
+                                <p class="form-control-static">{{$event->description}}</p>
                             </div>
                         </div>
                         <div class="col-md-4">
