@@ -11,7 +11,9 @@
         @foreach($events as $event)
         <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="in_img">
+                @if (!empty($event->image))
                 <img src="{{$event->image}}"/>
+                @endif
                 <div class="desc"><a href="{{route('show.event',$event)}}" style="color: black; font-family: MyriadPro-Bold;"> {{$event->title}}</a></div>
             </div>
         </div>
