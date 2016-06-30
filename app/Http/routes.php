@@ -25,7 +25,7 @@ Route::resource('tifas_event', 'Frontend\TIFASEvents');
 
 Route::group(["middleware" => ['auth']], function () {
     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
-    Route::get('event', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
+    Route::get('events', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
     Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
     Route::resource('event', 'Frontend\Events');
     Route::get('logout', 'Frontend\AuthController@sign_out');

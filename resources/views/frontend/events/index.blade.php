@@ -24,7 +24,16 @@
                 <div class="box-body table-responsive">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <th>ID</th>
+                            <th>ID
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Click to go to event"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+
+                            </th>
                             <th>Title</th>
                             <th>Short Description</th>
                             <th>Deadline</th>
@@ -33,8 +42,13 @@
                         </tr>
                         @forelse($events as $event)
                             <tr>
-                                <td>@if($event->is_close)<span class="label label-danger">{{ $event->id }}</span> @else
-                                        <span class="label label-success">{{ $event->id }}</span>@endif</td>
+                                <td>
+                                    @if($event->is_close)
+                                        <span class="label label-danger">{{ $event->id }}</span>
+                                    @else
+                                        <span class="label label-success">{{ $event->id }}</span>
+                                    @endif
+                                </td>
                                 <td>{{ $event->title }}</td>
                                 <td>{{ $event->short_description }}</td>
                                 <td>@if(isset($event->deadline)){{ $event->deadline->format('d/m/Y')}}@endif</td>

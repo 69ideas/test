@@ -52,6 +52,7 @@
     <script>
         $(function () {
             $('[data-toggle="popover"]').popover()
+            $('[data-toggle="tooltip"]').tooltip()
         })
         jQuery(function($){
             $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});

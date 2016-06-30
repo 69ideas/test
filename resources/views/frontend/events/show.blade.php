@@ -27,6 +27,7 @@
 
     <div class="row">
         <div class="col-sm-12">
+            <h1>Event # {{$event->id}}</h1>
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -72,6 +73,8 @@
                             <div class="form-group">
                                 @if(isset($event->image))
                                     <img src="/{{$event->image}}" style="width: 100%"/>
+                                @else
+                                    <img src="/images/no-image.png" style="width: 100%"/>
                                 @endif
                             </div>
                         </div>
