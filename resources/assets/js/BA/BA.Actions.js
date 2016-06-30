@@ -17,6 +17,7 @@ BA.Actions = {
 
         $(".add-participant", context).click(BA.Events.TabContentManage);
         $(".edit-participant", context).click(BA.Events.TabContentManage);
+        $(".send-email", context).click(BA.Events.TabContentManage);
 
         console.log($('.datepicker',context));
         $('.datepicker',context).datepicker({

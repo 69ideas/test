@@ -22,6 +22,8 @@ Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthCont
 Route::get('/event/show/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Pages@event']);
 Route::get('/article/show/{slug}', ['as' => 'show.article', 'uses' => 'Frontend\Pages@article']);
 Route::resource('tifas_event', 'Frontend\TIFASEvents');
+Route::get('/send_email/{event}', ['as' => 'send.email', 'uses' => 'Frontend\Pages@open_email']);
+Route::post('/send_email', ['as' => 'post.send.email', 'uses' => 'Frontend\Pages@send_email']);
 
 Route::group(["middleware" => ['auth']], function () {
     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);

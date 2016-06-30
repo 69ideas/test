@@ -48,6 +48,7 @@
             });
             $('.select2').select2();
         });
+
     </script>
     <script>
         $(function () {
@@ -61,8 +62,14 @@
             $("#ssn").mask("999-99-9999");
         });
     </script>
+    <script src="/js/AdminLTE.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="//cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
     <script src="/js/admin.js" type="text/javascript"></script>
     <script src="/js/vue-admin.js" type="text/javascript"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+
     <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
 
 </head>

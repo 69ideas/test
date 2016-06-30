@@ -27,6 +27,6 @@ class Users extends Controller
             $user->password=$request->get('password');
         }
         $user->save();
-        return redirect()->route('home')->with('success_message', 'User was updated');
+        return redirect()->route('event.index')->with('success_message', 'Profile was updated');
     }
 }

@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col-sm-12">
+        <h1>Event # {{$event->id}}</h1>
+        <h3>Coordinator: {{\Auth::user()->full_name}} {{\Auth::user()->email}}</h3>
         <div class="box">
             <div class="box-header with-border">
                 <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -8,7 +10,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!!  Form::label('start_date','Start Date:') !!}
+                            <label>Start Date <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Date when your Event will started"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
