@@ -14,7 +14,7 @@
             @forelse($entity->participants as $participant)
                 <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else Anonymous @endif</td>
                 <td>@if(isset($participant->user_id)){{$participant->user->email}}@else Anonymous @endif</td>
-                <td>{{$participant->amount_deposited}}</td>
+                <td>{{number_format($participant->amount_deposited,2)}}</td>
                 <td>{{$participant->deposit_type}}</td>
                 <td>@if (isset($participant->deposit_date)){{$participant->deposit_date->format('m/d/Y')}}@endif</td>
         </tr>
