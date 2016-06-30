@@ -9,8 +9,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            @if(isset($event->image))
-            <img src="/{{$event->image}}" style="width: 100%"/>
+            @if(!empty($event->image))
+                <img src="/{{$event->image}}" style="width: 100%"/>
             @else
                 <img src="/images/no-image.png" style="width: 100%"/>
             @endif
