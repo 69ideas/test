@@ -4,7 +4,7 @@
     <div class="row">
         @if (!$event->is_close)
             <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
+                {{ link_to_route('admin.event.close', 'Close Event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
             </div>
         @else
             <div class="col-sm-12">
