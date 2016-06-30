@@ -22,7 +22,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!!  Form::label('deadline','Deadline:') !!}
+                            <label>Deadline <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="This is a suggested date.  The Event will not automatically close after the date, nor will it keep a participant from being able to make a payment"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -37,11 +43,23 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Enter Amount per Participant</label>
+                            <label>Enter Amount per Participant <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Enter the fixed dollar amount each participants is to pay.  Enter “0” if you don’t want to set a limit "
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
                         </div>
                         <div class="form-group">
-                            <label>Enter Number of Participants</label>
+                            <label>Enter Number of Participants <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Enter the fixed number of participants for your event.  Enter “0” if you don’t want to set a limit"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small></label>
                             {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
 
@@ -56,7 +74,7 @@
                             <label>Short Description  <small
                                         data-toggle="tooltip"
                                         data-placement="top"
-                                        title="In this area you enter up to x characters that explains to your participants the purpose of the event."
+                                        title="In this area you enter up to 255 characters that explains to your participants the purpose of the event."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small></label>
@@ -82,10 +100,22 @@
                             </small>
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?
+                            {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?<small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="An Option that the Event Fee will be taken out to the total collected.  Otherwise the Coordinator will have to pay it."
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
+                            {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?<small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="An Option that the CC Fees will be taken out to the total collected.  Otherwise the participants will have it added when they make their payment"
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
                         </div>
 
                     </div>
