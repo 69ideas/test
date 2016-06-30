@@ -59,7 +59,7 @@
                                 <p class="form-control-static">{{$event->seo_keywords}}</p>
                             </div>
                             <div class="form-group">
-                                Allow Anonymous? @if( !$event->allow_anonymous)  <i
+                                Allow Anonymous? @if( $event->allow_anonymous)  <i
                                         class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
                             </div>
                             <div class="form-group">

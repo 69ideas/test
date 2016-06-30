@@ -50,7 +50,7 @@
                                 </td>
                                 <td>{{ $event->short_description }}</td>
                                 <td>@if(isset($event->deadline)){{ $event->deadline->format('d/m/Y')}}@endif</td>
-                                <td>@if( !$event->allow_anonymous)  <i
+                                <td>@if( $event->allow_anonymous)  <i
                                             class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                                 <td>
                                     <a href="{{ route('event.show', $event) }}"
