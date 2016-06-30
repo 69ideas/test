@@ -30,4 +30,29 @@ class Participant extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getIsHandsPaymentAttribute()
+    {
+        return ($this->deposit_type == 'Cash');
+    }
+
+    public function  getVaultXCollectedAttribute()
+    {
+        return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_attribute;
+    }
+
+    public function  getCoordinatorCollectedAttribute()
+    {
+        return ($this->amount_deposited - $this->cc_fees * $this->commission ) * $this->is_hands_attribute;
+    }
+
+    public function  getCommissionAttribute()
+    {
+        return 0.15 + (0.25 + 0.035 * $this->amount_deposited) * (!$this->is_hands_attribute);
+    }
+
+    public function  getTotalAttribute()
+    {
+        return $this->vault_x_collected + $this->coordinator_collected + $this->commission;
+    }
 }
