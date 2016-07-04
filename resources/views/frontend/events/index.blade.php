@@ -68,7 +68,7 @@
                                     <a href="{{ route('event.edit', $event) }}"
                                        class="btn btn-xs btn-primary"
                                        data-toggle="tooltip" data-placement="top"
-                                       title="Edit"
+                                       title="Edit" style="background: #49658A;"
                                     >
                                         <i class="fa fa-pencil"></i>
                                     </a>

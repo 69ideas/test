@@ -86,13 +86,7 @@ class Pages extends Controller
         ];
     }
     public function send_email(Request $request){
-        $user=\Auth::user();
-        $email=$request->get('email');
-        \Mail::queue('frontend.emails.send_event', compact('event','request', 'email','user'), function (Message $message) use ($email) {
-            $message->to($email)
-                ->subject('Event');
-        });
-        return redirect()->back()->with('success_message','Email was send');
+       
     }
 
 }

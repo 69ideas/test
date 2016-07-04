@@ -16,7 +16,8 @@
         "intervention/image": "~2.2",
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle": "^6.2",
-        "paquettg/php-html-parser": "^1.6"
+        "paquettg/php-html-parser": "^1.6",
+        "fedeisas/laravel-mail-css-inliner": "~1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

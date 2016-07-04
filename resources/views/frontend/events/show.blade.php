@@ -24,8 +24,8 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>Event # {{$event->id}}</h1>
-            <h3>Coordinator: {{\Auth::user()->full_name}} </h3>
-            <h4>Coordinar's Email:   {{\Auth::user()->email}}</h4>
+            <h3 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h3>
+            <h4 style="text-align: right">Coordinar's Email:   {{\Auth::user()->email}}</h4>
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>

@@ -25,7 +25,7 @@
         </div>
 
         <div class="col-sm-4" style="text-align: center">
-            <a href="{{route('send.email',$event)}}" class="send-email">Send it by email</a>
+
         </div>
 
         <div class="col-sm-4" style="text-align: right">

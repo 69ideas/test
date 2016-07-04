@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Mail\Message;
 
 class Events extends Controller
 {
@@ -52,6 +53,13 @@ class Events extends Controller
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
         $event->save();
+
+        $user=\Auth::user();
+        $email=$user->email;
+        \Mail::queue('frontend.emails.ex', compact('event','user'), function (Message $message) use ($email,$event) {
+            $message->to($email)
+                ->subject($event->short_description);
+        });
 
         return redirect()->route('event.show',$event)->with('success_message', 'Event was added');
     }
