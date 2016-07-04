@@ -11,9 +11,9 @@
     <div class="row">
         &nbsp;
     </div>
-    {!! Form::open(['route'=>['event.store'], 'files' => true]) !!}
+    {!! Form::open(['route'=>['tifas_event.store'], 'files' => true]) !!}
 
-    @include('frontend.events._form')
+    @include('frontend.tifas_events._form')
     <div class="row">
         &nbsp;
     </div>

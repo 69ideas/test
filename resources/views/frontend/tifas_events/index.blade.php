@@ -2,8 +2,13 @@
 @section('content')
 
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-8">
-            {{ link_to_route('event.create', 'New event', [], ['class'=>'btn btn-block btn-success pull-right']) }}
+        <div class="col-sm-4">
+            {{ link_to_route('profile', 'Edit Profile', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can edit your profile by clicking here ']) }}
+        </div>
+        <div class="col-sm-4 ">
+        </div>
+        <div class="col-sm-4">
+            {{ link_to_route('tifas_event.create', 'New event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event clicking here']) }}
         </div>
     </div>
     <div class="row">

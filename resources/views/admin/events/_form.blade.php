@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            {!! Form::textarea('description', null, ['class'=>'form-control', 'placeholder'=>'Enter Description']) !!}
+                            {!! Form::textarea('description', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Description']) !!}
                         </div>
                         <div class="form-group">
                             <label>Image</label>

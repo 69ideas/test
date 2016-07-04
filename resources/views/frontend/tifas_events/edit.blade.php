@@ -11,7 +11,7 @@
     <div class="row">
         &nbsp;
     </div>
-    {!! Form::model($event, ['route'=>['event.update', $event], 'method'=>'PATCH', 'files' => true]) !!}
-    @include('frontend.events._form')
+    {!! Form::model($event, ['route'=>['tifas_event.update', $event], 'method'=>'PATCH', 'files' => true]) !!}
+    @include('frontend.tifas_event._form')
     {!! Form::close() !!}
 @stop

@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-sm-12">
         <h1>Event # {{$event->id}}</h1>
-        <h3>Coordinator: {{\Auth::user()->full_name}} {{\Auth::user()->email}}</h3>
+        <h3>Coordinator: {{\Auth::user()->full_name}} </h3>
+        <h4>Coordinar's Email:   {{\Auth::user()->email}}</h4>
         <div class="box">
             <div class="box-header with-border">
                 <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -13,7 +14,7 @@
                             <label>Start Date <small
                                         data-toggle="tooltip"
                                         data-placement="top"
-                                        title="Date when your Event will started"
+                                        title="Date your event will be started."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small></label>
@@ -82,7 +83,7 @@
                             <label>Short Description  <small
                                         data-toggle="tooltip"
                                         data-placement="top"
-                                        title="In this area you enter up to 255 characters that explains to your participants the purpose of the event."
+                                        title="In this area you enter up to 100 characters that explains to your participants the purpose of the event."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small></label>
@@ -92,17 +93,17 @@
                             <label>Description<small
                                         data-toggle="tooltip"
                                         data-placement="top"
-                                        title="In this area you enter up to x characters that explains to your participants the purpose of the event."
+                                        title="Fully describe your Event"
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small></label>
-                            {!! Form::textarea('description', null, ['class'=>'form-control', 'placeholder'=>'Enter Description']) !!}
+                            {!! Form::textarea('description', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Description']) !!}
                         </div>
                         <div class="form-group">
                             {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous? <small
                                     data-toggle="tooltip"
                                     data-placement="top"
-                                    title="If you type “check” each participant will be able to list themselves as anonymous on the Event ."
+                                    title="If you check this box, each participant will have the option to list themselves on the event page."
                             >
                                 <i class="fa fa-info-circle"></i>
                             </small>

@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <p class="form-control-static">{{$event->description}}</p>
+                                <p class="form-control-static">{!!  $event->description!!}</p>
                             </div>
                         </div>
                         <div class="col-md-4">

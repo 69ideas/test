@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/css/custom.css"/>
     <link rel="stylesheet" href="/css/responsive.css"/>
-    <link rel="stylesheet" href="/css/AdminLTE.css">
+
     <link rel="stylesheet" href="/plugins/jQuery-treegrid/css/jquery.treegrid.css">
     <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
@@ -52,7 +52,10 @@
                 increaseArea: '20%' // optional
             });
             $('.select2').select2();
-            $('.searchable').DataTable();
+            $('.searchable').each(function(){
+                if($(this).find('tbody tr:not(.bg-info)').length > 0)
+                    $(this).DataTable();
+            });
         });
 
     </script>
@@ -71,6 +74,8 @@
     <script src="/js/AdminLTE.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="//cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
+    <script src="/tinymce/plugins/responsivefilemanager/plugin.min.js" type="text/javascript"></script>
+
     <script src="/js/admin.js" type="text/javascript"></script>
     <script src="/js/vue-admin.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>

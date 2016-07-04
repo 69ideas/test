@@ -23,8 +23,8 @@
                 <td>{{ number_format($participant->total, 2) }}</td>
             </tr>
         @empty
-            <tr>
-                <td class="bg-info text-center text-bold" colspan="18">
+            <tr class="bg-info">
+                <td class="text-center text-bold" colspan="18">
                     No participants attached to this {{$module}}
                 </td>
             </tr>

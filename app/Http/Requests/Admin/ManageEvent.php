@@ -24,7 +24,7 @@ class ManageEvent extends Request
     public function rules()
     {
         return [
-            'short_description' => 'required|max:255',
+            'short_description' => 'required|max:100',
             'start_date' => 'required',
             'deadline' => 'required',
         ];

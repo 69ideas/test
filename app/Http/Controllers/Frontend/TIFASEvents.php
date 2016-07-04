@@ -21,16 +21,16 @@ class TIFASEvents extends Controller
         view()->share('page', null);
     }
     public function index(){
-        $events = \App\Event::paginate(\Config::get('pagination.frontend.events', 15));
+        $events = \App\Event::paginate(\Config::get('pagination.frontend.tifas_events', 15));
         $page_title = 'Events';
         return view('frontend.tifas_events.index',compact('events','page_title'));
     }
     public function create(){
-        $page_title = 'Adding event';
+        $page_title = 'Adding Event';
         $event = new Event();
-        $submit_text = "Add event";
+        $submit_text = "Add Event";
 
-        return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
+        return view('frontend.tifas_events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){
         $event = new Event();;
