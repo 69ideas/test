@@ -285,3 +285,13 @@ PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-USERID: info_api1.
 PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-PASSWORD: P7KUBZYK8RN462R2
 PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-SIGNATURE: AFcWxV21C7fd0v3bYYYRCpSSRl31A11ZPkdM0UA3lmo0MndV9erWalw9
 PayPal\Core\PPAPIService: Response: responseEnvelope.timestamp=2016-07-06T04%3A55%3A33.260-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=da7c72e3a61f0&responseEnvelope.build=23046607&payKey=AP-2B974080WB821953M&paymentExecStatus=CREATED
+PayPal\Core\PPAPIService: Request: requestEnvelope.errorLanguage=en_US&actionType=PAY&cancelUrl=http%3A%2F%2Fvault-x.my%2Ferror&currencyCode=USD&feesPayer=PRIMARYRECEIVER&receiverList.receiver(0).amount=103.46&receiverList.receiver(0).email=vaultx-coordinator%40ananas-web.ru&receiverList.receiver(0).primary=1&receiverList.receiver(1).amount=0.15&receiverList.receiver(1).email=vaultx-admin%40ananas-web.ru&senderEmail=vaultx-donater%40ananas-web.ru&returnUrl=http%3A%2F%2Fvault-x.my&fundingConstraint.allowedFundingType.fundingTypeInfo(0).fundingType=ECHECK&fundingConstraint.allowedFundingType.fundingTypeInfo(1).fundingType=BALANCE&fundingConstraint.allowedFundingType.fundingTypeInfo(2).fundingType=CREDITCARD
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-REQUEST-DATA-FORMAT: NV
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-RESPONSE-DATA-FORMAT: NV
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-DEVICE-IPADDRESS: 127.0.0.1
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-REQUEST-SOURCE: adaptivepayments-php-sdk-3.6.106
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-APPLICATION-ID: APP-80W284485P519543T
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-USERID: info_api1.ananas-web.ru
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-PASSWORD: P7KUBZYK8RN462R2
+PayPal\Core\PPHttpConnection: Adding header X-PAYPAL-SECURITY-SIGNATURE: AFcWxV21C7fd0v3bYYYRCpSSRl31A11ZPkdM0UA3lmo0MndV9erWalw9
+PayPal\Core\PPAPIService: Response: responseEnvelope.timestamp=2016-07-07T05%3A05%3A57.768-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=b38d71510ab82&responseEnvelope.build=23046607&payKey=AP-20157530CM066323A&paymentExecStatus=CREATED

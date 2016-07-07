@@ -64,7 +64,7 @@ class PayReceipt extends Controller
         $receiver2->primary = false;
         $receiverList = new ReceiverList([$receiver1, $receiver2]);
         $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
-            'USD', $receiverList, route('success'));
+            'USD', $receiverList, route('home'));
         $payRequest->feesPayer = 'PRIMARYRECEIVER';
         if ($request->get("email") != "") {
             $payRequest->senderEmail = $request->get("email");
