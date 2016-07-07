@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-md-6">
             <h3>{{$event->short_description}}</h3>
-            <h4 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h4>
-            <h5 style="text-align: right">Coordinar's Email:   {{\Auth::user()->email}}</h5>
+            <h4 style="text-align: right">Coordinator: {{$event->user->full_name}} </h4>
+            <h5 style="text-align: right">Coordinar's Email:   {{$event->user->email}}</h5>
             <hr>
             <div class="form-group">
                 {!! $event->description !!}
