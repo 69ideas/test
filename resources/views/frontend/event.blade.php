@@ -10,7 +10,7 @@
                 {!! $event->description !!}
                 <hr>
                 Amount per Participant
-                {{ number_format($event->needable_sum, 2) }}
+                {{ number_format($event->needable_sum, 2) }}<br>
                 Total Collected
                 {{ number_format($event->total, 2) }}
             </div>
