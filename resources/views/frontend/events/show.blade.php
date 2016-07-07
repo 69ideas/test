@@ -77,6 +77,10 @@
                                 <p class="form-control-static">{{$event->number_participants}}</p>
                             </div>
                             <div class="form-group">
+                                <label>Enter Amount per Participant</label>
+                                <p class="form-control-static">{{$event->needable_sum}}</p>
+                            </div>
+                            <div class="form-group">
                                 @if(isset($event->image))
                                     <img src="/{{$event->image}}" style="width: 100%"/>
                                 @else

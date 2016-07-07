@@ -2,8 +2,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                {!!  Form::label('user_id','Participant:') !!}
-                {!!  Form::select('user_id', $users, null,['class'=>"form-control"]) !!}
+                <label>Participant:<small
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Set '--Not set--' if user has not got account on Vault-x"
+                    >
+                        <i class="fa fa-info-circle"></i>
+                    </small></label>
+                {!!  Form::select('user_id', $users, null,['class'=>"form-control select2 related-name"]) !!}
+            </div>
+            <div id="data_holder">
+
             </div>
             <div class="form-group">
                 {!!  Form::label('amount_deposited','Amount Deposit:') !!}

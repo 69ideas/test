@@ -13,11 +13,10 @@ BA.Events = {
             $('.new_city').slideUp();
 
     },
-    RelatedType: function(e)
-    {
+    RelatedType: function (e) {
         $('#data_holder_type').slideUp();
         //$(this).val() - �������� �� �������
-        $.get('/admin/type?related=' + $(this).val(), null, function(data){
+        $.get('/admin/type?related=' + $(this).val(), null, function (data) {
 
             var content = $(data.content);
             BA.Actions.init(content);
@@ -26,19 +25,16 @@ BA.Events = {
             console.log(data);
         }, 'json');
     },
-    TabContentManage: function(e)
-    {
+    TabContentManage: function (e) {
         e.preventDefault();
         var href = $(this).prop('href');
         $.get(href, null, BA.Events.TabContentManageLoaded, 'json');
     },
 
-    TabContentManageLoaded:function(data)
-    {
-        if(data.error_code != 0)
-        {
+    TabContentManageLoaded: function (data) {
+        if (data.error_code != 0) {
             alert('Error happened');
-            return ;
+            return;
         }
 
         var content = $(data.content);
@@ -138,30 +134,27 @@ BA.Events = {
         }
     },
 
-    CaruselDeleteRow: function (e)
-    {
+    CaruselDeleteRow: function (e) {
         e.preventDefault();
 
         $(this).parents('tr').remove();
     },
 
-    CaruselAddRow: function (e)
-    {
+    CaruselAddRow: function (e) {
         console.log($(this).prop('href'));
         $.get($(this).prop('href') + '/' + ($('table.carusel-rows tr').length - 1), null, BA.Events.NewCaruselRowResponse, 'json');
         e.preventDefault();
 
-    }, ModalClosed: function(e) {
+    }, ModalClosed: function (e) {
         $(this).remove();
         e.preventDefault();
     },
 
-    ModalClosing: function(e) {
+    ModalClosing: function (e) {
         BA.Bindings.CurrentWindow = null;
     },
 
-    SubmitAjaxForm: function(e)
-    {
+    SubmitAjaxForm: function (e) {
         e.preventDefault();
 
         var _form = $(this);
@@ -172,25 +165,25 @@ BA.Events = {
             type: "POST",
             url: $(this).prop('action'),
             data: $(this).serialize(),
-            success: function(data, status){BA.Events.AjaxFormHandler(data, status, _form)},
-            error: function(response, status){BA.Events.AjaxFormHandlerFailed(response, status, _form)},
+            success: function (data, status) {
+                BA.Events.AjaxFormHandler(data, status, _form)
+            },
+            error: function (response, status) {
+                BA.Events.AjaxFormHandlerFailed(response, status, _form)
+            },
             dataType: 'json'
         });
     },
 
-    AjaxFormHandler: function(data, status, _form)
-    {
-        if(data.error_code == 0)
-        {
+    AjaxFormHandler: function (data, status, _form) {
+        if (data.error_code == 0) {
             data = data.data;
             $.get(data.url, null, ERP.Events.TabContentLoaded, 'json');
         }
     },
 
-    TabContentLoaded: function(data, type)
-    {
-        if(data.error_code == 0)
-        {
+    TabContentLoaded: function (data, type) {
+        if (data.error_code == 0) {
             data = data.data;
             var tab = $('#tab_' + data.type);
             tab.html('');
@@ -198,18 +191,15 @@ BA.Events = {
             BA.Actions.init(content);
             tab.append(content);
 
-            if(BA.Bindings.CurrentWindow != null)
+            if (BA.Bindings.CurrentWindow != null)
                 BA.Bindings.CurrentWindow.find('.close').click();
         }
 
     },
 
-    AjaxFormHandlerFailed: function(response, status, _form)
-    {
-        if(response.status == 422)
-        {
-            for(var i in response.responseJSON)
-            {
+    AjaxFormHandlerFailed: function (response, status, _form) {
+        if (response.status == 422) {
+            for (var i in response.responseJSON) {
                 var block = _form.find("[name='" + i + "']").parents('.form-group');
 
                 block.addClass('has-error');
@@ -219,17 +209,14 @@ BA.Events = {
         console.log(response);
     },
 
-    SubmitMainForm: function(e)
-    {
+    SubmitMainForm: function (e) {
         e.preventDefault();
 
-        $('.main_form_'+$(this).data('form')).submit();
+        $('.main_form_' + $(this).data('form')).submit();
     },
 
-    NewCaruselRowResponse: function(data)
-    {
-        if(data.status == 'ok')
-        {
+    NewCaruselRowResponse: function (data) {
+        if (data.status == 'ok') {
             var content = $(data.content);
             BA.Actions.init(content);
 
@@ -237,5 +224,27 @@ BA.Events = {
 
 
         }
+    },
+
+    RelatedName: function (e) {
+        if ($(this).val() == '') {
+            $.get('/payment_name?related=' + $(this).val(), null, function (data) {
+                $('#data_holder').html(data);
+            })
+        }
+        else {
+            $.get('/payment_name?related=' + $(this).val(), null, function (data) {
+                $('#data_holder').html('');
+            })
+        }
+    },
+    RelatedPayment: function (e) {
+        if(BA.Bindings.CurrentAmountRequest != null)
+            BA.Bindings.CurrentAmountRequest.abort();
+        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $(this).data('event') + '&amount=' + $(this).val(), null, function (data) {
+            $('#total_payment').html(data);
+            BA.Bindings.CurrentAmountRequest = null;
+        })
     }
+
 };

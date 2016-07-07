@@ -75,18 +75,18 @@ class Pages extends Controller
         $next = Article::orderBy('created_at', 'asc')->where('created_at', '>', $article->created_at)->first();
         return view('frontend.article', compact('article', 'prev', 'next', 'page'));
     }
-    public function open_email()
+    public function open_payment(Event $event)
     {
-        $page_title = 'Share Event';
+        $page_title = 'Make Payment';
         $page=null;
         return [
             'error_code' => 0,
-            'title' => 'Share Event',
-            'content' => view('frontend.emails.share_event', compact('page','page_title'))->render()
+            'title' => 'Make Payment',
+            'content' => view('frontend.payment', compact('page','page_title','event'))->render()
         ];
     }
-    public function send_email(Request $request){
-       
+    public function payment(Request $request){
+       return redirect()->back();
     }
 
 }

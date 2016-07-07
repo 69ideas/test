@@ -15,7 +15,7 @@
         @forelse($entity->participants as $participant)
             <tr>
                 <td>@if (isset($participant->deposit_date)){{$participant->deposit_date->format('m/d/Y')}}@endif</td>
-                <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else Anonymous @endif</td>
+                <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else {{$participant->name}} @endif</td>
                 <td>{{ $participant->deposit_type }}</td>
                 <td>{{ number_format($participant->vault_x_collected, 2) }}</td>
                 <td>{{ number_format($participant->coordinator_collected, 2) }}</td>
@@ -44,4 +44,10 @@
         @endif
         </tfoot>
     </table>
+    @if(!$entity->is_close)
+        <div class="form-group">
+            <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
+               class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Add Participant</a>
+        </div>
+    @endif
 </div>

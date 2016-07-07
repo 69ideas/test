@@ -22,13 +22,19 @@ Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthCont
 Route::get('/event/show/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Pages@event']);
 Route::get('/article/show/{slug}', ['as' => 'show.article', 'uses' => 'Frontend\Pages@article']);
 Route::resource('tifas_event', 'Frontend\TIFASEvents');
-Route::get('/send_email/{event}', ['as' => 'send.email', 'uses' => 'Frontend\Pages@open_email']);
-Route::post('/send_email', ['as' => 'post.send.email', 'uses' => 'Frontend\Pages@send_email']);
+Route::get('/payment/{event}', ['as' => 'payment', 'uses' => 'Frontend\Pages@open_payment']);
+Route::post('/payment/{event}', ['as' => 'post.payment', 'uses' => 'PayReceipt@doAction']);
+Route::get('error', ['as' => 'error', 'uses' => 'Frontend\Pages@home']);
+Route::get('success', ['as' => 'success', 'uses' => 'Frontend\Pages@home']);
+Route::get('payment_total', ['as' => 'payment_total', 'uses' => 'PayReceipt@payment_total']);
+
 
 Route::group(["middleware" => ['auth']], function () {
     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
     Route::get('events', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
     Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
+    Route::resource('participant', 'Frontend\Participants');
+    Route::get('payment_name', ['as' => 'payment_name', 'uses' => 'Frontend\Participants@payment_name']);
     Route::resource('event', 'Frontend\Events');
     Route::get('logout', 'Frontend\AuthController@sign_out');
 });

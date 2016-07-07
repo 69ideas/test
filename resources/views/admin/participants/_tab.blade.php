@@ -44,10 +44,10 @@
         @endforelse
         <tbody>
     </table>
-    @if(!$entity->is_close)
+    <!--@if(!$entity->is_close)
         <div class="form-group">
             <a href="/admin/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
                class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Add Participant</a>
         </div>
-    @endif
+    @endif -->
 </div>

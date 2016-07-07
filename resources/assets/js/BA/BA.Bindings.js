@@ -1,3 +1,4 @@
 BA.Bindings = {
-    CurrentWindow : null
+    CurrentWindow : null,
+    CurrentAmountRequest: null
 };

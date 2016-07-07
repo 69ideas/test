@@ -10,14 +10,15 @@ BA.Actions = {
         $('.related-type', context).change(BA.Events.RelatedType);
         $('.related-type', context).change();
 
-        console.log($('.related-category', context));
-        $('.related-category', context).change(BA.Events.RelatedCategory);
-        $('.related-product', context).change(BA.Events.RelatedProduct);
-        $('.related-location', context).change(BA.Events.RelatedLocation);
-
+        console.log($('.related-name', context));
+        $('.related-name', context).change(BA.Events.RelatedName);
+        $('.related-name', context).change();
         $(".add-participant", context).click(BA.Events.TabContentManage);
         $(".edit-participant", context).click(BA.Events.TabContentManage);
-        $(".send-email", context).click(BA.Events.TabContentManage);
+        $(".make-payment", context).click(BA.Events.TabContentManage);
+        $('.related-payment', context).keyup(BA.Events.RelatedPayment);
+        $('.related-payment', context).keyup();
+
 
         console.log($('.datepicker',context));
         $('.datepicker',context).datepicker({

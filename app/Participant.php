@@ -30,6 +30,10 @@ class Participant extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function payment(){
+        return $this->belongsTo(Payment::class);
+    }
+
 
     public function getIsHandsPaymentAttribute()
     {
@@ -38,17 +42,17 @@ class Participant extends Model
 
     public function  getVaultXCollectedAttribute()
     {
-        return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_attribute;
+        return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_payment;
     }
 
     public function  getCoordinatorCollectedAttribute()
     {
-        return ($this->amount_deposited - $this->cc_fees * $this->commission ) * $this->is_hands_attribute;
+        return ($this->amount_deposited - $this->cc_fees * $this->commission ) * $this->is_hands_payment;
     }
 
     public function  getCommissionAttribute()
     {
-        return 0.15 + (0.25 + 0.035 * $this->amount_deposited) * (!$this->is_hands_attribute);
+        return (0.15 + (0.25 + 0.035 * $this->amount_deposited)) * (!$this->is_hands_payment);
     }
 
     public function  getTotalAttribute()

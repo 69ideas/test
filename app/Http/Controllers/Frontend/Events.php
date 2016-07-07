@@ -48,8 +48,20 @@ class Events extends Controller
             'needable_sum',
             'short_description',
             'allow_anonymous'));
+        $this->validate($request, [
+            'needable_sum' => 'required',
+        ]);
         $event->user_id=\Auth::user()->id;
         $event->sort_order=0;
+        if ($request->get('vxp_fees')==null){
+            $event->vxp_fees=0;
+        }
+        if ($request->get('cc_fees')==null){
+            $event->vxp_fees=0;
+        }
+        if ($request->get('allow_anonymous')==null){
+            $event->vxp_fees=0;
+        }
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
         $event->save();
@@ -72,15 +84,11 @@ class Events extends Controller
     }
     public function update(Requests\Admin\ManageEvent $request,Event $event){
         $event->fill($request->only(
-            'vxp_fees',
-            'cc_fees',
             'number_participants',
             'deadline',
             'description',
             'start_date',
-            'short_description',
-            'needable_sum',
-            'allow_anonymous'));
+            'short_description'));
         $event->save();
         $event->user_id=\Auth::user()->id;
         $event->sort_order=0;

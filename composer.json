@@ -17,7 +17,8 @@
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle": "^6.2",
         "paquettg/php-html-parser": "^1.6",
-        "fedeisas/laravel-mail-css-inliner": "~1.5"
+        "fedeisas/laravel-mail-css-inliner": "~1.5",
+        "paypal/adaptivepayments-sdk-php":"v3.6.106"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
