@@ -33,14 +33,12 @@
         <tfoot>
         @if($entity->participants->count() > 0)
             <tr>
-
                 <td colspan="3" style="text-align: right">Total:</td>
                 <td>{{ number_format($entity->vault_x_collected, 2) }}</td>
                 <td>{{ number_format($entity->coordinator_collected, 2) }}</td>
                 <td>{{ number_format($entity->commission, 2) }}</td>
                 <td>{{ number_format($entity->total, 2) }}</td>
             </tr>
-
         @endif
         </tfoot>
     </table>

@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-xs-8">
                     <a href="/register">Registration</a> <br>
-                    <a href="/register">Forgot password</a>
+                    <a href="{{route('forgot')}}">Forgot password</a>
                 </div>
             </div>
             {!! Form::close() !!}

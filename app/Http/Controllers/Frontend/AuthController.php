@@ -143,4 +143,49 @@ class AuthController extends Controller
         $text = 'You are trying to log in from another location. Please check your mail and confirm its location.';
         return view('frontend.success_registration', compact('text'));
     }
+    public function open_forgot(){
+        return view('frontend.forgot');
+    }
+    public function forgot(Request $request){
+        $user=User::where('email',$request->get('email'))->first();
+        if ($user==null){
+            return redirect()->back()->with('error_message','User not found');
+        }
+        else{
+            $url = str_random(50);
+            $user->reset_password=$url;
+            $user->save();
+            \Mail::queue('frontend.emails.reset_password', compact('request', 'user', 'url'), function (Message $message) use ($user) {
+                $message->to($user->email)
+                    ->subject('Reset password');
+            });
+        }
+        return view('frontend.forgot');
+    }
+    public function reset($url, Request $request)
+    {
+        $user=User::where('reset_password',$url)->first();
+        if ($user!=null){
+            return view('frontend.reset',compact('user'));
+        }
+        else{
+            abort(404);
+        }
+    }
+    public function reset_post(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect('/register')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            $user=User::where('id',$request->get('user_id'))->first();
+            $user->password=$request->get('password');
+            $user->reser_password=null;
+            $user->save();
+            return redirect()->route('login')->with('success_message','Your password successfully reseted');
+        }
+    }
 }
