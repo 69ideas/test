@@ -160,7 +160,8 @@ class AuthController extends Controller
                     ->subject('Reset password');
             });
         }
-        return view('frontend.forgot');
+        $text = 'Please check your e-mail';
+        return view('frontend.success_registration', compact('text'));
     }
     public function reset($url, Request $request)
     {
@@ -183,7 +184,7 @@ class AuthController extends Controller
         } else {
             $user=User::where('id',$request->get('user_id'))->first();
             $user->password=$request->get('password');
-            $user->reser_password=null;
+            $user->reset_password=null;
             $user->save();
             return redirect()->route('login')->with('success_message','Your password successfully reseted');
         }
