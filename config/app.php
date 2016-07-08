@@ -169,6 +169,7 @@ return [
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Fedeisas\LaravelMailCssInliner\LaravelMailCssInlinerServiceProvider::class,
+        Seriousjelly\Draftable\ServiceProvider::class,
 
     ],
 

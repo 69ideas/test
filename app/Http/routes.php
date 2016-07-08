@@ -29,6 +29,7 @@ Route::get('success1', ['as' => 'success1', 'uses' => 'Frontend\Pages@home']);
 Route::get('payment_total', ['as' => 'payment_total', 'uses' => 'PayReceipt@payment_total']);
 Route::get('forgot', ['as' => 'forgot', 'uses' => 'Frontend\AuthController@open_forgot']);
 Route::get('reset/{url}', ['as' => 'reset', 'uses' => 'Frontend\AuthController@reset']);
+Route::get('event_created/{event}', ['as' => 'event.created', 'uses' => 'Frontend\Events@event_created']);
 Route::post('reset', ['as' => 'reset.post', 'uses' => 'Frontend\AuthController@reset_post']);
 Route::post('forgot', ['as' => 'forgot.post', 'uses' => 'Frontend\AuthController@forgot']);
 

@@ -50,6 +50,10 @@
                                                     Event Coordinator: {{$event->full_name}}
                                                     <br>
                                                     Coordinar's Email:{{$user->email}}</div>
+                                                    <br>
+                                                    The Event Number: {{$event->event_number}}
+                                                    <br>
+                                                    The Event Access Code: {{$event->event_code}}
                                             </td>
                                         </tr>
                                     </table>

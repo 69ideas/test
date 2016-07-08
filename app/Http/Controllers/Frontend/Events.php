@@ -37,7 +37,6 @@ class Events extends Controller
         $event->vxp_fees=true;
         $event->cc_fees=false;
 
-
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){
@@ -55,6 +54,15 @@ class Events extends Controller
         $this->validate($request, [
             'needable_sum' => 'required',
         ]);
+
+        do{
+            $str = str_random(10);
+            $str = strtoupper($str);
+            $str = preg_replace('/[0-9]/', '', $str);
+        }while(mb_strlen($str) < 3);
+        $str = mb_substr($str, 0 , 3);
+        $event->event_number=$str.rand(100000,999999);
+        $event->event_code= str_random(10);
         $event->user_id=\Auth::user()->id;
         $event->sort_order=0;
         if ($request->get('vxp_fees')==null){
@@ -76,8 +84,8 @@ class Events extends Controller
             $message->to($email)
                 ->subject($event->short_description);
         });
+        return redirect()->route('event.created',compact('event'));
 
-        return redirect()->route('event.show',$event)->with('success_message', 'An email invitation was sent to your email that you can send to your participants');
     }
     public function edit(Event $event){
         $page_title = 'Editing Event';
@@ -109,5 +117,8 @@ class Events extends Controller
         $event->closed_date=Carbon::now();
         $event->save();
         return redirect()->route('event.index');
+    }
+    public function event_created(Event $event){
+        return view('frontend.success_event',compact('event'));
     }
 }

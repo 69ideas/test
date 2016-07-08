@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "18cbf50392984700b1fd38c1010ecfd2",
-    "content-hash": "a27cf5d86b95d90f37ea8250a28bb8a6",
+    "hash": "a36a26bad4c0b64b32f615bee7d22732",
+    "content-hash": "e96234a455d33d7c03ae8dd529479702",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -2289,6 +2289,56 @@
                 "shell"
             ],
             "time": "2016-03-09 05:03:14"
+        },
+        {
+            "name": "seriousjelly/laravel-draftable",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seriousjelly/laravel-draftable.git",
+                "reference": "8df8b28e6e57e5db03a8faff37b21d4606721ef1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seriousjelly/laravel-draftable/zipball/8df8b28e6e57e5db03a8faff37b21d4606721ef1",
+                "reference": "8df8b28e6e57e5db03a8faff37b21d4606721ef1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Seriousjelly\\Draftable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Bratherton",
+                    "email": "chris@seriousjelly.com"
+                }
+            ],
+            "description": "A Eloquent Draftable trait for Laravel",
+            "homepage": "http://www.seriousjelly.com",
+            "keywords": [
+                "draftable",
+                "drafts",
+                "eloquent",
+                "laravel",
+                "live",
+                "status"
+            ],
+            "time": "2015-11-08 11:34:57"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4645,7 +4695,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "seriousjelly/laravel-draftable": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
