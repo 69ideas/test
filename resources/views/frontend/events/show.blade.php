@@ -49,16 +49,13 @@
                                         Not set @endif</p>
                             </div>
                             <div class="form-group">
-                                Allow Anonymous? @if( $event->allow_anonymous)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
                             </div>
                             <div class="form-group">
-                                Fee taken out of Total? @if( $event->vxp_fees)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
                             </div>
                             <div class="form-group">
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else <label> No  </label> @endif
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -81,7 +78,7 @@
                                 <p class="form-control-static">{{$event->needable_sum}}</p>
                             </div>
                             <div class="form-group">
-                                @if(isset($event->image))
+                                @if($event->image!='')
                                     <img src="/{{$event->image}}" style="width: 100%"/>
                                 @else
                                     <img src="/images/no-image.png" style="width: 100%"/>

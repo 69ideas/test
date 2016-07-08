@@ -33,6 +33,10 @@ class Events extends Controller
         $page_title = 'Adding Event';
         $event = new Event();
         $submit_text = "Add Event";
+        $event->allow_anonymous=true;
+        $event->vxp_fees=true;
+        $event->cc_fees=false;
+
 
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
@@ -57,10 +61,10 @@ class Events extends Controller
             $event->vxp_fees=0;
         }
         if ($request->get('cc_fees')==null){
-            $event->vxp_fees=0;
+            $event->cc_fees=0;
         }
         if ($request->get('allow_anonymous')==null){
-            $event->vxp_fees=0;
+            $event->allow_anonymous=0;
         }
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
@@ -73,7 +77,7 @@ class Events extends Controller
                 ->subject($event->short_description);
         });
 
-        return redirect()->route('event.show',$event)->with('success_message', 'Event was added');
+        return redirect()->route('event.show',$event)->with('success_message', 'An email invitation was sent to your email that you can send to your participants');
     }
     public function edit(Event $event){
         $page_title = 'Editing Event';

@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="form-group">
-                            @if (isset($event->vxp_fees))
+                            @if (isset($event->needable_sum))
                                 <label>Enter Amount per Participant</label>
                                 <p class="form-control-static">{{$event->needable_sum}}</p>
                             @else
@@ -85,9 +85,8 @@
                             {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
                         <div class="form-group">
-                            @if (isset($event->allow_anonymous))
-                                Allow Anonymous? @if( $event->allow_anonymous)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                            @if (isset($event->start_date))
+                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
                             @else
                                 {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
                                 <small
@@ -100,11 +99,10 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            @if (isset($event->vxp_fees))
-                                Fee taken out of Total? @if( $event->vxp_fees)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                            @if (isset($event->start_date))
+                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
                             @else
-                                {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?
+                                {!!  Form::checkbox('vxp_fees',true,true) !!} Event Fee taken out of Total?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -115,9 +113,8 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            @if (isset($event->cc_fees))
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)  <i
-                                        class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif
+                            @if (isset($event->start_date))
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)    <label> Yes </label>@else <label> No  </label> @endif
                             @else
                                 {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
                                 <small
