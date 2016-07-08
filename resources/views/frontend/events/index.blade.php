@@ -40,8 +40,11 @@
 
                             </th>
                             <th>Short Description</th>
-                            <th>Deadline</th>
-                            <th>Allow Anonymous?</th>
+                            <th>Total Collected</th>
+                            <th>Total Contributed by user </th>
+                            <th>Start Date</th>
+                            <th>Close Date</th>
+                            <th>Total Contributed by user </th>
                             <th>Action</th>
                         </tr>
                         @forelse($events as $event)
@@ -58,13 +61,6 @@
                                 <td>@if( $event->allow_anonymous)  <i
                                             class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                                 <td>
-                                    <a href="{{ route('event.show', $event) }}"
-                                       class="btn btn-xs btn-success"
-                                       data-toggle="tooltip" data-placement="top"
-                                       title="Show&Add Participant"
-                                    >
-                                        <i class="fa fa-desktop"></i>
-                                    </a>
                                     <a href="{{ route('event.edit', $event) }}"
                                        class="btn btn-xs btn-primary"
                                        data-toggle="tooltip" data-placement="top"

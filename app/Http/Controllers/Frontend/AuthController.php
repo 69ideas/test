@@ -124,12 +124,17 @@ class AuthController extends Controller
         $device->hash = null;
         $device->confirmed = true;
         $device->save();
-        return redirect()->route('event.index');
+        return redirect()->route('profile');
     }
 
     public function success()
     {
-        $text = ' You are successfully registered. Please, check your email and confirm your location';
+        $text = 'Thank you for registering with VaultXIT.com.  
+        A confirmation email was sent to you containing a link that will activate your account.  
+        Once activated, you can enter your profile information and create an event.  
+        Couldn’t be any easier.  
+        If for some reason you do not get the email, it probably means you entered the wrong email address,
+        so simply re-register and make sure the correct email address was entered.';
         return view('frontend.success_registration', compact('text'));
     }
 

@@ -84,38 +84,6 @@
                             </label>
                             {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
-
-                        <div class="form-group">
-                            <label>Image</label>
-                            {!! Form::file('image') !!}
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Short Description
-                                <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="In this area you enter up to 100 characters that explains to your participants the purpose of the event."
-                                >
-                                    <i class="fa fa-info-circle"></i>
-                                </small>
-                            </label>
-                            {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
-                        </div>
-                        <div class="form-group">
-                            <label>Description
-                                <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Fully describe your Event"
-                                >
-                                    <i class="fa fa-info-circle"></i>
-                                </small>
-                            </label>
-                            {!! Form::textarea('description', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Description']) !!}
-                        </div>
                         <div class="form-group">
                             @if (isset($event->allow_anonymous))
                                 Allow Anonymous? @if( $event->allow_anonymous)  <i
@@ -160,6 +128,38 @@
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                             @endif
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Short Description
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="In this area you enter up to 25 characters that explains to your participants the purpose of the event."
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+                            </label>
+                            {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Description
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Fully describe your Event"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+                            </label>
+                            {!! Form::textarea('description', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Description']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            {!! Form::file('image') !!}
                         </div>
 
                     </div>

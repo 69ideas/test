@@ -6,7 +6,7 @@
     @include('frontend.partials.header')
     <div class="login-box">
         <div class="login-logo">
-            <a href="#">Vault-X. Register</a>
+            <a href="/"> <img  src="/images/logo.png"/></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
