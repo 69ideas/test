@@ -52,7 +52,7 @@ class Participant extends Model
 
     public function  getCommissionAttribute()
     {
-        return (0.15 + (0.25 + 0.035 * $this->amount_deposited)) * (!$this->is_hands_payment);
+        return (0.15 + (0.032 * $this->amount_deposited)) * (!$this->is_hands_payment);
     }
 
     public function  getTotalAttribute()
