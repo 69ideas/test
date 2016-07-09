@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-xs-4" style="text-align: center">
-            @if(!$event->closed_date)
+            @if(!$event->is_close)
             @if(!$event->allow_anonymous && \Auth::user() || $event->allow_anonymous)
             <a href="{{route('payment',[$event])}}" class="make-payment">Make Payment</a>
             @else
