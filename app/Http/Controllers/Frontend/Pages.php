@@ -25,11 +25,14 @@ class Pages extends Controller
 
     public function page(Request $request, $url)
     {
+        if (!\Auth::user()->filled){
+            \Auth::logout();
+        }
         $page = Page::where('seo_url', $url)->firstOrFail();
 
         $actions = [
             'faq' => 'faq',
-            'find event' => 'findind_event',
+            'find event' => 'finding_event',
             'secure' => 'home',
             'blog' => 'blog'
         ];
@@ -37,7 +40,6 @@ class Pages extends Controller
         if (isset($actions[$page->hidden_name])) {
             return call_user_func([$this, $actions[$page->hidden_name]], $page, $request, $url);
         }
-
         return view('frontend.page', compact('page'));
     }
 
@@ -101,6 +103,9 @@ class Pages extends Controller
 
     public function find()
     {
+        if (!\Auth::user()->filled){
+            \Auth::logout();
+        }
         $page=Page::where('hidden_name','find')->first();
         return view('frontend.finding_event',compact('page'));
     }

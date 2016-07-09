@@ -23,6 +23,7 @@ class Users extends Controller
             'state',
             'zip_code',
             'email'));
+        $user->filled=true;
         if ($request->get('password')!=null){
             $user->password=$request->get('password');
         }

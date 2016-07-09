@@ -63,7 +63,12 @@ class AuthController extends Controller
                         ->with('error_message', 'Please, activate your account');
                 }
             }
-            return redirect()->route('event.index');
+            if (\Auth::user()->filled){
+                return redirect()->route('event.index');
+            }
+            else{
+                return redirect()->route('profile');
+            }
         }
 
         return redirect()
@@ -124,7 +129,13 @@ class AuthController extends Controller
         $device->hash = null;
         $device->confirmed = true;
         $device->save();
-        return redirect()->route('profile');
+        if (\Auth::user()->filled){
+            return redirect()->route('event.index');
+        }
+        else{
+            return redirect()->route('profile');
+        }
+
     }
 
     public function success()
