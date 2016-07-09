@@ -42,21 +42,34 @@ class Participant extends Model
 
     public function  getVaultXCollectedAttribute()
     {
-        return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_payment;
+        //return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_payment;
+        return 0.15;
     }
 
     public function  getCoordinatorCollectedAttribute()
     {
-        return ($this->amount_deposited - $this->cc_fees * $this->commission ) * $this->is_hands_payment;
+       $event=Event::where('id',$this->participantable_id)->first();
+
+        $amount=$this->amount_deposited;
+        if ($event->vxp_fees) {
+            $amount -= 0.15;
+        }
+
+        if ($event->cc_fees) {
+            $amount *= (1 - 0.032);
+        }
+        return $amount;
+        //return ($this->amount_deposited - $this->commission );
+
     }
 
     public function  getCommissionAttribute()
     {
-        return (0.15 + (0.032 * $this->amount_deposited)) * (!$this->is_hands_payment);
+        return (0.032 * $this->amount_deposited);
     }
 
     public function  getTotalAttribute()
     {
-        return $this->vault_x_collected + $this->coordinator_collected + $this->commission;
+        return $this->amount_deposited;
     }
 }

@@ -115,7 +115,7 @@ class Event extends Model implements SluggableInterface
     }
     public function getCurrentUserCollectedAttribute(){
         $total=0;
-       foreach ($this->participants()->get() as $participant){
+       foreach ($this->participants()->where('user_id',\Auth::user()->id)->get() as $participant){
            $total=$total+$participant->amount_deposited;
        };
         return $total;
