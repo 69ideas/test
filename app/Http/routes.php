@@ -32,6 +32,8 @@ Route::get('reset/{url}', ['as' => 'reset', 'uses' => 'Frontend\AuthController@r
 Route::get('event_created/{event}', ['as' => 'event.created', 'uses' => 'Frontend\Events@event_created']);
 Route::post('reset', ['as' => 'reset.post', 'uses' => 'Frontend\AuthController@reset_post']);
 Route::post('forgot', ['as' => 'forgot.post', 'uses' => 'Frontend\AuthController@forgot']);
+Route::get('find', ['as' => 'find', 'uses' => 'Frontend\Pages@find']);
+Route::post('find', ['as' => 'find.post', 'uses' => 'Frontend\Pages@post_find']);
 
 
 Route::group(["middleware" => ['auth']], function () {

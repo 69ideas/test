@@ -14,13 +14,6 @@
         @endif
     </div>
     <div class="row">
-        @if ($event->is_close)
-            <div class="col-sm-12">
-                <h1><span class="label label-danger">CLOSED</span></h1>
-            </div>
-        @endif
-    </div>
-    <div class="row">
         &nbsp;
     </div>
     <div class="row">

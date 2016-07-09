@@ -88,7 +88,7 @@ class Event extends Model implements SluggableInterface
 
     public function getIsCloseAttribute()
     {
-        return $this->deadline < new Carbon();
+        return $this->closed_date >  new Carbon();
     }
 
 
@@ -112,6 +112,13 @@ class Event extends Model implements SluggableInterface
     {
         return $this->participants->sum('total');
 
+    }
+    public function getCurrentUserCollectedAttribute(){
+        $total=0;
+       foreach ($this->participants()->get() as $participant){
+           $total=$total+$participant->amount_deposited;
+       };
+        return $total;
     }
 
 }

@@ -49,6 +49,9 @@ class PayReceipt extends Controller
         $participant->deposit_type = 'Paypal';
         $participant->deposit_date = Carbon::now();
         $participant = $participant->payment()->associate($payment);
+        if (\Auth::user()){
+            $participant->user_id=\Auth::user()->id;
+        }
         $participant->save();
         $participant->amount_deposited =  $payment->amount_with_fees;
         $participant->save();

@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h3>{{$event->short_description}}</h3>
+            <h3>Event# @if (isset($event->event_number)) {{$event->event_number}} @else {{$event->id}} @endif  {{$event->short_description}}</h3>
             <h4 style="text-align: right">Coordinator: {{$event->user->full_name}} </h4>
             <h5 style="text-align: right">Coordinar's Email:   {{$event->user->email}}</h5>
             <hr>
@@ -32,10 +32,12 @@
         </div>
 
         <div class="col-xs-4" style="text-align: center">
+            @if(!$event->closed_date)
             @if(!$event->allow_anonymous && \Auth::user() || $event->allow_anonymous)
             <a href="{{route('payment',[$event])}}" class="make-payment">Make Payment</a>
             @else
                 <a href="{{route('login')}}">Please Sign in to do payment</a>
+            @endif
             @endif
         </div>
 

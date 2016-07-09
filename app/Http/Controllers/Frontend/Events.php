@@ -24,7 +24,7 @@ class Events extends Controller
         view()->share('page', null);
     }
     public function index(){
-        $events = \App\Event::where('user_id',\Auth::user()->id)->orderBy('created_at', 'DESC')
+        $events = \App\Event::orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.frontend.events', 15));
         $page_title = 'Events';
         return view('frontend.events.index',compact('events','page_title'));

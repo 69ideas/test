@@ -27,6 +27,12 @@ class ManageUser extends Request
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'username' => 'required|max:255',
+            'phone' => 'required',
+            'address_1' => 'required',
+            'address_2' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required',
             'email' => 'email|required',
             'password' => 'min:8|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/',
         ];

@@ -18,7 +18,7 @@
             <div class="row">
 
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Reset</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat" style="background: #49658A;">Reset</button>
                 </div>
             </div>
             {!! Form::close() !!}

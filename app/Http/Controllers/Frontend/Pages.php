@@ -18,7 +18,7 @@ class Pages extends Controller
     {
         //$events = Event::where('is_show', 1)->get();
         $active = 'active';
-        $photos=Photo::orderBy('sort_order')->get();
+        $photos = Photo::orderBy('sort_order')->get();
         $page = Page::where('hidden_name', 'home')->first();
         return view('frontend.home', compact('photos', 'active', 'page'));
     }
@@ -29,9 +29,9 @@ class Pages extends Controller
 
         $actions = [
             'faq' => 'faq',
-            'find event' => 'find_event',
-            'secure'=>'home',
-            'blog'=>'blog'
+            'find event' => 'findind_event',
+            'secure' => 'home',
+            'blog' => 'blog'
         ];
 
         if (isset($actions[$page->hidden_name])) {
@@ -63,30 +63,54 @@ class Pages extends Controller
         $next = Event::orderBy('created_at', 'asc')->where('created_at', '>', $event->created_at)->first();
         return view('frontend.event', compact('event', 'prev', 'next', 'page'));
     }
-    public function blog($page, Request $request, $url){
-        $articles=Article::orderBy('created_at', 'DESC')
+
+    public function blog($page, Request $request, $url)
+    {
+        $articles = Article::orderBy('created_at', 'DESC')
             ->paginate(\Config::get('pagination.frontend.articles', 15));
-        return view('frontend.blog', compact('page','articles'));
+        return view('frontend.blog', compact('page', 'articles'));
     }
-    public function article ($slug){
+
+    public function article($slug)
+    {
         $article = Article::findBySlug($slug);
         $page = null;
         $prev = Article::orderBy('created_at', 'decs')->where('created_at', '<', $article->created_at)->first();
         $next = Article::orderBy('created_at', 'asc')->where('created_at', '>', $article->created_at)->first();
         return view('frontend.article', compact('article', 'prev', 'next', 'page'));
     }
+
     public function open_payment(Event $event)
     {
         $page_title = 'Make Payment';
-        $page=null;
+        $page = null;
         return [
             'error_code' => 0,
             'title' => 'Make Payment',
-            'content' => view('frontend.payment', compact('page','page_title','event'))->render()
+            'content' => view('frontend.payment', compact('page', 'page_title', 'event'))->render()
         ];
     }
-    public function payment(Request $request){
-       return redirect()->back();
+
+    public function payment(Request $request)
+    {
+        return redirect()->back();
+    }
+    public function finding_event($page, Request $request, $url){
+        return redirect()->route('find',compact('page'));
     }
 
+    public function find()
+    {
+        $page=Page::where('hidden_name','find')->first();
+        return view('frontend.finding_event',compact('page'));
+    }
+   public function post_find(Request $request){
+       $event=Event::where('event_number',$request->get('event_number'))->where('event_code',$request->get('event_code'))->first();
+       if ($event==null){
+           return redirect()->route('find')->with('error_message','Event not found');
+       }
+       else{
+           return redirect()->route('show.event',compact('event'));
+       }
+   }
 }
