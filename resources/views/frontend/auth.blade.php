@@ -6,7 +6,7 @@
     @include('frontend.partials.header')
     <div class="login-box">
         <div class="login-logo">
-            <a href="/">Vault-X. Login</a>
+            <a href="/"> <img  src="/images/logo.png"/></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -34,8 +34,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-8">
-                    <a href="/register">Registration</a> <br>
+                <div class="col-xs-6">
+                    <a href="/register">Registration</a>
+                    </div>
+                <div class="col-xs-6" style="text-align: right">
                     <a href="{{route('forgot')}}">Forgot password</a>
                 </div>
             </div>

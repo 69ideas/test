@@ -7,7 +7,7 @@
     height: 5px;">
     @foreach($articles as $article)
         <h2>{{$article->title}}</h2>
-        <small class="text-muted">{{$article->created_at->format('h:m m/d/y')}}</small>
+        <small class="text-muted">{{$article->created_at->format('m/d/Y')}}</small>
         <hr>
         {!! $article->media_object !!}<br>
         {{ $article->large_annotation }}

@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>{{$article->title}}</h3>
-                <small class="text-muted">{{$article->created_at->format('h:m m/d/y')}}</small>
+                <small class="text-muted">{{$article->created_at->format('m/d/Y')}}</small>
                 <hr>
                 <div class="form-group">
                     {!! $article->text !!}
