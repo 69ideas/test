@@ -25,8 +25,10 @@ class Pages extends Controller
 
     public function page(Request $request, $url)
     {
-        if (!\Auth::user()->filled){
-            \Auth::logout();
+        if (\Auth::user()) {
+            if (!\Auth::user()->filled) {
+                \Auth::logout();
+            }
         }
         $page = Page::where('seo_url', $url)->firstOrFail();
 
@@ -97,25 +99,32 @@ class Pages extends Controller
     {
         return redirect()->back();
     }
-    public function finding_event($page, Request $request, $url){
-        return redirect()->route('find',compact('page'));
+
+    public function finding_event($page, Request $request, $url)
+    {
+        return redirect()->route('find', compact('page'));
     }
 
     public function find()
     {
-        if (!\Auth::user()->filled){
-            \Auth::logout();
+        if (\Auth::user()) {
+            if (!\Auth::user()->filled) {
+                \Auth::logout();
+            }
         }
-        $page=Page::where('hidden_name','find')->first();
-        return view('frontend.finding_event',compact('page'));
+            $page = Page::where('hidden_name', 'find')->first();
+            return view('frontend.finding_event', compact('page'));
+
     }
-   public function post_find(Request $request){
-       $event=Event::where('event_number',$request->get('event_number'))->where('event_code',$request->get('event_code'))->first();
-       if ($event==null){
-           return redirect()->route('find')->with('error_message','Event not found');
-       }
-       else{
-           return redirect()->route('show.event',compact('event'));
-       }
-   }
+
+    public function post_find(Request $request)
+    {
+        $event = Event::where('event_number', $request->get('event_number'))->where('event_code',
+            $request->get('event_code'))->first();
+        if ($event == null) {
+            return redirect()->route('find')->with('error_message', 'Event not found');
+        } else {
+            return redirect()->route('show.event', compact('event'));
+        }
+    }
 }
