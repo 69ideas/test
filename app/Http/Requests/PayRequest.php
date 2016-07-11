@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ManageEvent extends Request
+class PayRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,10 @@ class ManageEvent extends Request
      * @return array
      */
     public function rules()
-    {
-        return [
-            'short_description' => 'required|max:25',
-            'start_date' => 'required',
-            'deadline' => 'required',
-            'paypal_email' => 'email|required',
-        ];
+    { return [
+        'name' => 'required|max:255',
+        'amount' => 'required',
+        'email' => 'email|required|confirmed',
+    ];
     }
 }

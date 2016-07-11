@@ -85,6 +85,18 @@
                             {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
                         <div class="form-group">
+                            <label>PayPal Email
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Enter your PayPal account's email"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+                            </label>
+                            {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
+                        </div>
+                        <div class="form-group">
                             @if (isset($event->start_date))
                                 Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
                             @else

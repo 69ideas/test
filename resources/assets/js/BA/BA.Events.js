@@ -233,18 +233,27 @@ BA.Events = {
             })
         }
         else {
-            $.get('/payment_name?related=' + $(this).val(), null, function (data) {
                 $('#data_holder').html('');
-            })
         }
     },
     RelatedPayment: function (e) {
         if(BA.Bindings.CurrentAmountRequest != null)
             BA.Bindings.CurrentAmountRequest.abort();
-        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $(this).data('event') + '&amount=' + $(this).val(), null, function (data) {
+        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amount=' + $('#amount').val() + '&amount_2=' + $('#amount_2').val(), null, function (data) {
             $('#total_payment').html(data);
             BA.Bindings.CurrentAmountRequest = null;
         })
+    },
+    AnotherEntry: function (e) {
+        $('#another_entry').html('');
+
+        if ($(this).is(':checked')) {
+            $.get('/another_entry?related=' + $(this).val(), null, function (data) {
+                var content = $(data);
+                BA.Actions.init(content);
+                $('#another_entry').append(content);
+            })
+        }
     }
 
 };

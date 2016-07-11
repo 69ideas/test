@@ -87,6 +87,10 @@
                         <div class="form-group">
                             {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
                         </div>
+                        <div class="form-group">
+                            <label>Enter PayPal account</label>
+                        {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
+                        </div>
                     </div>
                 </div>
             </div>

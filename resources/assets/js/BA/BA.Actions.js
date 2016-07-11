@@ -19,6 +19,8 @@ BA.Actions = {
         $('.related-payment', context).keyup(BA.Events.RelatedPayment);
         $('.related-payment', context).keyup();
 
+        $('.another_entry', context).change(BA.Events.AnotherEntry);
+
 
         console.log($('.datepicker',context));
         $('.datepicker',context).datepicker({

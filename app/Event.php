@@ -50,6 +50,7 @@ class Event extends Model implements SluggableInterface
         'start_date',
         'short_description',
         'allow_anonymous',
+        'paypal_email'
     ];
 
     public function user()

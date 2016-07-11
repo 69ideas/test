@@ -15,15 +15,14 @@ class Payment extends Model
     {
 
         $event = $this->participant->participantable;
-        $amount = $this->amount;
+        $amount = $this->amount+$this->amount_2;
 
         return static::CountWithFee($amount, $event);
     }
 
     public static function CountWithFee($amount, $event)
     {
-
-
+     
         if ($event->vxp_fees) {
             $amount += 0.15;
         }

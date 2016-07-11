@@ -27,6 +27,7 @@ Route::post('/payment/{event}', ['as' => 'post.payment', 'uses' => 'PayReceipt@d
 Route::get('error', ['as' => 'error', 'uses' => 'Frontend\Pages@home']);
 Route::get('success1', ['as' => 'success1', 'uses' => 'Frontend\Pages@home']);
 Route::get('payment_total', ['as' => 'payment_total', 'uses' => 'PayReceipt@payment_total']);
+Route::get('another_entry', ['as' => 'another_entry', 'uses' => 'PayReceipt@another_entry']);
 Route::get('forgot', ['as' => 'forgot', 'uses' => 'Frontend\AuthController@open_forgot']);
 Route::get('reset/{url}', ['as' => 'reset', 'uses' => 'Frontend\AuthController@reset']);
 Route::get('event_created/{event}', ['as' => 'event.created', 'uses' => 'Frontend\Events@event_created']);
