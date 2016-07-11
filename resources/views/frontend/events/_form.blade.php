@@ -94,7 +94,11 @@
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                             </label>
+                            @if (isset($event->paypal_email))
+                                <br><p class="form-control-static">{{$event->paypal_email}}</p>
+                            @else
                             {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
+                            @endif
                         </div>
                         <div class="form-group">
                             @if (isset($event->start_date))

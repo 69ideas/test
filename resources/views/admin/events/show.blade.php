@@ -92,6 +92,10 @@
                                 <label>Description</label>
                                 <p class="form-control-static">{!!  $event->description!!}</p>
                             </div>
+                            <div class="form-group">
+                                <label>PayPal E-mail</label>
+                                <p class="form-control-static">{{$event->paypal_email}}</p>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">

@@ -60,7 +60,8 @@ class Events extends Controller
             'vxp_fees',
             'cc_fees',
             'number_participants',
-            'allow_anonymous'));
+            'allow_anonymous',
+            'paypal_email'));
         $event->save();
         $event->replace_image('image', 'image', $request, $event->id);
         $event->save();
@@ -108,7 +109,8 @@ class Events extends Controller
             'start_date',
             'short_description',
             'needable_sum',
-            'allow_anonymous'));
+            'allow_anonymous',
+            'paypal_email'));
         $event->save();
             $event->replace_image('image', 'image', $request, $event->id);
         $event->save();

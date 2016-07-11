@@ -62,6 +62,10 @@
                             <div class="form-group">
                                 Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else <label> No  </label> @endif
                             </div>
+                            <div class="form-group">
+                                <label>PayPal E-mail</label>
+                                <p class="form-control-static">{{$event->paypal_email}}</p>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">

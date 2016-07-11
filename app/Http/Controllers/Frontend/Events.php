@@ -40,7 +40,11 @@ class Events extends Controller
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){
-        $event = new Event();;
+        $event = new Event();
+        $this->validate($request, [
+            'needable_sum' => 'required',
+            'paypal_email' => 'email|required',
+        ]);
         $event->fill($request->only(
             'vxp_fees',
             'cc_fees',
@@ -50,11 +54,8 @@ class Events extends Controller
             'start_date',
             'needable_sum',
             'short_description',
-            'allow_anonymous'));
-        $this->validate($request, [
-            'needable_sum' => 'required',
-        ]);
-
+            'allow_anonymous',
+            'paypal_email'));
         do{
             $str = str_random(10);
             $str = strtoupper($str);

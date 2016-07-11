@@ -27,7 +27,6 @@ class ManageEvent extends Request
             'short_description' => 'required|max:25',
             'start_date' => 'required',
             'deadline' => 'required',
-            'paypal_email' => 'email|required',
         ];
     }
 }
