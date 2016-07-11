@@ -45,15 +45,27 @@ class PayReceipt extends Controller
 
         $participant = new Participant();
         $participant->name = $request->get('name');
-        $participant->participantable()->associate($event) ;
+        $participant->participantable()->associate($event);
         $participant->deposit_type = 'Paypal';
         $participant->deposit_date = Carbon::now();
         $participant = $participant->payment()->associate($payment);
-        if (\Auth::user()){
-            $participant->user_id=\Auth::user()->id;
+        if (\Auth::user()) {
+            $participant->user_id = \Auth::user()->id;
         }
         $participant->save();
-        $participant->amount_deposited =  $payment->amount_with_fees;
+        $participant->amount_deposited = $payment->amount_with_fees;
+        $participant->vxp_fees = 0.15;
+        $participant->cc_fees = 0.032*$payment->amount;
+        if ($event->vxp_fees && $event->cc_fees) {
+            $participant->coordinator_collected = $payment->amount;
+        } elseif ($event->vxp_fees && !$event->cc_fees) {
+            $participant->coordinator_collected = $payment->amount - $participant->cc_fees;
+        } elseif (!$event->vxp_fees && $event->cc_fees) {
+            $participant->coordinator_collected = $payment->amount - $participant->vxp_fees;
+        } elseif ($event->vxp_fees && $event->cc_fees) {
+            $participant->coordinator_collected = $payment->amount - $participant->vxp_fees - $participant->cc_fees;
+        }
+
         $participant->save();
 
         $receiver1 = new Receiver();
@@ -80,9 +92,6 @@ class PayReceipt extends Controller
         $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('ECHECK');
         $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('BALANCE');
         $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
-
-
-
 
 
         $service = new AdaptivePaymentsService(); //это был семпл... тут это не применимо :(
@@ -115,10 +124,12 @@ class PayReceipt extends Controller
         }
         return "";
     }
-    public function payment_total(Request $request){
+
+    public function payment_total(Request $request)
+    {
         $event = Event::find($request->get('event'));
-        $total = Payment::CountWithFee($request->get('amount'), $event) ;
-        return view('frontend.total_payment',compact('total'));
+        $total = Payment::CountWithFee($request->get('amount'), $event);
+        return view('frontend.total_payment', compact('total'));
     }
 
 }

@@ -46,7 +46,7 @@ class Participant extends Model
         return 0.15;
     }
 
-    public function  getCoordinatorCollectedAttribute()
+   /* public function  getCoordinatorCollectedAttribute()
     {
        $event=Event::where('id',$this->participantable_id)->first();
 
@@ -61,7 +61,7 @@ class Participant extends Model
         return $amount;
         //return ($this->amount_deposited - $this->commission );
 
-    }
+    }*/
 
     public function  getCommissionAttribute()
     {

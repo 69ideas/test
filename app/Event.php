@@ -94,7 +94,7 @@ class Event extends Model implements SluggableInterface
 
     public function getVaultXCollectedAttribute()
     {
-        return $this->participants->sum('vault_x_collected');
+        return $this->participants->sum('vxp_fees');
     }
 
     public function getCoordinatorCollectedAttribute()
@@ -104,13 +104,13 @@ class Event extends Model implements SluggableInterface
 
     public function getCommissionAttribute()
     {
-        return $this->participants->sum('commission');
+        return $this->participants->sum('cc_fees');
 
     }
 
     public function getTotalAttribute()
     {
-        return $this->participants->sum('total');
+        return $this->participants->sum('amount_deposited');
 
     }
     public function getCurrentUserCollectedAttribute(){
