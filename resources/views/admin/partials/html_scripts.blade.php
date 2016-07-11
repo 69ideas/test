@@ -12,10 +12,27 @@
 
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="//cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
+<script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 <script src="/tinymce/plugins/responsivefilemanager/plugin.min.js" type="text/javascript"></script>
 <script src="/js/admin.js" type="text/javascript"></script>
-<script src="/js/vue-admin.js" type="text/javascript"></script>
 <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/js/vue-admin.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        $(".bars").click(function(){
+            $("nav ul").toggle();
+        });
+
+    $('.searchable').each(function(){
+        if($(this).find('tbody tr:not(.bg-info)').length > 0)
+            $(this).DataTable();
+    });
+    });
+</script>
 
 

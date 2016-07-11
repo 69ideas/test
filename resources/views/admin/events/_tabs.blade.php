@@ -6,7 +6,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="participant">
-                    @include('admin.participants._tab',['entity'=>$event,'module'=>'Event'])
+                    @include('frontend.events.participants._tab',['entity'=>$event,'module'=>'Event'])
                 </div>
             </div>
         </div>
