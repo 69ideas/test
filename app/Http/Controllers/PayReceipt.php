@@ -55,14 +55,14 @@ class PayReceipt extends Controller
         $participant->save();
         $participant->amount_deposited = $payment->amount_with_fees;
         $participant->vxp_fees = 0.15;
-        $participant->cc_fees = 0.032*$payment->amount;
+        $participant->cc_fees = 0.032*$payment->amount_with_fees;
         if ($event->vxp_fees && $event->cc_fees) {
             $participant->coordinator_collected = $payment->amount;
         } elseif ($event->vxp_fees && !$event->cc_fees) {
             $participant->coordinator_collected = $payment->amount - $participant->cc_fees;
         } elseif (!$event->vxp_fees && $event->cc_fees) {
             $participant->coordinator_collected = $payment->amount - $participant->vxp_fees;
-        } elseif ($event->vxp_fees && $event->cc_fees) {
+        } elseif (!$event->vxp_fees && !$event->cc_fees) {
             $participant->coordinator_collected = $payment->amount - $participant->vxp_fees - $participant->cc_fees;
         }
 
