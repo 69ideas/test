@@ -29,7 +29,6 @@ class ManageUser extends Request
             'username' => 'required|max:255',
             'phone' => 'required',
             'address_1' => 'required',
-            'address_2' => 'required',
             'city' => 'required',
             'state' => 'required',
             'zip_code' => 'required',

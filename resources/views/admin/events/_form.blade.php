@@ -79,13 +79,19 @@
                             {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
+                            Allow Anonymous? <br>
+                            {!!  Form::radio('allow_anonymous',true) !!} Yes
+                            {!!  Form::radio('allow_anonymous',false,true) !!} No
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('vxp_fees') !!} Event Fee taken out of Total?
+                            Event Fee taken out of Total?<br>
+                            {!!  Form::radio('vxp_fees',true,true) !!} Yes
+                            {!!  Form::radio('vxp_fees',false) !!} No
                         </div>
                         <div class="form-group">
-                            {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
+                           Credit Card Fees taken out of Total?<br>
+                            {!!  Form::radio('cc_fees',true) !!} Yes
+                            {!!  Form::radio('cc_fees',false,true) !!} No
                         </div>
                         <div class="form-group">
                             <label>Enter PayPal account</label>

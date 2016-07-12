@@ -103,7 +103,9 @@ class Users extends Controller
             'email',
             'password',
             'is_admin'));
+        $user->filled=true;
         $user->save();
+
         return redirect()->route('admin.user.index')->with('success_message', 'User was updated');
     }
 

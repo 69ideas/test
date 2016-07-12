@@ -18,9 +18,9 @@ class Participants extends Controller
         $participant = new Participant();
         $event = Event::find(\Request::get('id'));
         if ($event->allow_anonymous) {
-            $users = [null => '--Not set--'] + User:: orderByName()->get()->pluck('full_name', 'id')->all();
+            $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
         } else {
-            $users = User:: orderByName()->get()->pluck('full_name', 'id')->all();
+            $users = User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
         }
 
         return [

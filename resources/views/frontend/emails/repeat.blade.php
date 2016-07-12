@@ -112,14 +112,12 @@
                                                                                         -->
                                                                                         <h3 mc:edit="header"
                                                                                             style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
-                                                                                            Hello, {{$user->email}}
-                                                                                            ! </h3>
+                                                                                            Hello, @if($user->first_name!=''){{$user->first_name}} @else {{strtoupper($user->email)}} @endif ! </h3>
                                                                                         <div mc:edit="body"
                                                                                              style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
 
-                                                                                            Don't following this link, if you didn't any actions.
-                                                                                            Please, activate your
-                                                                                            account
+                                                                                            We noticed your account was accessed from a different location. 
+                                                                                            If this was you please click on the link below to authorize access.
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -172,7 +170,7 @@
                                                     style="padding-top:15px;padding-bottom:15px;padding-right:15px;padding-left:15px;">
                                                     <a style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;"
                                                        href="{{route('activate',$device->hash)}}"
-                                                       target="_blank">Activate</a>
+                                                       target="_blank">Authorize</a>
                                                 </td>
                                             </tr>
                                         </table>

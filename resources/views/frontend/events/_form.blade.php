@@ -104,7 +104,7 @@
                             @if (isset($event->start_date))
                                 Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
                             @else
-                                {!!  Form::checkbox('allow_anonymous') !!} Allow Anonymous?
+                                Allow Anonymous?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -112,13 +112,16 @@
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
+                                <br>
+                                {!!  Form::radio('allow_anonymous',true) !!} Yes
+                                {!!  Form::radio('allow_anonymous',false,true) !!} No
                             @endif
                         </div>
                         <div class="form-group">
                             @if (isset($event->start_date))
                                 Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
                             @else
-                                {!!  Form::checkbox('vxp_fees',true,true) !!} Event Fee taken out of Total?
+                               Event Fee taken out of Total?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -126,13 +129,16 @@
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
+                                <br>
+                                {!!  Form::radio('vxp_fees',true,true) !!} Yes
+                                {!!  Form::radio('vxp_fees',false) !!} No
                             @endif
                         </div>
                         <div class="form-group">
                             @if (isset($event->start_date))
                                 Credit Card Fees taken out of Total? @if( $event->cc_fees)    <label> Yes </label>@else <label> No  </label> @endif
                             @else
-                                {!!  Form::checkbox('cc_fees') !!} Credit Card Fees taken out of Total?
+                              Credit Card Fees taken out of Total?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -140,6 +146,9 @@
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
+                                <br>
+                                {!!  Form::radio('cc_fees',true) !!} Yes
+                                {!!  Form::radio('cc_fees',false,true) !!} No
                             @endif
                         </div>
 
