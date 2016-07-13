@@ -26,9 +26,10 @@
                                 </div>
                                 @if (isset($event->start_date))
                                     <input type="text" class="form-control pull-right datepicker" name="start_date"
-                                           value="{{$event->start_date->format('m/d/Y')}}">
+                                           value="{{old('start_date')?old('start_date'):$event->start_date->format('m/d/Y')}}">
                                 @else
-                                    <input type="text" class="form-control pull-right datepicker" name="start_date">
+                                    <input type="text" class="form-control pull-right datepicker"
+                                           value="{{old('start_date')}}" name="start_date">
                                 @endif
                             </div>
                         </div>
@@ -48,11 +49,24 @@
                                 </div>
                                 @if (isset($event->deadline))
                                     <input type="text" class="form-control pull-right datepicker" name="deadline"
-                                           value="{{$event->deadline->format('m/d/Y')}}">
+                                           value="{{old('deadline')?old('deadline'):$event->deadline->format('m/d/Y')}}">
                                 @else
-                                    <input type="text" class="form-control pull-right datepicker" name="deadline">
+                                    <input type="text" class="form-control pull-right datepicker"
+                                           value="{{old('deadline')}}" name="deadline">
                                 @endif
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Enter Number of Participants
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Enter the fixed number of participants for your event.  Enter “0” if you don’t want to set a limit"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+                            </label>
+                            {!! Form::text('number_participants', 0, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
 
                         <div class="form-group">
@@ -69,20 +83,17 @@
                                         <i class="fa fa-info-circle"></i>
                                     </small>
                                 </label>
-                                {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
+                                <div class="input-group">
+                                     <span class="input-group-btn">
+                                    <button class="btn btn-primary" style="background: #49658A">
+                                        &nbsp;<i class="fa fa-dollar"></i>&nbsp;</button>
+                                         </button>
+
+                                 </span>
+                                    {!! Form::text('needable_sum', 0, ['placeholder'=>'Enter Number of Participants','class'=>'form-control']) !!}
+
+                                </div>
                             @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Enter Number of Participants
-                                <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Enter the fixed number of participants for your event.  Enter “0” if you don’t want to set a limit"
-                                >
-                                    <i class="fa fa-info-circle"></i>
-                                </small>
-                            </label>
-                            {!! Form::text('number_participants', null, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
                         </div>
                         <div class="form-group">
                             <label>PayPal Email
@@ -97,12 +108,13 @@
                             @if (isset($event->paypal_email))
                                 <br><p class="form-control-static">{{$event->paypal_email}}</p>
                             @else
-                            {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
+                                {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
                             @endif
                         </div>
                         <div class="form-group">
-                            @if (isset($event->start_date))
-                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
+                            @if (isset($event->deadline))
+                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             @else
                                 Allow Anonymous?
                                 <small
@@ -118,10 +130,11 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            @if (isset($event->start_date))
-                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
+                            @if (isset($event->deadline))
+                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             @else
-                               Event Fee taken out of Total?
+                                Event Fee taken out of Total?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -135,10 +148,11 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            @if (isset($event->start_date))
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)    <label> Yes </label>@else <label> No  </label> @endif
+                            @if (isset($event->deadline))
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)    <label> Yes </label>@else
+                                    <label> No </label> @endif
                             @else
-                              Credit Card Fees taken out of Total?
+                                Credit Card Fees taken out of Total?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -165,7 +179,7 @@
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                             </label>
-                            {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description']) !!}
+                            {!! Form::text('short_description', null, ['class'=>'form-control', 'placeholder'=>'Short Description','maxlength'=>'25']) !!}
                         </div>
                         <div class="form-group">
                             <label>Description

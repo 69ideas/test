@@ -8,8 +8,8 @@
             {!! Form::text('event_number', null, ['class'=>'form-control', 'placeholder'=>'Event Number ']) !!}
         </div>
         <div class="form-group">
-            <label>Event Code</label>
-            {!! Form::text('event_code', null, ['class'=>'form-control', 'placeholder'=>'Event Code ']) !!}
+            <label>Event Access Code</label>
+            {!! Form::text('event_code', null, ['class'=>'form-control', 'placeholder'=>'Event Access Code ']) !!}
         </div>
         <div class="row">
             <div class="col-xs-4">

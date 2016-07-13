@@ -32,11 +32,8 @@ class Events extends Controller
     public function create(){
         $page_title = 'Adding Event';
         $event = new Event();
+        $event->start_date=Carbon::now();
         $submit_text = "Add Event";
-        $event->allow_anonymous=true;
-        $event->vxp_fees=true;
-        $event->cc_fees=false;
-
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){

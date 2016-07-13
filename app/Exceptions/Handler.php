@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,6 +46,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if($e instanceof TokenMismatchException)
+        {
+            return back()->withInput(request()->except(['_token']))->with('error_message', 'You was inactive for a while. For security reasons you need to fill form again.');
+        }
+
         return parent::render($request, $e);
     }
 }

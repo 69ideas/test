@@ -15,11 +15,11 @@
             <small
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Enter Paypal E-mail"
+                    title="Enter E-mail"
             >
                 <i class="fa fa-info-circle"></i>
             </small></label>
-        {!! Form::text('email_2', null, ['class'=>'form-control', 'placeholder'=>'Enter Paypal e-mail']) !!}
+        {!! Form::text('email_2', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
     </div>
     <div class="form-group">
         <label>Amount 2

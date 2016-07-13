@@ -43,7 +43,7 @@
                                         <tr>
                                             <td align="center" valign="top" class="textContent">
                                                 <h1 style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;">
-                                                    Hello, {{$user->email}}  </h1>
+                                                    Hello, @if($user->first_name!=''){{$user->first_name}} @else {{strtoupper($user->email)}} @endif  </h1>
                                                 <h2 style="text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#205478;line-height:135%;">
                                                     Event: {{$event->short_description}}</h2>
                                                 <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
@@ -189,7 +189,7 @@
                                                 style="padding-top:15px;padding-bottom:15px;padding-right:15px;padding-left:15px;">
                                                 <a style="color:#FFFFFF;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:135%;"
                                                    href="{{route('event.show',$event)}}"
-                                                   target="_blank">See more</a>
+                                                   target="_blank">Go to the Event</a>
                                             </td>
                                         </tr>
                                     </table>

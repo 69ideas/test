@@ -84,7 +84,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Enter Amount per Participant</label>
-                                <p class="form-control-static">{{$event->needable_sum}}</p>
+                                <p class="form-control-static">@if(!$event->needable_sum){{$event->needable_sum}} @else No limit @endif</p>
                             </div>
                             <div class="form-group">
                                 @if($event->image!='')

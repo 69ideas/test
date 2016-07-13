@@ -42,20 +42,32 @@
         @endif
         </tfoot>
     </table>
-    @if(!$entity->is_close and $entity->user_id==\Auth::user()->id)
+    @if(!$entity->is_close)
         <div class="row">
-            <div class="col-xs-2">
-                <div class="form-group">
-                    <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
-                       class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i> Add
-                        Participant</a>
+            @if ($entity->user_id==\Auth::user()->id)
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i> Add
+                            Participant
+                            <small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Payments made to coordinator in cash"
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @endif
             <div class="col-xs-2">
-                <div class="form-group">
-                    <a href="{{route('payment',[$event])}}"
-                       class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
-                </div>
+                @if(\Auth::user())
+                    <div class="form-group">
+                        <a href="{{route('payment',[$event])}}"
+                           class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
+                    </div>
+                @endif
             </div>
         </div>
     @endif

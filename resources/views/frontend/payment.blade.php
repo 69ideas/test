@@ -8,18 +8,26 @@
         >
             <i class="fa fa-info-circle"></i>
         </small></label>
-    {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+    @if (\Auth::user())
+    {!! Form::text('name', \Auth::user()->full_name, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+        @else
+        {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+    @endif
 </div>
 <div class="form-group">
     <label>E-mail 1
         <small
                 data-toggle="tooltip"
                 data-placement="top"
-                title="Enter Paypal E-mail"
+                title="Enter E-mail"
         >
             <i class="fa fa-info-circle"></i>
         </small></label>
-    {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter Paypal e-mail']) !!}
+    @if (\Auth::user())
+    {!! Form::text('email', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+    @else
+        {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+    @endif
 </div>
 <div class="form-group">
     <label>Re-enter email address
@@ -30,7 +38,11 @@
         >
             <i class="fa fa-info-circle"></i>
         </small></label>
-    {!! Form::text('email_confirmation', null, ['class'=>'form-control', 'placeholder'=>'Repeat Paypal e-mail']) !!}
+    @if (\Auth::user())
+    {!! Form::text('email_confirmation', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+    @else
+        {!! Form::text('email_confirmation', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+    @endif
 </div>
 <div class="form-group">
     <label>Amount 1

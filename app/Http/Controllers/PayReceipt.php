@@ -198,7 +198,12 @@ class PayReceipt extends Controller
     ) {
         $event = Event::find($request->get('event'));
         $total = Payment::CountWithFee($request->get('amount') + $request->get('amount_2'), $event);
-        return view('frontend.total_payment', compact('total'));
+        $total_1=Payment::CountWithFee($request->get('amount'), $event);
+        $cc_fees_1=$total_1*0.032;
+        $cc_fees_2=$total_1*0.032;
+        $cc_fees=$total*0.032;
+        $total_2=Payment::CountWithFee($request->get('amount_2'), $event);
+        return view('frontend.total_payment', compact('total','total_1','total_2','cc_fees_1','cc_fees_2','cc_fees'));
     }
 
     public
