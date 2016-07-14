@@ -23,11 +23,11 @@ class Payment extends Model
     public static function CountWithFee($amount, $event)
     {
      
-        if ($event->vxp_fees) {
+        if (!$event->vxp_fees) {
             $amount += 0.15;
         }
 
-        if ($event->cc_fees) {
+        if (!$event->cc_fees) {
             $amount /= (1 - 0.032);
         }
 

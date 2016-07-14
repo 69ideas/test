@@ -61,13 +61,13 @@ class PayReceipt extends Controller
             $participant->amount_deposited = $payment->amount_with_fees;
             $participant->vxp_fees = 0.15;
             $participant->cc_fees = 0.032 * $payment->amount_with_fees;
-            if ($event->vxp_fees && $event->cc_fees) {
+            if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $payment->amount;
-            } elseif ($event->vxp_fees && !$event->cc_fees) {
-                $participant->coordinator_collected = $payment->amount - $participant->cc_fees;
             } elseif (!$event->vxp_fees && $event->cc_fees) {
+                $participant->coordinator_collected = $payment->amount - $participant->cc_fees;
+            } elseif ($event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $payment->amount - $participant->vxp_fees;
-            } elseif (!$event->vxp_fees && !$event->cc_fees) {
+            } elseif ($event->vxp_fees && $event->cc_fees) {
                 $participant->coordinator_collected = $payment->amount - $participant->vxp_fees - $participant->cc_fees;
             }
             $participant->save();
@@ -89,15 +89,15 @@ class PayReceipt extends Controller
             $participant = $participant->payment()->associate($payment);
             $participant->save();
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
-            $participant->vxp_fees = 0.15;
+            $participant->vxp_fees = 0.3;
             $participant->cc_fees = 0.032 * $participant->amount_deposited;
-            if ($event->vxp_fees && $event->cc_fees) {
+            if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount');
-            } elseif ($event->vxp_fees && !$event->cc_fees) {
-                $participant->coordinator_collected = $request->get('amount') - $participant->cc_fees;
             } elseif (!$event->vxp_fees && $event->cc_fees) {
+                $participant->coordinator_collected = $request->get('amount') - $participant->cc_fees;
+            } elseif ($event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount') - $participant->vxp_fees;
-            } elseif (!$event->vxp_fees && !$event->cc_fees) {
+            } elseif ($event->vxp_fees && $event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount') - $participant->vxp_fees - $participant->cc_fees;
             }
             $participant->save();
@@ -120,13 +120,13 @@ class PayReceipt extends Controller
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount_2'), $event);
             $participant->vxp_fees = 0.15;
             $participant->cc_fees = 0.032 * $participant->amount_deposited;
-            if ($event->vxp_fees && $event->cc_fees) {
+            if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount_2');
-            } elseif ($event->vxp_fees && !$event->cc_fees) {
-                $participant->coordinator_collected = $request->get('amount_2') - $participant->cc_fees;
             } elseif (!$event->vxp_fees && $event->cc_fees) {
+                $participant->coordinator_collected = $request->get('amount_2') - $participant->cc_fees;
+            } elseif ($event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount_2') - $participant->vxp_fees;
-            } elseif (!$event->vxp_fees && !$event->cc_fees) {
+            } elseif ($event->vxp_fees && $event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount_2') - $participant->vxp_fees - $participant->cc_fees;
             }
             $participant->save();
@@ -197,13 +197,36 @@ class PayReceipt extends Controller
         Request $request
     ) {
         $event = Event::find($request->get('event'));
-        $total = Payment::CountWithFee($request->get('amount') + $request->get('amount_2'), $event);
         $total_1=Payment::CountWithFee($request->get('amount'), $event);
-        $cc_fees_1=$total_1*0.032;
-        $cc_fees_2=$total_1*0.032;
-        $cc_fees=$total*0.032;
         $total_2=Payment::CountWithFee($request->get('amount_2'), $event);
-        return view('frontend.total_payment', compact('total','total_1','total_2','cc_fees_1','cc_fees_2','cc_fees'));
+        $total = $total_1+$total_2;
+        if (!$event->cc_fees){
+            $cc_fees_1=round($total_1*0.032,2);
+            $cc_fees_2=round($total_2*0.032,2);
+        }
+        else {
+            $cc_fees_1=round(0,2);
+            $cc_fees_2=round(0,2);
+        }
+        if (!$event->vxp_fees){
+            $vxp_fees_1=0.15;
+            if($request->get('amount_2')>0){
+                $vxp_fees_2=0.15;
+            } else {
+                $vxp_fees_2=round(0,2);
+            }
+
+        }
+        else {
+            $vxp_fees_1=round(0,2);
+            $vxp_fees_2=round(0,2);
+        }
+        if ($request->get('amount_2')>0){
+            $other=1;
+        } else{
+            $other=0;
+        }
+        return view('frontend.total_payment', compact('other','total','event','total_1','total_2','cc_fees_1','cc_fees_2','vxp_fees_1','vxp_fees_2'));
     }
 
     public

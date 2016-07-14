@@ -69,9 +69,10 @@
 <div id="total_payment">
 
 </div>
+{{Form::hidden('event',$event)}}
 <div class="form-group">
     {!! Form::submit('Pay',['class'=>'btn btn-primary']) !!}
 </div>
-{{Form::hidden('event',$event)}}
+
 {!!  Form::close()!!}
 
