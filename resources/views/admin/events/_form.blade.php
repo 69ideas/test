@@ -57,7 +57,15 @@
                         </div>
                         <div class="form-group">
                             <label>Enter Amount per Participant</label>
-                            {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" style="background: #49658A">
+                                        &nbsp;<i class="fa fa-dollar"></i>&nbsp;</button>
+
+
+                                 </span>
+                                {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
+                            </div>
                         </div>
 
                     </div>
@@ -89,13 +97,13 @@
                             {!!  Form::radio('vxp_fees',false) !!} No
                         </div>
                         <div class="form-group">
-                           Credit Card Fees taken out of Total?<br>
+                            Credit Card Fees taken out of Total?<br>
                             {!!  Form::radio('cc_fees',true) !!} Yes
                             {!!  Form::radio('cc_fees',false,true) !!} No
                         </div>
                         <div class="form-group">
                             <label>Enter PayPal account</label>
-                        {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
+                            {!! Form::email('paypal_email', null, ['class'=>'form-control', 'placeholder'=>'Enter your PayPal account\'s email']) !!}
                         </div>
                     </div>
                 </div>

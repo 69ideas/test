@@ -59,8 +59,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $event->short_description }}</td>
-                                    <td>{{ number_format($event->total, 2) }}</td>
-                                    <td>{{ number_format($event->current_user_collected, 2) }}</td>
+                                    <td>${{ number_format($event->total, 2) }}</td>
+                                    <td>${{ number_format($event->current_user_collected, 2) }}</td>
                                     <td>@if(isset($event->start_date)){{ $event->start_date->format('m/d/Y')}} @endif</td>
                                     <td>@if(isset($event->closed_date)){{ $event->closed_date->format('m/d/Y')}} @else
                                             Open @endif</td>

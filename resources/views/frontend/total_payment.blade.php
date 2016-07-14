@@ -8,6 +8,7 @@
         >
             <i class="fa fa-info-circle"></i>
         </small></label>
-    {!! Form::text('total', $total, ['class'=>'form-control', 'disabled'=>'disabled']) !!}
+
+    {!! Form::text('total', '$'.$total, ['class'=>'form-control', 'disabled'=>'disabled']) !!}
 </div>
 </div>

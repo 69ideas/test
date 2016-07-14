@@ -17,10 +17,10 @@
                 <td>@if (isset($participant->deposit_date)){{$participant->deposit_date->format('m/d/Y')}}@endif</td>
                 <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else {{$participant->name}} @endif</td>
                 <td>{{ $participant->deposit_type }}</td>
-                <td>{{ number_format($participant->vxp_fees, 2) }}</td>
-                <td>{{ number_format($participant->coordinator_collected, 2) }}</td>
-                <td>{{ number_format($participant->cc_fees, 2) }}</td>
-                <td>{{ number_format($participant->amount_deposited, 2) }}</td>
+                <td>${{ number_format($participant->vxp_fees, 2) }}</td>
+                <td>${{ number_format($participant->coordinator_collected, 2) }}</td>
+                <td>${{ number_format($participant->cc_fees, 2) }}</td>
+                <td>${{ number_format($participant->amount_deposited, 2) }}</td>
             </tr>
         @empty
             <tr class="bg-info">
@@ -34,17 +34,17 @@
         @if($entity->participants->count() > 0)
             <tr>
                 <td colspan="3" style="text-align: right">Total:</td>
-                <td>{{ number_format($entity->vault_x_collected, 2) }}</td>
-                <td>{{ number_format($entity->coordinator_collected, 2) }}</td>
-                <td>{{ number_format($entity->commission, 2) }}</td>
-                <td>{{ number_format($entity->total, 2) }}</td>
+                <td>${{ number_format($entity->vault_x_collected, 2) }}</td>
+                <td>${{ number_format($entity->coordinator_collected, 2) }}</td>
+                <td>${{ number_format($entity->commission, 2) }}</td>
+                <td>${{ number_format($entity->total, 2) }}</td>
             </tr>
         @endif
         </tfoot>
     </table>
     @if(!$entity->is_close)
         <div class="row">
-            @if ($entity->user_id==\Auth::user()->id)
+            @if ($entity->user_id==\Auth::user()->id || \Auth::user()->is_admin)
                 <div class="col-xs-2">
                     <div class="form-group">
                         <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"

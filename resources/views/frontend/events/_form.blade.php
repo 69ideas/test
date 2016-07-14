@@ -87,7 +87,7 @@
                                      <span class="input-group-btn">
                                     <button class="btn btn-primary" style="background: #49658A">
                                         &nbsp;<i class="fa fa-dollar"></i>&nbsp;</button>
-                                         </button>
+
 
                                  </span>
                                     {!! Form::text('needable_sum', 0, ['placeholder'=>'Enter Number of Participants','class'=>'form-control']) !!}
