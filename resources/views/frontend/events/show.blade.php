@@ -80,7 +80,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Number of Participants</label>
-                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else no limit @endif</p>
+                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else No limit @endif</p>
                             </div>
                             <div class="form-group">
                                 <label>Enter Amount per Participant</label>
