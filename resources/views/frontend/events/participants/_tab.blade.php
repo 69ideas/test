@@ -43,32 +43,34 @@
         </tfoot>
     </table>
     @if(!$entity->is_close)
-        <div class="row">
-            @if ($entity->user_id==\Auth::user()->id || \Auth::user()->is_admin)
-                <div class="col-xs-2">
-                    <div class="form-group">
-                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i> Add
-                            Participant
-                            <small
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Payments made to coordinator in cash"
-                            >
-                                <i class="fa fa-info-circle"></i>
-                            </small>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            <div class="col-xs-2">
-                @if(\Auth::user())
-                    <div class="form-group">
-                        <a href="{{route('payment',[$event])}}"
-                           class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
+        @if(\Auth::user())
+            <div class="row">
+                @if ($entity->user_id==\Auth::user()->id || \Auth::user()->is_admin)
+                    <div class="col-xs-2">
+                        <div class="form-group">
+                            <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
+                               class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i> Add
+                                Participant
+                                <small
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Payments made to coordinator in cash"
+                                >
+                                    <i class="fa fa-info-circle"></i>
+                                </small>
+                            </a>
+                        </div>
                     </div>
                 @endif
+                <div class="col-xs-2">
+                    @if(\Auth::user())
+                        <div class="form-group">
+                            <a href="{{route('payment',[$event])}}"
+                               class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
+                        </div>
+                    @endif
+                </div>
             </div>
-        </div>
+        @endif
     @endif
 </div>
