@@ -1,11 +1,14 @@
 @extends('frontend.layout')
 @section('content')
     <div class="row">
-        @if (!$event->is_close && $event->user_id=\Auth::user()->id)
-            <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
-            </div>
-        @elseif(!$event->is_close)
+        @if (!$event->is_close)
+            @if (\Auth::user())
+                @if($event->user_id=\Auth::user()->id)
+                    <div class="col-sm-4 col-sm-offset-8">
+                        {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
+                    </div>
+                @endif
+            @endif
         @else
             <div class="col-sm-12">
                 <h1><span class="label label-danger">CLOSED</span></h1>
@@ -29,7 +32,7 @@
         <div class="col-sm-12">
             <h1>Event # {{$event->id}}</h1>
             <h3 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h3>
-            <h4 style="text-align: right">Coordinar's Email:   {{\Auth::user()->email}}</h4>
+            <h4 style="text-align: right">Coordinar's Email: {{\Auth::user()->email}}</h4>
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -53,13 +56,16 @@
                                         Not set @endif</p>
                             </div>
                             <div class="form-group">
-                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
+                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             </div>
                             <div class="form-group">
-                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
+                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             </div>
                             <div class="form-group">
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else <label> No  </label> @endif
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else
+                                    <label> No </label> @endif
                             </div>
                             <div class="form-group">
                                 <label>PayPal E-mail</label>
@@ -79,11 +85,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Number of Participants</label>
-                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else no limit @endif</p>
+                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else
+                                        no limit @endif</p>
                             </div>
                             <div class="form-group">
                                 <label>Enter Amount per Participant</label>
-                                <p class="form-control-static">@if(!$event->needable_sum){{$event->needable_sum}} @else No limit @endif</p>
+                                <p class="form-control-static">@if(!$event->needable_sum){{$event->needable_sum}} @else
+                                        No limit @endif</p>
                             </div>
                             <div class="form-group">
                                 @if($event->image!='')
