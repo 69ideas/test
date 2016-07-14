@@ -113,7 +113,7 @@
         &nbsp;
     </div>
     <div class="row">
-        <div class="col-xs-4">
+        <!--<div class="col-xs-4">
 
             @if($prev != null)
                 <a href="{{route('show.event',[$prev])}}">Previous</a>
@@ -128,6 +128,6 @@
             @if($next!= null)
                 <a href="{{route('show.event',[$next])}}">Next</a>
             @endif
-        </div>
+        </div>-->
     </div>
 @endsection
