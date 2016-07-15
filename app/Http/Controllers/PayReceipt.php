@@ -142,15 +142,13 @@ class PayReceipt extends Controller
 
         $receiver2 = new Receiver();
         $receiver2->email = 'vaultx-admin@ananas-web.ru'; //@todo @nisshen Move to config or admin
-        $receiver2->amount = 0.15; //стандартно?
+        $receiver2->amount = 0.15;
         $receiver2->primary = false;
         $receiverList = new ReceiverList([$receiver1, $receiver2]);
         $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
             'USD', $receiverList, route('home'));
         $payRequest->feesPayer = 'PRIMARYRECEIVER';
-        if ($request->get("email") != "") {
-            $payRequest->senderEmail = $request->get("email");
-        }
+
 
         $payRequest->fundingConstraint = new FundingConstraint();
 
@@ -161,7 +159,7 @@ class PayReceipt extends Controller
         $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
 
 
-        $service = new AdaptivePaymentsService(); //это был семпл... тут это не применимо :(
+        $service = new AdaptivePaymentsService();
         try {
             /* wrap API method calls on the service object with a try catch */
             $response = $service->Pay($payRequest);

@@ -7,10 +7,11 @@
                 title="Name"
         >
             <i class="fa fa-info-circle"></i>
-        </small></label>
+        </small>
+    </label>
     @if (\Auth::user())
-    {!! Form::text('name', \Auth::user()->full_name, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
-        @else
+        {!! Form::text('name', \Auth::user()->full_name, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+    @else
         {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
     @endif
 </div>
@@ -22,9 +23,10 @@
                 title="Enter E-mail"
         >
             <i class="fa fa-info-circle"></i>
-        </small></label>
+        </small>
+    </label>
     @if (\Auth::user())
-    {!! Form::text('email', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+        {!! Form::text('email', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
     @else
         {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
     @endif
@@ -37,9 +39,10 @@
                 title="Re-enter email address"
         >
             <i class="fa fa-info-circle"></i>
-        </small></label>
+        </small>
+    </label>
     @if (\Auth::user())
-    {!! Form::text('email_confirmation', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+        {!! Form::text('email_confirmation', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
     @else
         {!! Form::text('email_confirmation', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
     @endif
@@ -52,7 +55,8 @@
                 title="Enter Amount"
         >
             <i class="fa fa-info-circle"></i>
-        </small></label>
+        </small>
+    </label>
     {!! Form::text('amount', null, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','id'=>'amount','data-event'=>$event->id]) !!}
 </div>
 <div class="form-group">
@@ -62,7 +66,8 @@
     <div class="form-group">
         {!!  Form::checkbox('anonymous',1,null) !!} Anonymous
     </div>
-    @endif
+@endif
+
 <div id="another_entry">
 
 </div>
