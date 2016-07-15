@@ -154,9 +154,13 @@ class PayReceipt extends Controller
 
         $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
         $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
-        $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('ECHECK');
-        $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('BALANCE');
-        $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
+        if ($request->get('type') == 'paypal') {
+            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('BALANCE');
+        } else {
+            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('ECHECK');
+        }
+        //
+        //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
 
 
         $service = new AdaptivePaymentsService();
@@ -195,36 +199,36 @@ class PayReceipt extends Controller
         Request $request
     ) {
         $event = Event::find($request->get('event'));
-        $total_1=Payment::CountWithFee($request->get('amount'), $event);
-        $total_2=Payment::CountWithFee($request->get('amount_2'), $event);
-        $total = $total_1+$total_2;
-        if (!$event->cc_fees){
-            $cc_fees_1=round($total_1*0.032,2);
-            $cc_fees_2=round($total_2*0.032,2);
+        $total_1 = Payment::CountWithFee($request->get('amount'), $event);
+        $total_2 = Payment::CountWithFee($request->get('amount_2'), $event);
+        $total = $total_1 + $total_2;
+        if (!$event->cc_fees) {
+            $cc_fees_1 = round($total_1 * 0.032, 2);
+            $cc_fees_2 = round($total_2 * 0.032, 2);
+        } else {
+            $cc_fees_1 = round(0, 2);
+            $cc_fees_2 = round(0, 2);
         }
-        else {
-            $cc_fees_1=round(0,2);
-            $cc_fees_2=round(0,2);
-        }
-        if (!$event->vxp_fees){
-            $vxp_fees_1=0.15;
-            if($request->get('amount_2')>0){
-                $vxp_fees_2=0.15;
+        if (!$event->vxp_fees) {
+            $vxp_fees_1 = 0.15;
+            if ($request->get('amount_2') > 0) {
+                $vxp_fees_2 = 0.15;
             } else {
-                $vxp_fees_2=round(0,2);
+                $vxp_fees_2 = round(0, 2);
             }
 
+        } else {
+            $vxp_fees_1 = round(0, 2);
+            $vxp_fees_2 = round(0, 2);
         }
-        else {
-            $vxp_fees_1=round(0,2);
-            $vxp_fees_2=round(0,2);
+        if ($request->get('amount_2') > 0) {
+            $other = 1;
+        } else {
+            $other = 0;
         }
-        if ($request->get('amount_2')>0){
-            $other=1;
-        } else{
-            $other=0;
-        }
-        return view('frontend.total_payment', compact('other','total','event','total_1','total_2','cc_fees_1','cc_fees_2','vxp_fees_1','vxp_fees_2'));
+        return view('frontend.total_payment',
+            compact('other', 'total', 'event', 'total_1', 'total_2', 'cc_fees_1', 'cc_fees_2', 'vxp_fees_1',
+                'vxp_fees_2'));
     }
 
     public

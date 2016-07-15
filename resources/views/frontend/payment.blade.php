@@ -67,7 +67,11 @@
         {!!  Form::checkbox('anonymous',1,null) !!} Anonymous
     </div>
 @endif
-
+<div class="form-group">
+    <label>What are you using to make this payment?  </label>
+    {!!  Form::radio('type','paypal', true) !!} PayPal
+    {!!  Form::radio('type','credit card') !!} Credit Card
+</div>
 <div id="another_entry">
 
 </div>

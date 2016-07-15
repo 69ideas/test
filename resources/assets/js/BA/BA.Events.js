@@ -254,6 +254,7 @@ BA.Events = {
                 $('#another_entry').append(content);
             })
         }
+        $('.related-payment', context).keyup();
     }
 
 };
