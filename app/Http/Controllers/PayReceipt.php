@@ -89,7 +89,7 @@ class PayReceipt extends Controller
             $participant = $participant->payment()->associate($payment);
             $participant->save();
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
-            $participant->vxp_fees = 0.3;
+            $participant->vxp_fees = 0.15;
             $participant->cc_fees = 0.032 * $participant->amount_deposited;
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount');
