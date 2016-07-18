@@ -17,7 +17,8 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <h1>Event # {{$event->id}}</h1>
+            <h1>Event # {{$event->event_number}}</h1>
+            <h2>{{$event->short_description}}</h2>
             <h3 style="text-align: right">Coordinator: {{$event->user->full_name}} </h3>
             <h4 style="text-align: right">Coordinar's Email:   {{$event->user->email}}</h4>
             <div class="box">
