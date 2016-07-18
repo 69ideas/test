@@ -1,21 +1,6 @@
 @extends('frontend.layout')
 @section('content')
     <div class="row">
-        @if (!$event->is_close)
-            @if (\Auth::user())
-                @if($event->user_id==\Auth::user()->id)
-                    <div class="col-sm-4 col-sm-offset-8">
-                        {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
-                    </div>
-                @endif
-            @endif
-        @else
-            <div class="col-sm-12">
-                <h1><span class="label label-danger">CLOSED</span></h1>
-            </div>
-        @endif
-    </div>
-    <div class="row">
         &nbsp;
     </div>
     <div class="row">

@@ -1,4 +1,16 @@
 <div class="row">
+    <div class="row">
+        @if (!$event->is_close && $event->user_id==\Auth::user()->id)
+            <div class="col-sm-4 col-sm-offset-8">
+                {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
+            </div>
+        @elseif(!$event->is_close)
+        @else
+            <div class="col-sm-12">
+                <h1><span class="label label-danger">CLOSED</span></h1>
+            </div>
+        @endif
+    </div>
     <div class="col-sm-12">
         <h1>Event # {{$event->id}}</h1>
         <h3 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h3>
