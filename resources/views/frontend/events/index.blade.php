@@ -91,12 +91,4 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="pull-right">
-                {!! $events->render() !!}
-            </div>
-        </div>
-    </div>
-
 @endsection

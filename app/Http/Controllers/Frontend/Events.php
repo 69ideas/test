@@ -25,7 +25,7 @@ class Events extends Controller
     }
     public function index(){
         $events = \App\Event::orderBy('created_at', 'DESC')
-            ->paginate(\Config::get('pagination.frontend.events', 15));
+            ->get();
         $page_title = 'Events';
         return view('frontend.events.index',compact('events','page_title'));
     }
