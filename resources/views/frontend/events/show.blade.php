@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        @if (!$event->is_close && $event->user_id=\Auth::user()->id)
+        @if (!$event->is_close && $event->user_id==\Auth::user()->id)
             <div class="col-sm-4 col-sm-offset-8">
                 {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
             </div>

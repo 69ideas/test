@@ -45,7 +45,7 @@
     @if(!$entity->is_close)
         @if(\Auth::user())
             <div class="row">
-                @if ($entity->user_id==\Auth::user()->id || \Auth::user()->is_admin)
+                @if ($entity->user_id==\Auth::user()->id)
                     <div class="col-xs-2">
                         <div class="form-group">
                             <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
