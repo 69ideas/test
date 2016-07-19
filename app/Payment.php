@@ -24,7 +24,7 @@ class Payment extends Model
     {
      
         if (!$event->vxp_fees) {
-            $amount += 0.15;
+            $amount += 0.2;
         }
 
         if (!$event->cc_fees) {

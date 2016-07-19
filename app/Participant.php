@@ -43,7 +43,7 @@ class Participant extends Model
     public function  getVaultXCollectedAttribute()
     {
         //return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_payment;
-        return 0.15;
+        return 0.2;
     }
 
    /* public function  getCoordinatorCollectedAttribute()

@@ -59,7 +59,7 @@ class PayReceipt extends Controller
             $participant = $participant->payment()->associate($payment);
             $participant->save();
             $participant->amount_deposited = $payment->amount_with_fees;
-            $participant->vxp_fees = 0.15;
+            $participant->vxp_fees = 0.2;
             $participant->cc_fees = 0.032 * $payment->amount_with_fees;
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $payment->amount;
@@ -89,7 +89,7 @@ class PayReceipt extends Controller
             $participant = $participant->payment()->associate($payment);
             $participant->save();
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
-            $participant->vxp_fees = 0.15;
+            $participant->vxp_fees = 0.2;
             $participant->cc_fees = 0.032 * $participant->amount_deposited;
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount');
@@ -118,7 +118,7 @@ class PayReceipt extends Controller
             $participant = $participant->payment()->associate($payment);
             $participant->save();
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount_2'), $event);
-            $participant->vxp_fees = 0.15;
+            $participant->vxp_fees = 0.2;
             $participant->cc_fees = 0.032 * $participant->amount_deposited;
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount_2');
@@ -142,7 +142,7 @@ class PayReceipt extends Controller
 
         $receiver2 = new Receiver();
         $receiver2->email = 'vaultx-admin@ananas-web.ru'; //@todo @nisshen Move to config or admin
-        $receiver2->amount = 0.15;
+        $receiver2->amount = 0.2;
         $receiver2->primary = false;
         $receiverList = new ReceiverList([$receiver1, $receiver2]);
         $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
@@ -210,9 +210,9 @@ class PayReceipt extends Controller
             $cc_fees_2 = round(0, 2);
         }
         if (!$event->vxp_fees) {
-            $vxp_fees_1 = 0.15;
+            $vxp_fees_1 = 0.2;
             if ($request->get('amount_2') > 0) {
-                $vxp_fees_2 = 0.15;
+                $vxp_fees_2 = 0.2;
             } else {
                 $vxp_fees_2 = round(0, 2);
             }
