@@ -69,8 +69,8 @@
 @endif
 <div class="form-group">
     <label>What are you using to make this payment?  </label>
-    {!!  Form::radio('type','paypal', true) !!} PayPal
-    {!!  Form::radio('type','credit card') !!} Credit Card
+    {!!  Form::radio('type','paypal', true,['id'=>'type','class'=>'type']) !!} PayPal
+    {!!  Form::radio('type','credit card',false,['class'=>'type']) !!} Credit Card
 </div>
 <div id="another_entry">
 

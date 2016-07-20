@@ -17,6 +17,7 @@ BA.Actions = {
         $(".edit-participant", context).click(BA.Events.TabContentManage);
         $(".make-payment", context).click(BA.Events.TabContentManage);
         $('.related-payment', context).keyup(BA.Events.RelatedPayment);
+        $('.type', context).change(BA.Events.RelatedPayment);
         $('.related-payment', context).keyup();
 
         $('.another_entry', context).change(BA.Events.AnotherEntry);

@@ -97,7 +97,7 @@
                                 </label>
                                 <div class="input-group">
                                      <span class="input-group-btn">
-                                    <button class="btn btn-primary" style="background: #49658A">
+                                    <button type="button" class="btn btn-primary" style="background: #49658A">
                                         &nbsp;<i class="fa fa-dollar"></i>&nbsp;</button>
 
 

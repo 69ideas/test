@@ -239,7 +239,7 @@ BA.Events = {
     RelatedPayment: function (e) {
         if(BA.Bindings.CurrentAmountRequest != null)
             BA.Bindings.CurrentAmountRequest.abort();
-        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amount=' + $('#amount').val() + '&amount_2=' + $('#amount_2').val(), null, function (data) {
+        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amount=' + $('#amount').val() + '&amount_2=' + $('#amount_2').val()+'&type='+$('input[name="type"]:checked').val(), null, function (data) {
             $('#total_payment').html(data);
             BA.Bindings.CurrentAmountRequest = null;
         })

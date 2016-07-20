@@ -13,7 +13,6 @@ class Payment extends Model
 
     public function getAmountWithFeesAttribute()
     {
-
         $event = $this->participant->participantable;
         $amount = $this->amount+$this->amount_2;
 
@@ -22,13 +21,12 @@ class Payment extends Model
 
     public static function CountWithFee($amount, $event)
     {
-     
         if (!$event->vxp_fees) {
             $amount += 0.2;
         }
 
         if (!$event->cc_fees) {
-            $amount /= (1 - 0.032);
+            $amount /= (1 - 0.029);
         }
 
         return round($amount,2);
