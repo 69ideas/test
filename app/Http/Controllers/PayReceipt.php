@@ -202,40 +202,27 @@ class PayReceipt extends Controller
         $total_1 = Payment::CountWithFee($request->get('amount'), $event);
         $total_2 = Payment::CountWithFee($request->get('amount_2'), $event);
         $total = $total_1 + $total_2;
-        if (!$event->cc_fees) {
-            $cc_fees_1 = round($total_1 * 0.032, 2);
-            $cc_fees_2 = round($total_2 * 0.032, 2);
-        } else {
-            $cc_fees_1 = round(0, 2);
-            $cc_fees_2 = round(0, 2);
-        }
-        if (!$event->vxp_fees) {
-            $vxp_fees_1 = 0.2;
-            if ($request->get('amount_2') > 0) {
-                $vxp_fees_2 = 0.2;
-            } else {
-                $vxp_fees_2 = round(0, 2);
-            }
 
-        } else {
-            $vxp_fees_1 = round(0, 2);
-            $vxp_fees_2 = round(0, 2);
-        }
+        $cc_fees_1 = round($total_1 * 0.032, 2);
+        $cc_fees_2 = round($total_2 * 0.032, 2);
+        $vxp_fees_1 = 0.2;
         if ($request->get('amount_2') > 0) {
-            $other = 1;
-        } else {
-            $other = 0;
+            $vxp_fees_2 = 0.2;
+            if ($request->get('amount_2') > 0) {
+                $other = 1;
+            } else {
+                $other = 0;
+            }
+            return view('frontend.total_payment',
+                compact('other', 'total', 'event', 'total_1', 'total_2', 'cc_fees_1', 'cc_fees_2', 'vxp_fees_1',
+                    'vxp_fees_2'));
         }
-        return view('frontend.total_payment',
-            compact('other', 'total', 'event', 'total_1', 'total_2', 'cc_fees_1', 'cc_fees_2', 'vxp_fees_1',
-                'vxp_fees_2'));
-    }
 
-    public
-    function another_entry(
-        Request $request
-    ) {
-        return view('frontend.another_entry');
-    }
+        public
+        function another_entry(
+            Request $request
+        ) {
+            return view('frontend.another_entry');
+        }
 
-}
+    }
