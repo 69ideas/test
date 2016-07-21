@@ -37,7 +37,7 @@ class PayReceipt extends Controller
         $payment = new Payment();
         $payment->name = $request->get('name');
         $payment->email = $request->get('email');
-        $payment->amount = $request->get('amount')+$request->get('amount_2');
+        $payment->amount = $request->get('amount') + $request->get('amount_2');
         $payment->method = 'Paypal';
         $payment->status = 'Pending';
         $payment->save();
@@ -62,11 +62,11 @@ class PayReceipt extends Controller
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
             $participant->deposit_type = 'PayPal';
             if (!$event->vxp_fees) {
-                $participant->vxp_fees=round(max(0.2,$request->get('amount')*0.005),2);
+                $participant->vxp_fees = round(max(0.2, $request->get('amount') * 0.005), 2);
             }
 
             if (!$event->cc_fees) {
-                $participant->cc_fees=round($request->get('amount')*0.029,2)+0.3;
+                $participant->cc_fees = round($request->get('amount') * 0.029, 2) + 0.3;
             }
 
 
@@ -97,11 +97,11 @@ class PayReceipt extends Controller
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
             $participant->deposit_type = 'PayPal';
             if (!$event->vxp_fees) {
-                $participant->vxp_fees=round(max(0.2,$request->get('amount')*0.005),2);
+                $participant->vxp_fees = round(max(0.2, $request->get('amount') * 0.005), 2);
             }
 
             if (!$event->cc_fees) {
-                $participant->cc_fees=round($request->get('amount')*0.029,2)+0.3;
+                $participant->cc_fees = round($request->get('amount') * 0.029, 2) + 0.3;
             }
 
             $participant->deposit_date = Carbon::now();
@@ -136,11 +136,11 @@ class PayReceipt extends Controller
             $participant->amount_deposited = Payment::CountWithFee($request->get('amount_2'), $event);
             $participant->deposit_type = 'PayPal';
             if (!$event->vxp_fees) {
-                $participant->vxp_fees=round(max(0.2,$request->get('amount_2')*0.005),2);
+                $participant->vxp_fees = round(max(0.2, $request->get('amount_2') * 0.005), 2);
             }
 
             if (!$event->cc_fees) {
-                $participant->cc_fees=round($request->get('amount_2')*0.029,2)+0.3;
+                $participant->cc_fees = round($request->get('amount_2') * 0.029, 2) + 0.3;
             }
 
 
@@ -166,7 +166,7 @@ class PayReceipt extends Controller
 
         $receiver2 = new Receiver();
         $receiver2->email = 'vaultx-admin@ananas-web.ru'; //@todo @nisshen Move to config or admin
-        $receiver2->amount = round(max(0.2, $payment->amount * 0.005),2);
+        $receiver2->amount = round(max(0.2, $payment->amount * 0.005), 2);
         $receiver2->primary = false;
         $receiverList = new ReceiverList([$receiver1, $receiver2]);
         $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
@@ -231,24 +231,10 @@ class PayReceipt extends Controller
             $total_2 = 0;
         }
         $total = $total_1 + $total_2;
-        $vxp_fees_1=0;
-        $vxp_fees_2=0;
-        $cc_fees_1=0;
-        $cc_fees_2=0;
-        if (!$event->vxp_fees) {
-            $vxp_fees_1=round(max(0.2,$request->get('amount')*0.005),2);
-        }
-
-        if (!$event->cc_fees) {
-            $cc_fees_1=round($request->get('amount')*0.029,2)+0.3;
-        }
-        if (!$event->vxp_fees) {
-            $vxp_fees_2=round(max(0.2,$request->get('amount_2')*0.005),2);
-        }
-
-        if (!$event->cc_fees) {
-            $cc_fees_2=round($request->get('amount_2')*0.029,2)+0.3;
-        }
+        $vxp_fees_1 = round(max(0.2, $request->get('amount') * 0.005), 2);
+        $cc_fees_1 = round($request->get('amount') * 0.029, 2) + 0.3;
+        $vxp_fees_2 = round(max(0.2, $request->get('amount_2') * 0.005), 2);
+        $cc_fees_2 = round($request->get('amount_2') * 0.029, 2) + 0.3;
         if ($request->get('amount_2') > 0) {
             $other = 1;
         } else {
