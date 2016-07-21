@@ -24,6 +24,8 @@ class PayRequest extends Request
     public function rules()
     { return [
         'name' => 'required|max:255',
+        'name_2' => 'required_with:another_entry',
+        'email_2' => 'email|required_with:another_entry',
         'amount' => 'required',
         'email' => 'email|required|confirmed',
     ];

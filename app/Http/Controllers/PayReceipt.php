@@ -37,13 +37,8 @@ class PayReceipt extends Controller
         $payment = new Payment();
         $payment->name = $request->get('name');
         $payment->email = $request->get('email');
-        $payment->amount = $request->get('amount') + $request->get('amount_2');
-
-        if ($request->get('type') != 'paypal') {
-            $payment->method = 'CC';
-        } else {
-            $payment->method = 'Paypal ACH';
-        }
+        $payment->amount = $request->get('amount')+$request->get('amount_2');
+        $payment->method = 'Paypal';
         $payment->status = 'Pending';
         $payment->save();
 
@@ -64,18 +59,17 @@ class PayReceipt extends Controller
 
             $participant = $participant->payment()->associate($payment);
             $participant->save();
-
-            if ($request->get('type') != 'paypal') {
-                $participant->cc_fees = 0.029 * $participant->amount_deposited;
-                $participant->vxp_fees = 0.3;
-                $participant->deposit_type = 'CC';
-                $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
-            } else {
-                $participant->cc_fees = 0;
-                $participant->vxp_fees = 0.2;
-                $participant->deposit_type = 'Paypal ACH';
-                $participant->amount_deposited = $request->get('amount');
+            $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
+            $participant->deposit_type = 'PayPal';
+            if (!$event->vxp_fees) {
+                $participant->vxp_fees=round(max(0.2,$request->get('amount')*0.005),2);
             }
+
+            if (!$event->cc_fees) {
+                $participant->cc_fees=round($request->get('amount')*0.029,2)+0.3;
+            }
+
+
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $payment->amount;
             } elseif (!$event->vxp_fees && $event->cc_fees) {
@@ -86,6 +80,7 @@ class PayReceipt extends Controller
                 $participant->coordinator_collected = $payment->amount - $participant->vxp_fees - $participant->cc_fees;
             }
             $participant->save();
+
 
         } else {
             $participant = new Participant();
@@ -99,17 +94,16 @@ class PayReceipt extends Controller
                 }
             }
             $participant->participantable()->associate($event);
-            if ($request->get('type') != 'paypal') {
-                $participant->deposit_type = 'CC';
-                $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
-                $participant->cc_fees = 0.029 * $participant->amount_deposited;
-                $participant->vxp_fees = 0.3;
-            } else {
-                $participant->deposit_type = 'Paypal ACH';
-                $participant->amount_deposited = $request->get('amount');
-                $participant->cc_fees = 0;
-                $participant->vxp_fees = 0.2;
+            $participant->amount_deposited = Payment::CountWithFee($request->get('amount'), $event);
+            $participant->deposit_type = 'PayPal';
+            if (!$event->vxp_fees) {
+                $participant->vxp_fees=round(max(0.2,$request->get('amount')*0.005),2);
             }
+
+            if (!$event->cc_fees) {
+                $participant->cc_fees=round($request->get('amount')*0.029,2)+0.3;
+            }
+
             $participant->deposit_date = Carbon::now();
             $participant = $participant->payment()->associate($payment);
             $participant->save();
@@ -139,18 +133,17 @@ class PayReceipt extends Controller
             $participant->deposit_date = Carbon::now();
             $participant = $participant->payment()->associate($payment);
             $participant->save();
-
-            if ($request->get('type') != 'paypal') {
-                $participant->deposit_type = 'CC';
-                $participant->cc_fees = 0.029 * $participant->amount_deposited;
-                $participant->vxp_fees = 0.3;
-                $participant->amount_deposited = Payment::CountWithFee($request->get('amount_2'), $event);
-            } else {
-                $participant->deposit_type = 'Paypal ACH';
-                $participant->cc_fees = 0;
-                $participant->vxp_fees = 0.2;
-                $participant->amount_deposited = $request->get('amount_2');
+            $participant->amount_deposited = Payment::CountWithFee($request->get('amount_2'), $event);
+            $participant->deposit_type = 'PayPal';
+            if (!$event->vxp_fees) {
+                $participant->vxp_fees=round(max(0.2,$request->get('amount_2')*0.005),2);
             }
+
+            if (!$event->cc_fees) {
+                $participant->cc_fees=round($request->get('amount_2')*0.029,2)+0.3;
+            }
+
+
             if (!$event->vxp_fees && !$event->cc_fees) {
                 $participant->coordinator_collected = $request->get('amount_2');
             } elseif (!$event->vxp_fees && $event->cc_fees) {
@@ -167,17 +160,13 @@ class PayReceipt extends Controller
 
         $receiver1 = new Receiver();
         $receiver1->email = $event->paypal_email;
-        if ($request->get('type') != 'paypal') {
-        $receiver1->amount = $payment->amount_with_fees;}
-        else{
-            $receiver1->amount = $payment->amount;
-        }
+        $receiver1->amount = $payment->amount_with_fees;
         $receiver1->primary = true;
 
 
         $receiver2 = new Receiver();
         $receiver2->email = 'vaultx-admin@ananas-web.ru'; //@todo @nisshen Move to config or admin
-        $receiver2->amount = 0.2;
+        $receiver2->amount = round(max(0.2, $payment->amount * 0.005),2);
         $receiver2->primary = false;
         $receiverList = new ReceiverList([$receiver1, $receiver2]);
         $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
@@ -234,39 +223,31 @@ class PayReceipt extends Controller
         Request $request
     ) {
         $event = Event::find($request->get('event'));
-        if ($request->get('type') != 'paypal') {
-            $total_1 = Payment::CountWithFee($request->get('amount'), $event);
-            if ($request->get('amount_2') > 0) {
-                $total_2 = Payment::CountWithFee($request->get('amount_2'), $event);
-            } else {
-                $total_2 = 0;
-            }
+
+        $total_1 = Payment::CountWithFee($request->get('amount'), $event);
+        if ($request->get('amount_2') > 0) {
+            $total_2 = Payment::CountWithFee($request->get('amount_2'), $event);
         } else {
-            $total_1 = $request->get('amount');
-            if ($request->get('amount_2') > 0) {
-                $total_2 = $request->get('amount_2');
-            } else {
-                $total_2 = 0;
-            }
+            $total_2 = 0;
         }
         $total = $total_1 + $total_2;
-        if ($request->get('type') != 'paypal') {
-            $cc_fees_1 = round($total_1 * 0.029, 2);
-            $cc_fees_2 = round($total_2 * 0.029, 2);
-            $vxp_fees_1 = 0.3;
-        } else {
-            $cc_fees_1 = round(0, 2);
-            $cc_fees_2 = round(0, 2);
-            $vxp_fees_1 = 0.2;
+        $vxp_fees_1=0;
+        $vxp_fees_2=0;
+        $cc_fees_1=0;
+        $cc_fees_2=0;
+        if (!$event->vxp_fees) {
+            $vxp_fees_1=round(max(0.2,$request->get('amount')*0.005),2);
         }
 
+        if (!$event->cc_fees) {
+            $cc_fees_1=round($request->get('amount')*0.029,2)+0.3;
+        }
+        if (!$event->vxp_fees) {
+            $vxp_fees_2=round(max(0.2,$request->get('amount_2')*0.005),2);
+        }
 
-        if ($request->get('amount_2') > 0) {
-            if ($request->get('type') != 'paypal') {
-                $vxp_fees_2 = 0.3;
-            } else {
-                $vxp_fees_2 = 0.2;
-            }
+        if (!$event->cc_fees) {
+            $cc_fees_2=round($request->get('amount_2')*0.029,2)+0.3;
         }
         if ($request->get('amount_2') > 0) {
             $other = 1;
