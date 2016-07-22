@@ -72,4 +72,15 @@ class Participant extends Model
     {
         return $this->amount_deposited;
     }
+
+    public function getEmailAttribute($value)
+    {
+        if($value != null)
+            return $value;
+
+        if($this->user == null)
+            return null;
+        else
+            return $this->user->email;
+    }
 }

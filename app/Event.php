@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Mail\Message;
 
 class Event extends Model implements SluggableInterface
 {
@@ -14,8 +16,32 @@ class Event extends Model implements SluggableInterface
     use SluggableTrait;
     protected $sluggable = [
         'build_from' => 'short_description',
-        'on_update'  => true,
+        'on_update' => true,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::updated(function (Event $event) {
+            $event
+                ->participants
+                ->reject(function (Participant $participant) {
+                    return is_null($participant->email);
+                })
+                ->unique('email')
+                ->each(function (Participant $participant) use ($event)
+                {
+
+                    $email = $participant->email;
+                    \Mail::queue('frontend.emails.change', compact('event', 'participant'),
+                        function (Message $message) use ($email, $event) {
+                            $message->to($email)
+                                ->subject('Event was changed');
+                        });
+                });
+            
+        });
+    }
 
     public function getRouteKeyName()
     {
@@ -86,39 +112,52 @@ class Event extends Model implements SluggableInterface
         return $this->morphMany(Participant::class, 'participantable');
 
     }
+    public function payed_participants()
+    {
+        return $this->morphMany(Participant::class, 'participantable')
+            ->where(function(Builder $builder){
+                $builder->whereNull('payment_id')
+                    ->orWhereHas('payment', function (Builder $builder){
+                        $builder->where('status', 'Completed');
+                    });
+            });
+
+    }
 
     public function getIsCloseAttribute()
     {
-        return $this->closed_date >  new Carbon();
+        return $this->closed_date > new Carbon();
     }
 
 
     public function getVaultXCollectedAttribute()
     {
-        return $this->participants->sum('vxp_fees');
+        return $this->payed_participants->sum('vxp_fees');
     }
 
     public function getCoordinatorCollectedAttribute()
     {
-        return $this->participants->sum('coordinator_collected');
+        return $this->payed_participants->sum('coordinator_collected');
     }
 
     public function getCommissionAttribute()
     {
-        return $this->participants->sum('cc_fees');
+        return $this->payed_participants->sum('cc_fees');
 
     }
 
     public function getTotalAttribute()
     {
-        return $this->participants->sum('amount_deposited');
+        return $this->payed_participants->sum('amount_deposited');
 
     }
-    public function getCurrentUserCollectedAttribute(){
-        $total=0;
-       foreach ($this->participants()->where('user_id',\Auth::user()->id)->get() as $participant){
-           $total=$total+$participant->amount_deposited;
-       };
+
+    public function getCurrentUserCollectedAttribute()
+    {
+        $total = 0;
+        foreach ($this->participants()->where('user_id', \Auth::user()->id)->get() as $participant) {
+            $total = $total + $participant->amount_deposited;
+        };
         return $total;
     }
 

@@ -251,5 +251,6 @@ return [
 
 
     ],
+    'admin_email'=>env('APP_ADMIN_EMAIL', 'vaultx-admin@ananas-web.ru')
 
 ];

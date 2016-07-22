@@ -64,7 +64,7 @@
 
 
                                  </span>
-                                {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'Enter Required amount']) !!}
+                                {!! Form::text('needable_sum', null, ['class'=>'form-control', 'placeholder'=>'No set amount']) !!}
                             </div>
                         </div>
 

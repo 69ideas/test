@@ -38,11 +38,11 @@ BA.Events = {
         }
 
         var content = $(data.content);
-        BA.Actions.init(content);
 
         var title = data.title || "";
 
         BA.Actions.OpenModal(title, content);
+        BA.Actions.init(content);
     },
     MoveUpBlockClick: function (e) {
         var block = $(this).parents('.media');
@@ -233,28 +233,31 @@ BA.Events = {
             })
         }
         else {
-                $('#data_holder').html('');
+            $('#data_holder').html('');
         }
     },
     RelatedPayment: function (e) {
-        if(BA.Bindings.CurrentAmountRequest != null)
+        if (BA.Bindings.CurrentAmountRequest != null)
             BA.Bindings.CurrentAmountRequest.abort();
-        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amount=' + $('#amount').val() + '&amount_2=' + $('#amount_2').val()+'&type='+$('input[name="type"]:checked').val(), null, function (data) {
+
+        var t = $('.related-payment').map(function(key,item){return $(item).val()}).toArray();
+
+        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amounts=' + JSON.stringify(t), null, function (data) {
             $('#total_payment').html(data);
             BA.Bindings.CurrentAmountRequest = null;
         })
     },
     AnotherEntry: function (e) {
-        $('#another_entry').html('');
+        //if ($(this).is(':checked')) {
+        $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + ($('#another_entry > div').length + 1), null, function (data) {
+            var content = $(data);
 
-        if ($(this).is(':checked')) {
-            $.get('/another_entry?related=' + $(this).val(), null, function (data) {
-                var content = $(data);
-                BA.Actions.init(content);
-                $('#another_entry').append(content);
-            })
-        }
-        $('.related-payment').keyup();
+            $('#another_entry').append(content);
+            BA.Actions.init(content);
+        });
+        //}
+        // $('.related-payment').keyup();
+        console.log('th');
 
     }
 

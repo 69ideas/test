@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use PayPal\Core\PPHttpConfig;
 
+define('PAYPAL_REDIRECT_URL', 'https://www.sandbox.paypal.com/webscr&cmd=');
+define("DEFAULT_SELECT", "- Select -");
+define('PP_CONFIG_PATH', config_path());
+
 class AppServiceProvider extends ServiceProvider
 {
     /**

@@ -1,13 +1,16 @@
 <div class="row">
     <div class="row">
-        @if (!$event->is_close && $event->user_id==\Auth::user()->id)
+
+        @if (!isset($event->closed_date))
             <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('admin.event.close', 'Close event', [$event->id], ['class'=>'btn btn-block btn-primary pull-right']) }}
+                {{ link_to_route('frontend.event.close', 'Close event', [$event], ['class'=>'btn btn-block btn-primary pull-right']) }}
             </div>
-        @elseif(!$event->is_close)
         @else
-            <div class="col-sm-12">
+            <div class="col-sm-10">
                 <h1><span class="label label-danger">CLOSED</span></h1>
+            </div>
+            <div class="col-sm-4 col-sm-offset-8">
+                {{ link_to_route('frontend.event.open', 'Open event', [$event], ['class'=>'btn btn-block btn-primary pull-right']) }}
             </div>
         @endif
     </div>
@@ -102,7 +105,7 @@
 
 
                                  </span>
-                                    {!! Form::text('needable_sum', 0, ['placeholder'=>'Enter Number of Participants','class'=>'form-control']) !!}
+                                    {!! Form::text('needable_sum', null, ['placeholder'=>'No set amount','class'=>'form-control']) !!}
 
                                 </div>
                             @endif

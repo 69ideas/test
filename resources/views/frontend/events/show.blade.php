@@ -20,7 +20,7 @@
             <h1>Event # {{$event->event_number}}</h1>
             <h2>{{$event->short_description}}</h2>
             <h3 style="text-align: right">Coordinator: {{$event->user->full_name}} </h3>
-            <h4 style="text-align: right">Coordinar's Email:   {{$event->user->email}}</h4>
+            <h4 style="text-align: right">Coordinar's Email: {{$event->user->email}}</h4>
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -44,13 +44,16 @@
                                         Not set @endif</p>
                             </div>
                             <div class="form-group">
-                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label> No  </label> @endif
+                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             </div>
                             <div class="form-group">
-                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label> No  </label> @endif
+                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label>
+                                    No </label> @endif
                             </div>
                             <div class="form-group">
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else <label> No  </label> @endif
+                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else
+                                    <label> No </label> @endif
                             </div>
                             <div class="form-group">
                                 <label>PayPal E-mail</label>
@@ -70,11 +73,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Number of Participants</label>
-                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else No limit @endif</p>
+                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else
+                                        No limit @endif</p>
                             </div>
                             <div class="form-group">
-                                <label>Enter Amount per Participant</label>
-                                <p class="form-control-static">@if(!$event->needable_sum && $event->needable_sum!=0)${{$event->needable_sum}} @else No limit @endif</p>
+                                <label>Amount per Participant</label>
+                                <p class="form-control-static">@if($event->needable_sum>0)
+                                        ${{$event->needable_sum}} @else No limit @endif</p>
                             </div>
                             <div class="form-group">
                                 @if($event->image!='')
@@ -90,14 +95,20 @@
 
             </div>
             @include('frontend.events._tabs')
-            <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
-                        class="fa fa-pencil"></i>
-                Edit
-            </a>
-            <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
-                        class="fa fa-angle-double-left"></i>
-                Back
-            </a>
+            @if(\Auth::user()->id==$event->user_id)
+                <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
+                            class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <a href="/event/send?id={{$event->id}}"
+                   class="btn btn-primary send-event" style="background: #49658A;"><i class="fa fa-envelope-o"></i>
+                    Send Event
+                </a>
+            @endif
+                <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
+                            class="fa fa-angle-double-left"></i>
+                    Back
+                </a>
         </div>
     </div>
     <div class="row">

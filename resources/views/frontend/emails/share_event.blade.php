@@ -1,4 +1,4 @@
-{!! Form::open(['route'=>'post.send.email']) !!}
+{!! Form::open(['route'=>['post.send.email', $event]]) !!}
 <div class="form-group">
     <label>E-mail
         <small
@@ -9,9 +9,11 @@
             <i class="fa fa-info-circle"></i>
         </small></label>
     {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+    {{Form::hidden('id',$event->id)}}
 </div>
 <div class="form-group">
-        {!! Form::submit('Save',['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
 </div>
-{!!  Form::close()!!}
+{!! Form::close() !!}
+
 

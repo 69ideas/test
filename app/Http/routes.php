@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', ['as' => 'home', 'uses' => 'Frontend\Pages@home']);
 Route::get('login', ['as' => 'login', 'uses' => 'Frontend\AuthController@sign_in']);
 Route::get('success', ['as' => 'success', 'uses' => 'Frontend\AuthController@success']);
@@ -37,12 +39,17 @@ Route::get('find', ['as' => 'find', 'uses' => 'Frontend\Pages@find']);
 Route::post('find', ['as' => 'find.post', 'uses' => 'Frontend\Pages@post_find']);
 
 
+
 Route::group(["middleware" => ['auth']], function () {
     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
     Route::get('events', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
     Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
     Route::resource('participant', 'Frontend\Participants');
     Route::get('payment_name', ['as' => 'payment_name', 'uses' => 'Frontend\Participants@payment_name']);
+    Route::get('/event/{event}/close', ['as' => 'frontend.event.close', 'uses' => 'Frontend\Events@close']);
+    Route::get('/event/{event}/open', ['as' => 'frontend.event.open', 'uses' => 'Frontend\Events@open']);
+    Route::get('/event/send', ['as' => 'frontend.event.send', 'uses' => 'Frontend\Events@send']);
+    Route::post('/event/send', ['as' => 'post.send.email', 'uses' => 'Frontend\Events@send_email']);
     Route::resource('event', 'Frontend\Events');
     Route::get('logout', 'Frontend\AuthController@sign_out');
 });

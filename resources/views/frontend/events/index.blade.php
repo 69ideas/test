@@ -51,7 +51,7 @@
                     @if (count($event->participants()->where('user_id',\Auth::user()->id)->get()) || $event->user_id==\Auth::user()->id)
                         <tr>
                             <td>
-                                @if($event->is_close)
+                                @if(!is_null($event->closed_date))
                                     <a href="{{ route('event.show', $event) }}"> <span
                                                 class="label label-danger"> @if (isset($event->event_number)) {{$event->event_number}} @else {{$event->id}} @endif  </span></a>
                                 @else

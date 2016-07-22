@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PayRequest extends Request
+class SendEmailRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class PayRequest extends Request
      * @return array
      */
     public function rules()
-    { return [
-        'part.*.name' => 'required|max:255',
-        'part.*.amount' => 'required',
-        'part.*.email' => 'email|required|confirmed',
-    ];
+    {
+        return [
+            'email' => 'email|required',
+        ];
     }
 }

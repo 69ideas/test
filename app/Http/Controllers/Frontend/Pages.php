@@ -88,10 +88,11 @@ class Pages extends Controller
     {
         $page_title = 'Make Payment';
         $page = null;
+        $id=0;
         return [
             'error_code' => 0,
             'title' => 'Make Payment',
-            'content' => view('frontend.payment', compact('page', 'page_title', 'event'))->render()
+            'content' => view('frontend.payment', compact('page', 'page_title', 'event','id'))->render()
         ];
     }
 

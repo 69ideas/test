@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($entity->participants as $participant)
+        @forelse($entity->payed_participants as $participant)
             <tr>
                 <td>@if (isset($participant->deposit_date)){{$participant->deposit_date->format('m/d/Y')}}@endif</td>
                 <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else {{$participant->name}} @endif</td>
@@ -45,7 +45,7 @@
     @if(!$entity->is_close)
         @if(\Auth::user())
             <div class="row">
-                @if ($entity->user_id==\Auth::user()->id)
+                @if ($entity->user_id==\Auth::user()->id && is_null($event->closed_date))
                     <div class="col-xs-2">
                         <div class="form-group">
                             <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
@@ -63,7 +63,7 @@
                     </div>
                 @endif
                 <div class="col-xs-2">
-                    @if(\Auth::user())
+                    @if(\Auth::user() && (count($event->participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
                         <div class="form-group">
                             <a href="{{route('payment',[$event])}}"
                                class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>

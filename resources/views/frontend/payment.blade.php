@@ -10,9 +10,9 @@
         </small>
     </label>
     @if (\Auth::user())
-        {!! Form::text('name', \Auth::user()->full_name, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+        {!! Form::text('part['.$id.'][name]', \Auth::user()->full_name, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
     @else
-        {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
+        {!! Form::text('part['.$id.'][name]', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
     @endif
 </div>
 <div class="form-group">
@@ -26,9 +26,9 @@
         </small>
     </label>
     @if (\Auth::user())
-        {!! Form::text('email', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+        {!! Form::text('part['.$id.'][email]', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
     @else
-        {!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
+        {!! Form::text('part['.$id.'][email]', null, ['class'=>'form-control', 'placeholder'=>'Enter e-mail']) !!}
     @endif
 </div>
 <div class="form-group">
@@ -42,9 +42,9 @@
         </small>
     </label>
     @if (\Auth::user())
-        {!! Form::text('email_confirmation', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+        {!! Form::text('part['.$id.'][email_confirmation]', \Auth::user()->email, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
     @else
-        {!! Form::text('email_confirmation', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+        {!! Form::text('part['.$id.'][email_confirmation]', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
     @endif
 </div>
 <div class="form-group">
@@ -57,30 +57,42 @@
             <i class="fa fa-info-circle"></i>
         </small>
     </label>
-    {!! Form::text('amount', null, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','id'=>'amount','data-event'=>$event->id]) !!}
+    @if($event->needable_sum>0)
+        {!! Form::text('part['.$id.'][amount]', $event->needable_sum, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','readonly'=>'readonly','id'=>'amount','data-event'=>$event->id]) !!}
+    @else
+        {!! Form::text('part['.$id.'][amount]',  null, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','id'=>'amount','data-event'=>$event->id]) !!}
+
+    @endif
 </div>
-<div class="form-group">
-    {!!  Form::checkbox('another_entry',1,null,['class'=>'another_entry']) !!} Add another Entry?
+<div id="another_entry">
+
 </div>
+
 @if ($event->allow_anonymous)
     <div class="form-group">
         {!!  Form::checkbox('anonymous',1,null) !!} Anonymous
     </div>
 @endif
 <div class="form-group">
-    <label>What are you using to make this payment?  </label>
+    <label>What are you using to make this payment? </label>
     {!!  Form::radio('type','paypal', true,['id'=>'type','class'=>'type']) !!} PayPal
     {!!  Form::radio('type','credit card',false,['class'=>'type']) !!} Credit Card
 </div>
-<div id="another_entry">
 
-</div>
 <div id="total_payment">
 
 </div>
 {{Form::hidden('event',$event)}}
-<div class="form-group">
-    {!! Form::submit('Pay',['class'=>'btn btn-primary']) !!}
+<div class="row">
+
+    <div class="col-md-2">{!! Form::submit('Pay',['class'=>'btn btn-primary']) !!} </div>
+    <div class="col-md-4">
+
+        <button type="button" class='btn btn-primary another_entry' data-event="{{$event->id}}" id="another"
+                data-id="{{$id}}">Add another Entry?
+        </button>
+    </div>
+
 </div>
 
 {!!  Form::close()!!}

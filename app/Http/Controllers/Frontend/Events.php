@@ -102,13 +102,35 @@ class Events extends Controller
         return view('frontend.events.show', compact('event'));
     }
     public function close(Event $event){
-        //$event=Event::find($id);
         $event->is_close=true;
         $event->closed_date=Carbon::now();
         $event->save();
-        return redirect()->route('event.index');
+        return redirect()->route('event.show',$event);
+    }
+    public function open(Event $event){
+        $event->is_close=false;
+        $event->closed_date=null;
+        $event->save();
+        return redirect()->route('event.show',$event);
     }
     public function event_created(Event $event){
         return view('frontend.success_event',compact('event'));
+    }
+    public function send(Request $request){
+        $event=Event::find($request->get('id'));
+        return [
+            'error_code' => 0,
+            'title' => 'Share Event',
+            'content' => view('frontend.emails.share_event', compact('event'))->render()
+        ];
+    }
+    public function send_email(Requests\SendEmailRequest $request){
+        $email=$request->get('email');
+        $event=Event::find($request->get('id'));
+        \Mail::queue('frontend.emails.send_event', compact('event','email'), function (Message $message) use ($email,$event) {
+            $message->to($email)
+                ->subject($event->short_description);
+        });
+        return redirect()->route('event.show',$event);
     }
 }
