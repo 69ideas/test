@@ -51,6 +51,7 @@ class Participants extends Controller
         $participant->participantable_type = $type;
         $participant->deposit_type = 'Cash';
         $participant->participantable_id = $id;
+        $participant->coordinator_collected = $participant->amount_deposited;
         $participant->save();
 
         if ($request->ajax()) {
