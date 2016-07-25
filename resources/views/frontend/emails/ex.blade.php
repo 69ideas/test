@@ -136,7 +136,7 @@
                                                                                         Deadline:{{$event->deadline->format('m/d/Y')}}
                                                                                         <br>
                                                                                         Amount per
-                                                                                        person: {{$event->needable_sum}}
+                                                                                        person: {{number_format($event->needable_sum,2)}}
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

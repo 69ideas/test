@@ -105,13 +105,13 @@ class Events extends Controller
         $event->is_close=true;
         $event->closed_date=Carbon::now();
         $event->save();
-        return redirect()->route('event.show',$event);
+        return redirect()->route('event.edit',$event);
     }
     public function open(Event $event){
         $event->is_close=false;
         $event->closed_date=null;
         $event->save();
-        return redirect()->route('event.show',$event);
+        return redirect()->route('event.edit',$event);
     }
     public function event_created(Event $event){
         return view('frontend.success_event',compact('event'));

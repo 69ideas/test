@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Event;
 use App\Participant;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,6 +18,7 @@ class Participants extends Controller
         $page_title = 'Adding participant';
         $participant = new Participant();
         $event = Event::find(\Request::get('id'));
+        $participant->deposit_date=Carbon::now();
         if ($event->allow_anonymous) {
             $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
         } else {
@@ -26,7 +28,7 @@ class Participants extends Controller
         return [
             'error_code' => 0,
             'title' => 'Add participant',
-            'content' => view('frontend.events.participants.add', compact('participant', 'users','page_title'))->render()
+            'content' => view('frontend.events.participants.add', compact('deposit_date','participant', 'users','page_title'))->render()
         ];
     }
 

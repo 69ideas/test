@@ -70,11 +70,11 @@
     <hr>
 
     <div class="form-group">
-            <label>Summary
+            <label>Total Payment
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="Summary"
+                        title="Total Payment"
                 >
                     <i class="fa fa-info-circle"></i>
                 </small>

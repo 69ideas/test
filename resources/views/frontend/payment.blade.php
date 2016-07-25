@@ -58,7 +58,7 @@
         </small>
     </label>
     @if($event->needable_sum>0)
-        {!! Form::text('part['.$id.'][amount]', $event->needable_sum, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','readonly'=>'readonly','id'=>'amount','data-event'=>$event->id]) !!}
+        {!! Form::text('part['.$id.'][amount]', number_format($event->needable_sum,2), ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','readonly'=>'readonly','id'=>'amount','data-event'=>$event->id]) !!}
     @else
         {!! Form::text('part['.$id.'][amount]',  null, ['class'=>'form-control related-payment', 'placeholder'=>'Enter Amount','id'=>'amount','data-event'=>$event->id]) !!}
 
@@ -86,6 +86,11 @@
 <div class="row">
 
     <div class="col-md-2">{!! Form::submit('Pay',['class'=>'btn btn-primary']) !!} </div>
+    <div class="col-md-6">
+        <small>Pressing Pay will bring you to PayPal to make your payment. You do not need to have a PayPal account to
+            make a credit card payment
+        </small>
+    </div>
     <div class="col-md-4">
 
         <button type="button" class='btn btn-primary another_entry' data-event="{{$event->id}}" id="another"

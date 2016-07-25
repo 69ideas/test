@@ -29,6 +29,7 @@
             </div>
         <!--<div class="form-group">
                 {!!  Form::label('deposit_type','Deposit Type:') !!}
+
         {!!  Form::text('deposit_type',null,['class'=>"form-control"]) !!}
 
                 </div>-->
