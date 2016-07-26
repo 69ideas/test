@@ -39,7 +39,14 @@ class Participants extends Controller
             $participant->user_id = $request->get('user_id');
         }
         else{
-            $participant->name=$request->get('name');
+            $user = \App\User::where('email', '=', $request->get('email'))->first();
+            if ($user === null) {
+                $participant->name=$request->get('name');
+                $participant->email=$request->get('email');
+            } else {
+                $participant->user_id = $user->user_id;
+                $participant->name = $user->full_name;
+            }
         };
         $participant->fill($request->only(
             'amount_deposited',
@@ -67,8 +74,8 @@ class Participants extends Controller
         return $response;
 
     }
-    public function payment_name(){
-        return view('frontend.events.participants.payment_name');  
+    public function payment_extended_info(){
+        return view('frontend.events.participants.payment_extended_info');
     }
 
 }

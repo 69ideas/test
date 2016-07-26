@@ -45,7 +45,7 @@ Route::group(["middleware" => ['auth']], function () {
     Route::get('events', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
     Route::patch('profile', ['as' => 'profile.post', 'uses' => 'Frontend\Users@update']);
     Route::resource('participant', 'Frontend\Participants');
-    Route::get('payment_name', ['as' => 'payment_name', 'uses' => 'Frontend\Participants@payment_name']);
+    Route::get('payment_extended_info', ['as' => 'payment_extended_info', 'uses' => 'Frontend\Participants@payment_extended_info']);
     Route::get('/event/{event}/close', ['as' => 'frontend.event.close', 'uses' => 'Frontend\Events@close']);
     Route::get('/event/{event}/open', ['as' => 'frontend.event.open', 'uses' => 'Frontend\Events@open']);
     Route::get('/event/send', ['as' => 'frontend.event.send', 'uses' => 'Frontend\Events@send']);

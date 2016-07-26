@@ -110,7 +110,7 @@ class PayReceipt extends Controller
             $payPalURL = PAYPAL_REDIRECT_URL . '_ap-payment&paykey=' . $token;
 
         });
-        return redirect($payPalURL);
+        return response()->json(['redirect' => $payPalURL]);
 
     }
 
