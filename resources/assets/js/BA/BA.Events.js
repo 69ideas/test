@@ -228,7 +228,7 @@ BA.Events = {
 
     RelatedName: function (e) {
         if ($(this).val() == '') {
-            $.get('/payment_name?related=' + $(this).val(), null, function (data) {
+            $.get('/payment_extended_info?related=' + $(this).val(), null, function (data) {
                 $('#data_holder').html(data);
             })
         }
@@ -240,7 +240,9 @@ BA.Events = {
         if (BA.Bindings.CurrentAmountRequest != null)
             BA.Bindings.CurrentAmountRequest.abort();
 
-        var t = $('.related-payment').map(function(key,item){return $(item).val()}).toArray();
+        var t = $('.related-payment').map(function (key, item) {
+            return $(item).val()
+        }).toArray();
 
         BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amounts=' + JSON.stringify(t), null, function (data) {
             $('#total_payment').html(data);
@@ -249,15 +251,30 @@ BA.Events = {
     },
     AnotherEntry: function (e) {
         //if ($(this).is(':checked')) {
-        $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + ($('#another_entry > div').length + 1), null, function (data) {
-            var content = $(data);
+        if ($('#another_entry > div').length + 1 < 4) {
+            $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + ($('#another_entry > div').length + 1), null, function (data) {
+                var content = $(data);
 
-            $('#another_entry').append(content);
-            BA.Actions.init(content);
-        });
-        //}
-        // $('.related-payment').keyup();
+                $('#another_entry').append(content);
+                BA.Actions.init(content);
+                if ($('#another_entry > div').length > 2) {
+                    $('#another').hide();
+                }
+            });
+        }
+
         console.log('th');
+
+    },
+
+    DeleteAnotherEntry: function (e) {
+        var that = this;
+        $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + $(this).data('id'), null, function (data) {
+        });
+        $('#another_' + $(that).data('id')).remove();
+        if ($('#another_entry > div').length < 3) {
+            $('#another').show();
+        }
 
     }
 

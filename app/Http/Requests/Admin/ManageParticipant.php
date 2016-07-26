@@ -24,7 +24,7 @@ class ManageParticipant extends Request
     public function rules()
     {
         return [
-            //
+            'amount_deposited' => 'required',
         ];
     }
 }

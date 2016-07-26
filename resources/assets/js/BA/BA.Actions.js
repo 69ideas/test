@@ -22,7 +22,7 @@ BA.Actions = {
         $('.related-payment', context).keyup();
 
         $('.another_entry', context).click(BA.Events.AnotherEntry);
-
+        $('.delete_another_entry', context).click(BA.Events.DeleteAnotherEntry);
 
         console.log($('.datepicker',context));
         $('.datepicker',context).datepicker({

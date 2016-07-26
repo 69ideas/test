@@ -28,4 +28,16 @@ class PayRequest extends Request
         'part.*.email' => 'email|required|confirmed',
     ];
     }
+
+    public function messages()
+    {
+        return [
+            'part.*.amount.required' => 'The amount field is required',
+            'part.*.email.confirmed'  => 'The email confirmation does not match',
+            'part.*.email.email'  => 'The email must be a valid email address',
+            'part.*.email.required' => 'The email field is required',
+            'part.*.name.required' => 'The name field is required',
+            'part.*.name.max' => 'Maximum 255 symbols',
+        ];
+    }
 }

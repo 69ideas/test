@@ -87,7 +87,7 @@
                         <div class="form-group">
                             @if (isset($event->needable_sum))
                                 <label>Enter Amount per Participant</label>
-                                <p class="form-control-static">{{$event->needable_sum}}</p>
+                                <p class="form-control-static">{{$event->needable_sum == "0" ? "no limit" : $event->needable_sum}}</p>
                             @else
                                 <label>Enter Amount per Participant
                                     <small
