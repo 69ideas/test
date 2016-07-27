@@ -139,6 +139,7 @@ class PayReceipt extends Controller
         $response = [];
         $mid=1;
         foreach ($amounts as $amount) {
+            $amount = str_replace(',','',$amount);
             $item = [
                 'mid'=>$mid,
                 'vxp' => Payment::CountFeeVXP($amount, $event, true),

@@ -121,7 +121,7 @@
             <div class="form-group">
                 @if ($event->allow_anonymous)
                     <div class="form-group">
-                        {!!  Form::checkbox('part['.$id.'][anonymous]',1,null) !!} Anonymous
+                        <label>{!!  Form::checkbox('part['.$id.'][anonymous]',1,null,['class'=>'anon']) !!} Anonymous</label>
                     </div>
                 @endif
             </div>

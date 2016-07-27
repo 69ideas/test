@@ -243,7 +243,6 @@ BA.Events = {
         var t = $('.related-payment').map(function (key, item) {
             return $(item).val()
         }).toArray();
-
         BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amounts=' + JSON.stringify(t), null, function (data) {
             $('#total_payment').html(data);
             BA.Bindings.CurrentAmountRequest = null;
@@ -308,14 +307,19 @@ BA.Events = {
             }
         });
         return false;
-        //var amount = parseInt($(this).find('[name="amount_deposited"]').val());
-        //if (isNaN(amount))
-        //    amount = 0;
-        //if (amount == 0) {
-        //    $(document.getElementsByName("amount_deposited")).parent().parent().addClass("has-error");
-        //    $(document.getElementsByName("amount_deposited")).parent().parent().append("<span class=\" help-block\">The amount field is required</span>");
-        //    $(this).find('[type="submit"]').prop('disabled', false);
-        //    return false;
-        //}
+    },
+
+    SwitchAnon: function (e) {
+        var str = $(this).attr("name").substring(0, 4);
+        var number = $(this).attr("name").substring(5, 6);
+        if ($(this).is(":checked")) {
+            $('input[name="' + str + '\[' + number + '\]\[name\]"]').attr('readonly', 'readonly');
+            $('input[name="' + str + '\[' + number + '\]\[email\]"]').attr('readonly', 'readonly');
+            $('input[name="' + str + '\[' + number + '\]\[email_confirmation\]"]').attr('readonly', 'readonly');
+        } else {
+            $('input[name="' + str + '\[' + number + '\]\[name\]"]').removeAttr('readonly');
+            $('input[name="' + str + '\[' + number + '\]\[email\]"]').removeAttr('readonly');
+            $('input[name="' + str + '\[' + number + '\]\[email_confirmation\]"]').removeAttr('readonly');
+        }
     }
 };

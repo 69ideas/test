@@ -47,7 +47,7 @@
                         </small>
                     </label>
                     @if($event->needable_sum>0)
-                        {!! Form::text('part['.$id.'][amount]', $event->needable_sum, ['class'=>'form-control related-payment', 'id'=>'amount_2', 'placeholder'=>'Enter Amount','readonly'=>'readonly']) !!}
+                        {!! Form::text('part['.$id.'][amount]', number_format($event->needable_sum,2), ['class'=>'form-control related-payment', 'id'=>'amount_2', 'placeholder'=>'Enter Amount','readonly'=>'readonly']) !!}
                     @else
                         {!! Form::text('part['.$id.'][amount]', null, ['class'=>'form-control related-payment', 'id'=>'amount_2']) !!}
                     @endif
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     @if ($event->allow_anonymous)
                         <div class="form-group">
-                            {!!  Form::checkbox('part['.$id.'][anonymous]',1,null) !!} Anonymous
+                            <label>{!!  Form::checkbox('part['.$id.'][anonymous]',1,null,['class'=>'anon']) !!} Anonymous</label>
                         </div>
                     @endif
                 </div>
