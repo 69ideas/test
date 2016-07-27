@@ -2,7 +2,7 @@
     <hr>
     <div class="box-body">
         <div class="form-group">
-            <h4>Next participant</h4>
+            <h4 class="participant_number">Participant</h4>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -37,20 +37,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Re-enter email address
-                        <small
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Re-enter email address"
-                        >
-                            <i class="fa fa-info-circle"></i>
-                        </small>
-                    </label>
-                    {!! Form::text('part['.$id.'][email_confirmation]', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
                     <label>Amount
                         <small
                                 data-toggle="tooltip"
@@ -67,13 +53,27 @@
                     @endif
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Re-enter email address
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Re-enter email address"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </label>
+                    {!! Form::text('part['.$id.'][email_confirmation]', null, ['class'=>'form-control', 'placeholder'=>'Repeat e-mail']) !!}
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     @if ($event->allow_anonymous)
                         <div class="form-group">
-                            {!!  Form::checkbox('anonymous',1,null) !!} Anonymous
+                            {!!  Form::checkbox('part['.$id.'][anonymous]',1,null) !!} Anonymous
                         </div>
                     @endif
                 </div>

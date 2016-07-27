@@ -44,7 +44,7 @@ class PayReceipt extends Controller
             $payment->save();
             foreach ($parts as $item) {
                 $participant = new Participant();
-                if ($request->get('anonymous')) {
+                if ($item['anonymous']==true) {
                     $participant->name = 'Anonymous';
                 } else {
                     $participant->name = $item['name'];
@@ -137,13 +137,16 @@ class PayReceipt extends Controller
         $amounts = json_decode($request->get('amounts', '[]'), true);
         $event = Event::find($request->get('event'));
         $response = [];
+        $mid=1;
         foreach ($amounts as $amount) {
             $item = [
+                'mid'=>$mid,
                 'vxp' => Payment::CountFeeVXP($amount, $event, true),
                 'cc' => Payment::CountFeeCC($amount, $event, true),
                 'total' => Payment::CountWithFee($amount, $event),
                 'donation' => Payment::CountDonation($amount, $event),
             ];
+            $mid=$mid+1;
             $response[] = $item;
         }
 

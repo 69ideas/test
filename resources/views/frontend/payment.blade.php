@@ -37,7 +37,7 @@
 {!! Form::open(['route'=>['post.payment', $event], 'id'=>'form']) !!}
 <div class="box-body">
     <div class="form-group">
-        <h4>Participant</h4>
+        <h4>Participant #1</h4>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -121,7 +121,7 @@
             <div class="form-group">
                 @if ($event->allow_anonymous)
                     <div class="form-group">
-                        {!!  Form::checkbox('anonymous',1,null) !!} Anonymous
+                        {!!  Form::checkbox('part['.$id.'][anonymous]',1,null) !!} Anonymous
                     </div>
                 @endif
             </div>
@@ -154,7 +154,7 @@
     <div class="col-md-4">
 
         <button type="button" class='btn btn-primary another_entry' data-event="{{$event->id}}" id="another"
-                data-id="{{$id}}">Add another Entry
+                data-id="1">Add another Entry
         </button>
     </div>
 </div>
