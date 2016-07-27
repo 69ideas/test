@@ -1,6 +1,7 @@
 BA.Actions = {
 
     init: function (context) {
+        $('.participant-form', context).submit(BA.Events.ParticipantSubmit).change();
         $('.carusel-remove-row', context).click(BA.Events.CaruselDeleteRow).change();
         $('.carusel-add-row', context).click(BA.Events.CaruselAddRow).change();
 
@@ -31,7 +32,7 @@ BA.Actions = {
             zIndex:100000
         });
 
-        $("form").submit(function(){
+        $("form:not(.dont-disable)").submit(function(){
             $(this).find('[type="submit"]').prop('disabled', true);
         });
         tinymce.init(BA.Options.wysiwyg);

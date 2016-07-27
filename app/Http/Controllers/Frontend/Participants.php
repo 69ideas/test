@@ -63,7 +63,8 @@ class Participants extends Controller
 
         if ($request->ajax()) {
             $response = [
-                'url' => route('admin.participant.entity_list', ['type' => $type, 'id' => $id])
+                'url' => route('admin.participant.entity_list', ['type' => $type, 'id' => $id]),
+                'previous_url' => redirect()->back()->getTargetUrl()
             ];
         } else {
             $response = redirect()

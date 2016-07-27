@@ -250,19 +250,21 @@ BA.Events = {
         })
     },
     AnotherEntry: function (e) {
-        //if ($(this).is(':checked')) {
-        if ($('#another_entry > div').length + 1 < 4) {
-            $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + ($('#another_entry > div').length + 1), null, function (data) {
-                var content = $(data);
-
-                $('#another_entry').append(content);
-                BA.Actions.init(content);
-                if ($('#another_entry > div').length > 2) {
-                    $('#another').hide();
-                }
+        //if ($('#another_entry > div').length + 1 < 4) {
+        $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + $(this).data('id'), null, function (data) {
+            var content = $(data);
+            $('#another_entry').append(content);
+            BA.Actions.init(content);
+            $('.participant_number').each(function(index){
+                $(this).text("Participant #" + (index + 2));
             });
-        }
-
+            var i = parseInt($('#another').data('id')) + 1;
+            $('#another').data('id', i);
+            if ($('#another_entry > div').length > 2) {
+                $('#another').hide();
+            }
+        });
+        //}
         console.log('th');
 
     },
@@ -270,12 +272,50 @@ BA.Events = {
     DeleteAnotherEntry: function (e) {
         var that = this;
         $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + $(this).data('id'), null, function (data) {
+            var content = $(data);
+            BA.Actions.init(content);
+            $('.participant_number').each(function(index){
+                $(this).text("Participant #" + (index + 2));
+            });
         });
         $('#another_' + $(that).data('id')).remove();
         if ($('#another_entry > div').length < 3) {
             $('#another').show();
         }
 
-    }
+    },
 
+    ParticipantSubmit: function (e) {
+        $.ajax({
+            type: 'post',
+            url: '/participant',
+            data: $("#payment_form").serialize(),
+            dataType: 'json',
+            success: function (data) {
+                window.location.href = data.previous_url;
+            },
+            error: function (data) {
+                $(".help-block").remove();
+                $(".has-error").removeClass("has-error");
+                if (data.status === 422) {
+                    var errors = data.responseJSON;
+                    console.log(errors);
+                    $.each(errors, function (key, value) {
+                        $(document.getElementsByName(key)).parent().parent().addClass("has-error");
+                        $(document.getElementsByName(key)).parent().parent().append("<span class=\" help-block\">" + value + "</span>");
+                    });
+                }
+            }
+        });
+        return false;
+        //var amount = parseInt($(this).find('[name="amount_deposited"]').val());
+        //if (isNaN(amount))
+        //    amount = 0;
+        //if (amount == 0) {
+        //    $(document.getElementsByName("amount_deposited")).parent().parent().addClass("has-error");
+        //    $(document.getElementsByName("amount_deposited")).parent().parent().append("<span class=\" help-block\">The amount field is required</span>");
+        //    $(this).find('[type="submit"]').prop('disabled', false);
+        //    return false;
+        //}
+    }
 };

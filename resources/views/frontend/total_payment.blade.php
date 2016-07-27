@@ -1,9 +1,10 @@
 <div>
     @foreach($response as $item)
+        <hr>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label>Amount
+                <label>Amount {{$item['mid']}}
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
@@ -16,7 +17,7 @@
                 {!! Form::text('', '$'.number_format($item['donation'],2), ['class'=>'form-control', 'disabled'=>'disabled']) !!}
             </div>
             <div class="form-group">
-                <label>CC Fees
+                <label>CC Fees {{$item['mid']}}
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
@@ -34,7 +35,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label>VXP Fees
+                <label>VXP Fees {{$item['mid']}}
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
@@ -51,7 +52,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <label>Total
+                <label>Total {{$item['mid']}}
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
