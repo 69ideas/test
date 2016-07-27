@@ -24,6 +24,7 @@ BA.Actions = {
 
         $('.another_entry', context).click(BA.Events.AnotherEntry);
         $('.delete_another_entry', context).click(BA.Events.DeleteAnotherEntry);
+        $('.anon', context).click(BA.Events.SwitchAnon);
 
         console.log($('.datepicker',context));
         $('.datepicker',context).datepicker({
