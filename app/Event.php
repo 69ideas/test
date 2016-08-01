@@ -161,4 +161,11 @@ class Event extends Model implements SluggableInterface
         return $total;
     }
 
+    public function isCoordinator($user)
+    {
+        if(is_null($user))
+            return false;
+
+        return $this->user_id == $user->id;
+    }
 }

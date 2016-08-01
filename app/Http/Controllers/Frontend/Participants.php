@@ -18,17 +18,19 @@ class Participants extends Controller
         $page_title = 'Adding participant';
         $participant = new Participant();
         $event = Event::find(\Request::get('id'));
-        $participant->deposit_date=Carbon::now();
+        $participant->deposit_date = Carbon::now();
         if ($event->allow_anonymous) {
-            $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
+            $users = [null => '--Not set--'] + User:: where('filled', 1)->orderByName()->get()->pluck('full_name',
+                    'id')->all();
         } else {
-            $users = User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
+            $users = User:: where('filled', 1)->orderByName()->get()->pluck('full_name', 'id')->all();
         }
 
         return [
             'error_code' => 0,
-            'title' => 'Add participant',
-            'content' => view('frontend.events.participants.add', compact('deposit_date','participant', 'users','page_title'))->render()
+            'title'      => 'Add participant',
+            'content'    => view('frontend.events.participants.add',
+                compact('deposit_date', 'participant', 'users', 'page_title'))->render(),
         ];
     }
 
@@ -37,12 +39,11 @@ class Participants extends Controller
         $participant = new Participant();
         if ($request->get('user_id') != 0) {
             $participant->user_id = $request->get('user_id');
-        }
-        else{
+        } else {
             $user = \App\User::where('email', '=', $request->get('email'))->first();
             if ($user === null) {
-                $participant->name=$request->get('name');
-                $participant->email=$request->get('email');
+                $participant->name = $request->get('name');
+                $participant->email = $request->get('email');
             } else {
                 $participant->user_id = $user->user_id;
                 $participant->name = $user->full_name;
@@ -63,8 +64,8 @@ class Participants extends Controller
 
         if ($request->ajax()) {
             $response = [
-                'url' => route('admin.participant.entity_list', ['type' => $type, 'id' => $id]),
-                'previous_url' => redirect()->back()->getTargetUrl()
+                'url'          => route('admin.participant.entity_list', ['type' => $type, 'id' => $id]),
+                'previous_url' => redirect()->back()->getTargetUrl(),
             ];
         } else {
             $response = redirect()
@@ -75,8 +76,27 @@ class Participants extends Controller
         return $response;
 
     }
-    public function payment_extended_info(){
+
+    public function payment_extended_info()
+    {
         return view('frontend.events.participants.payment_extended_info');
+    }
+
+    public function refund(Participant $participant)
+    {
+        $name = $participant->name;
+        if ($participant->payment_id == null) {
+            $participant->delete();
+
+            return back()->with('success_message', 'Participant ' . $name . ' was removed');
+        }
+        else
+        {
+            $participant->payment->status = 'Pending refund';
+            $participant->payment->save();
+
+            return back()->with('success_message', 'Participant ' . $name . ' maked as "Panding refund". We will check PayPal and delete or restore payment');
+        }
     }
 
 }
