@@ -17,14 +17,10 @@ class Participants extends Controller
     {
         $page_title = 'Adding participant';
         $participant = new Participant();
-        $event = Event::find(\Request::get('id'));
         $participant->deposit_date=Carbon::now();
         $needable_sum = \Request::get('needable_sum');
-        if ($event->allow_anonymous) {
-            $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
-        } else {
-            $users = User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
-        }
+        $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
+
 
         return [
             'error_code' => 0,
