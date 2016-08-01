@@ -9,6 +9,7 @@
             <th>Coordinator Collected</th>
             <th>CC Fees</th>
             <th>Total Collected</th>
+            <th>Refund</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
                 <td>${{ number_format($participant->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($participant->cc_fees, 2) }}</td>
                 <td>${{ number_format($participant->amount_deposited, 2) }}</td>
+                @if ($entity->isCoordinator(auth()->user()))
+                    <td><a href="{!! route('participant.refund', [$participant]) !!}">Refund</a></td>
+                @endif
             </tr>
         @empty
             <tr class="bg-info">
@@ -38,6 +42,7 @@
                 <td>${{ number_format($entity->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($entity->commission, 2) }}</td>
                 <td>${{ number_format($entity->total, 2) }}</td>
+                <td></td>
             </tr>
         @endif
         </tfoot>
@@ -45,11 +50,12 @@
     @if(!$entity->is_close)
         @if(\Auth::user())
             <div class="row">
-                @if ($entity->user_id==\Auth::user()->id && is_null($event->closed_date))
+                @if ($entity->isCoordinator(auth()->user()) && is_null($event->closed_date))
                     <div class="col-xs-3">
                         <div class="form-group">
                             <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}"
-                               class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator Payment
+                               class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator
+                                Payment
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
