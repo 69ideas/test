@@ -50,7 +50,7 @@
     @if(!$entity->is_close)
         @if(\Auth::user())
             <div class="row">
-                @if ($entity->user_id==\Auth::user()->id && (count($event->participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                @if ($entity->user_id==\Auth::user()->id && ((count($event->participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
                     <div class="col-xs-3">
                         <div class="form-group">
                             <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}"
