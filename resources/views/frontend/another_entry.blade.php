@@ -13,9 +13,21 @@
                                 data-placement="top"
                                 title="Name"
                         >
-                            <i class="fa fa-info-circle"></i>
+                            <i class="fa fa-info-circle">&nbsp&nbsp&nbsp</i>
                         </small>
                     </label>
+                    @if ($event->allow_anonymous)
+                        <label>{!!  Form::checkbox('part['.$id.'][anonymous]',1,null,['class'=>'anon']) !!}
+                            Anonymous
+                            <small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Your name will appear as Anonymous to all but the coordinator"
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
+                        </label>
+                    @endif
                     {!! Form::text('part['.$id.'][name]', null, ['class'=>'form-control', 'placeholder'=>'Enter Name']) !!}
                 </div>
             </div>
@@ -25,7 +37,7 @@
                         <small
                                 data-toggle="tooltip"
                                 data-placement="top"
-                                title="Enter E-mail"
+                                title="You will receive emails when changes are made to the event"
                         >
                             <i class="fa fa-info-circle"></i>
                         </small>
@@ -37,19 +49,11 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Amount
-                        <small
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Enter Amount"
-                        >
-                            <i class="fa fa-info-circle"></i>
-                        </small>
-                    </label>
+                    <label>Amount</label>
                     @if($event->needable_sum>0)
                         {!! Form::text('part['.$id.'][amount]', number_format($event->needable_sum,2), ['class'=>'form-control related-payment', 'id'=>'amount_2', 'placeholder'=>'Enter Amount','readonly'=>'readonly']) !!}
                     @else
-                        {!! Form::text('part['.$id.'][amount]', null, ['class'=>'form-control related-payment', 'id'=>'amount_2']) !!}
+                        {!! Form::text('part['.$id.'][amount]', null, ['class'=>'form-control related-payment', 'id'=>'amount_2', 'placeholder'=>'Enter Amount']) !!}
                     @endif
                 </div>
             </div>
@@ -69,16 +73,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @if ($event->allow_anonymous)
-                        <div class="form-group">
-                            <label>{!!  Form::checkbox('part['.$id.'][anonymous]',1,null,['class'=>'anon']) !!} Anonymous</label>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <button type="button" class='btn btn-primary btn-sm delete_another_entry pull-right'
                             data-event="{{$event->id}}"

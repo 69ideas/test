@@ -1,7 +1,7 @@
 <div class="box-body">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label>Participant:
                     <small
                             data-toggle="tooltip"
@@ -24,7 +24,11 @@
                                         &nbsp;<i class="fa fa-dollar"></i>&nbsp;</button>
 
                                  </span>
-                    {!!  Form::text('amount_deposited',null,['class'=>"form-control"]) !!}
+                    @if($needable_sum>0)
+                        {!!  Form::text('amount_deposited', number_format($needable_sum,2),['class'=>"form-control", 'readonly'=>'readonly']) !!}
+                    @else
+                        {!!  Form::text('amount_deposited',null,['class'=>"form-control"]) !!}
+                    @endif
                 </div>
             </div>
         <!--<div class="form-group">

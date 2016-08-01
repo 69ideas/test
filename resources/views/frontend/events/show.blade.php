@@ -72,9 +72,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Number of Participants</label>
+                                <label>Maximum number of participants</label>
                                 <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else
                                         No limit @endif</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Number of Participants</label>
+                                <p class="form-control-static">{{$event->participants->count()}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Amount per Participant</label>

@@ -44,7 +44,7 @@ class PayReceipt extends Controller
             $payment->save();
             foreach ($parts as $item) {
                 $participant = new Participant();
-                if ($item['anonymous']==true) {
+                if (array_get($item, 'anonymous', false)==true) {
                     $participant->name = 'Anonymous';
                 } else {
                     $participant->name = $item['name'];

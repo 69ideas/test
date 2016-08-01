@@ -4,16 +4,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label>Amount {{$item['mid']}}
-                    <small
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Amount"
-                    >
-                        <i class="fa fa-info-circle"></i>
-                    </small>
-                </label>
-
+                <label>Amount {{$item['mid']}}</label>
                 {!! Form::text('', '$'.number_format($item['donation'],2), ['class'=>'form-control', 'disabled'=>'disabled']) !!}
             </div>
             <div class="form-group">
@@ -21,7 +12,7 @@
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="CC Fees"
+                            title="PayPal Credit Card Fee of 2.9% + 30 cents"
                     >
                         <i class="fa fa-info-circle"></i>
                     </small>
@@ -39,7 +30,7 @@
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="VXP Fees"
+                            title="VaultX fee of .5% no less than 20 cents"
                     >
                         <i class="fa fa-info-circle"></i>
                     </small>
@@ -56,7 +47,7 @@
                     <small
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="This is the sum which You should pay on Paypal with commissions"
+                            title="Exactly what is charged for this entry"
                     >
                         <i class="fa fa-info-circle"></i>
                     </small>
@@ -75,7 +66,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="Total Payment"
+                        title="Exactly what is charged for all entries"
                 >
                     <i class="fa fa-info-circle"></i>
                 </small>

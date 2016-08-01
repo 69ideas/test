@@ -19,6 +19,7 @@ class Participants extends Controller
         $participant = new Participant();
         $event = Event::find(\Request::get('id'));
         $participant->deposit_date=Carbon::now();
+        $needable_sum = \Request::get('needable_sum');
         if ($event->allow_anonymous) {
             $users = [null => '--Not set--'] + User:: where('filled',1)->orderByName()->get()->pluck('full_name', 'id')->all();
         } else {
@@ -28,7 +29,7 @@ class Participants extends Controller
         return [
             'error_code' => 0,
             'title' => 'Add participant',
-            'content' => view('frontend.events.participants.add', compact('deposit_date','participant', 'users','page_title'))->render()
+            'content' => view('frontend.events.participants.add', compact('deposit_date','participant', 'users','page_title', 'needable_sum'))->render()
         ];
     }
 
