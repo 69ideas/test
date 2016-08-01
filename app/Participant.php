@@ -34,6 +34,16 @@ class Participant extends Model
         return $this->belongsTo(Payment::class);
     }
 
+    public function getFullNameAttribute()
+    {
+        if ($this->name != "") return $this->name;
+        elseif ($this->user_id != null) {
+            return $this->user->full_name;
+        } else {
+            return $this->email;
+        }
+
+    }
 
     public function getIsHandsPaymentAttribute()
     {

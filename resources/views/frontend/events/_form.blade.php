@@ -72,6 +72,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            @if(count($event->participants)>=$event->number_participants)
+                                <tr>
+                                    <td colspan="7"><p style="color:red">Maximum number of participants has been reached</p></td>
+                                </tr>
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <label>Enter Number of Participants
                                 <small
                                         data-toggle="tooltip"
@@ -81,7 +88,7 @@
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                             </label>
-                            {!! Form::text('number_participants', 0, ['class'=>'form-control', 'placeholder'=>'Enter Number of Participants']) !!}
+                            {!! Form::text('number_participants', $event->number_participants, ['class'=>'form-control', 'placeholder'=>'Enter maximum number of Participants']) !!}
                         </div>
 
                         <div class="form-group">
@@ -212,7 +219,6 @@
                             <label>Image</label>
                             {!! Form::file('image') !!}
                         </div>
-
                     </div>
                 </div>
             </div>

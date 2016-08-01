@@ -17,20 +17,18 @@ class Participants extends Controller
     {
         $page_title = 'Adding participant';
         $participant = new Participant();
-        $event = Event::find(\Request::get('id'));
+
         $participant->deposit_date = Carbon::now();
-        if ($event->allow_anonymous) {
-            $users = [null => '--Not set--'] + User:: where('filled', 1)->orderByName()->get()->pluck('full_name',
-                    'id')->all();
-        } else {
-            $users = User:: where('filled', 1)->orderByName()->get()->pluck('full_name', 'id')->all();
-        }
+        $needable_sum = \Request::get('needable_sum');
+        $users = [null => '--Not set--'] + User:: where('filled', 1)->orderByName()->get()->pluck('full_name', 'id')->all();
+
 
         return [
             'error_code' => 0,
             'title'      => 'Add participant',
             'content'    => view('frontend.events.participants.add',
-                compact('deposit_date', 'participant', 'users', 'page_title'))->render(),
+                compact('deposit_date', 'participant', 'users', 'page_title', 'needable_sum')
+            )->render(),
         ];
     }
 
@@ -89,13 +87,12 @@ class Participants extends Controller
             $participant->delete();
 
             return back()->with('success_message', 'Participant ' . $name . ' was removed');
-        }
-        else
-        {
+        } else {
             $participant->payment->status = 'Pending refund';
             $participant->payment->save();
 
-            return back()->with('success_message', 'Participant ' . $name . ' maked as "Panding refund". We will check PayPal and delete or restore payment');
+            return back()->with('success_message',
+                'Participant ' . $name . ' maked as "Panding refund". We will check PayPal and delete or restore payment');
         }
     }
 
