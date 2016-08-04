@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Number of Participants</label>
-                                <p class="form-control-static">{{$event->participants->count()}}</p>
+                                <p class="form-control-static">{{$event->payed_participants->count()}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Amount per Participant</label>

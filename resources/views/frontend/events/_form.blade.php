@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @if(count($event->participants)>=$event->number_participants && !is_null($event->closed_date))
+                            @if(count($event->payed_participants)>=$event->number_participants && !is_null($event->closed_date))
                                 <p style="color:red">Maximum number of participants has been
                                     reached</p>
                             @endif
