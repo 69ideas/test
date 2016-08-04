@@ -91,7 +91,7 @@
         @endif
         @if($entity->number_participants != 0 && ($entity->participants->count() >= $entity->number_participants))
             <tr>
-                <td colspan="7"><p style="color:red">Maximum number of participants has been reached</p></td>
+                <td colspan="8"><p style="color:red">Maximum number of participants has been reached</p></td>
             </tr>
         @endif
         </tfoot>
