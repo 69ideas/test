@@ -3,7 +3,7 @@
 
         @if (!isset($event->closed_date))
             <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('frontend.event.close', 'Close event', [$event], ['class'=>'btn btn-block btn-primary pull-right']) }}
+                {{ link_to_route('frontend.event.close', 'Close event', [$event], ['class'=>'btn btn-block btn-primary pull-right', 'data-toggle'=>"tooltip", 'data-placement'=>"top", 'title'=>"This will close your event so no one can make any more deposits.  You can reopen afterwards"]) }}
             </div>
         @else
             <div class="col-sm-10">
@@ -74,7 +74,8 @@
                         <div class="form-group">
                             @if(count($event->participants)>=$event->number_participants && !is_null($event->closed_date))
                                 <tr>
-                                    <td colspan="7"><p style="color:red">Maximum number of participants has been reached</p></td>
+                                    <td colspan="7"><p style="color:red">Maximum number of participants has been
+                                            reached</p></td>
                                 </tr>
                             @endif
                         </div>
