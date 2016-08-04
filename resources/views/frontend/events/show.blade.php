@@ -99,20 +99,23 @@
 
             </div>
             @include('frontend.events._tabs')
-            @if(\Auth::user()->id==$event->user_id)
-                <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
-                            class="fa fa-pencil"></i>
-                    Edit
-                </a>
-                <a href="/event/send?id={{$event->id}}"
-                   class="btn btn-primary send-event" style="background: #49658A;"><i class="fa fa-envelope-o"></i>
-                    Send Event
-                </a>
+            @if(\Auth::user()!=null)
+                @if(\Auth::user()->id==$event->user_id)
+                    <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
+                                class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                    <a href="/event/send?id={{$event->id}}"
+                       class="btn btn-primary send-event" style="background: #49658A;"><i class="fa fa-envelope-o"></i>
+                        Email Invite
+                    </a>
+
+                    <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
+                                class="fa fa-angle-double-left"></i>
+                        Back
+                    </a>
+                @endif
             @endif
-                <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
-                            class="fa fa-angle-double-left"></i>
-                    Back
-                </a>
         </div>
     </div>
     <div class="row">

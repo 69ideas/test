@@ -38,11 +38,51 @@
                         </small>
 
                     </th>
-                    <th>Short Description</th>
-                    <th>Total Collected</th>
-                    <th>Total Contributed by user</th>
-                    <th>Start Date</th>
-                    <th>Close Date</th>
+                    <th>Short Description
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Short Description"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </th>
+                    <th>Total Collected
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Total Collected"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </th>
+                    <th>Total Contributed by user
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Total Contributed by user"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </th>
+                    <th>Start Date
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Date event will be started."
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </th>
+                    <th>Close Date
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="This is a suggested date.  The Event will not automatically close after the date, nor will it keep a participant from being able to make a payment"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </th>
                     <th>Action</th>
                 </tr>
                 </thead>

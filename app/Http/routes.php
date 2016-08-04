@@ -38,8 +38,6 @@ Route::post('forgot', ['as' => 'forgot.post', 'uses' => 'Frontend\AuthController
 Route::get('find', ['as' => 'find', 'uses' => 'Frontend\Pages@find']);
 Route::post('find', ['as' => 'find.post', 'uses' => 'Frontend\Pages@post_find']);
 
-
-
 Route::group(["middleware" => ['auth']], function () {
     Route::get('profile', ['as' => 'profile', 'uses' => 'Frontend\Home@profile']);
     Route::get('events', ['as' => 'event', 'uses' => 'Frontend\Home@event']);
@@ -80,3 +78,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin\\'], function () {
     });
 });
 Route::get('{url}', ['as' => 'page', 'uses' => 'Frontend\Pages@page']);
+Route::get('/event/{event}', ['as' => 'event.show', 'uses' => 'Frontend\Events@show']);

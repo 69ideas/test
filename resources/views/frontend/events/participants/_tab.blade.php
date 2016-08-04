@@ -2,14 +2,72 @@
     <table class="searchable table table-bordered table-hover">
         <thead>
         <tr>
-            <th>Date Collected</th>
-            <th>Name of Participant</th>
-            <th>Method</th>
-            <th>VaultX Collected</th>
-            <th>Coordinator Collected</th>
-            <th>CC Fees</th>
-            <th>Total Collected</th>
-            <th>Refund</th>
+            <th>Date Collected
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Data when payment was made">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>Name of Participant
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Name of the person who give money">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>Method
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="How participant payed">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>VaultX Collected
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Commission of VaultX">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>Coordinator Collected
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="How much coordinator got for this event">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>CC Fees
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="CC Fee">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>Total Collected
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Total Collected">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+
+            <th>Refund
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Mark payment as refunded">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+
         </tr>
         </thead>
         <tbody>
@@ -35,7 +93,7 @@
         @endforelse
         </tbody>
         <tfoot>
-        @if($entity->participants->count() > 0)
+        @if($entity->payed_participants->count() > 0)
             <tr>
                 <td colspan="3" style="text-align: right">Total:</td>
                 <td>${{ number_format($entity->vault_x_collected, 2) }}</td>
@@ -45,41 +103,41 @@
                 <td></td>
             </tr>
         @endif
-        @if($entity->number_participants != 0 && ($entity->participants->count() >= $entity->number_participants))
+        @if($entity->number_participants != 0 && ($entity->payed_participants->count() >= $entity->number_participants))
             <tr>
-                <td colspan="7"><p style="color:red">Maximum number of participants has been reached</p></td>
+                <td colspan="8"><p style="color:red">Maximum number of participants has been reached</p></td>
             </tr>
         @endif
         </tfoot>
     </table>
-    @if(!$entity->is_close)
-        @if(\Auth::user())
-            <div class="row">
-                @if ($entity->isCoordinator(auth()->user()) && ((count($event->participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}"
-                               class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator Payment
-                                <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Payments made to coordinator in cash"
-                                >
-                                    <i class="fa fa-info-circle"></i>
-                                </small>
-                            </a>
-                        </div>
+    <div class="row">
+        @if(!$entity->is_close)
+            @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}"
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator
+                            Payment
+                            <small
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Payments made to coordinator in cash"
+                            >
+                                <i class="fa fa-info-circle"></i>
+                            </small>
+                        </a>
+                    </div>
+                </div>
+            @endif
+
+            <div class="col-xs-3">
+                @if((count($event->participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                    <div class="form-group">
+                        <a href="{{route('payment',[$event])}}"
+                           class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
                     </div>
                 @endif
-                <div class="col-xs-3">
-                    @if((count($event->participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
-                        <div class="form-group">
-                            <a href="{{route('payment',[$event])}}"
-                               class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
-                        </div>
-                    @endif
-                </div>
             </div>
         @endif
-    @endif
+    </div>
 </div>

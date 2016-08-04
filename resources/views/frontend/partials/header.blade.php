@@ -13,7 +13,7 @@
                 <li class="{{$active_login or ''}}"> @if (!\Auth::user()) <a href="/login">Login/Register</a>@endif</li>
                 @if (\Auth::user())
                     <li><a href="/logout">Logout</a></li>
-                    <li class="{{$active_event or ''}}"><a href="/event">@if(\Auth::user()->username){!! \Auth::user()->username !!} @else  {!! \Auth::user()->email !!} @endif</a></li>
+                    <li class="{{$active_event or ''}}"><a href="/event">@if(\Auth::user()->username)Click for {!! \Auth::user()->username !!} member page @else  {!! \Auth::user()->email !!} @endif</a></li>
                 @endif
             </ul>
             <div class="bars text-right">
