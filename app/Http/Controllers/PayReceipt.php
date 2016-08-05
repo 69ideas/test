@@ -26,7 +26,6 @@ use PayPal\Types\Common\PhoneNumberType;
 use PayPal\Types\Common\RequestEnvelope;
 
 
-
 class PayReceipt extends Controller
 {
     public function doAction(Requests\PayRequest $request, Event $event)
@@ -44,7 +43,7 @@ class PayReceipt extends Controller
             $payment->save();
             foreach ($parts as $item) {
                 $participant = new Participant();
-                if (array_get($item, 'anonymous', false)==true) {
+                if (array_get($item, 'anonymous', false) == true) {
                     $participant->name = 'Anonymous';
                 } else {
                     $participant->name = $item['name'];
@@ -69,32 +68,25 @@ class PayReceipt extends Controller
 
             $receiver1 = new Receiver();
             $receiver1->email = $event->paypal_email;
-            $receiver1->amount = Payment::CountWithFee($payment->amount, $event);
+            $receiver1->amount = (string)Payment::CountWithFee($payment->amount, $event);
             $receiver1->primary = true;
 
 
             $receiver2 = new Receiver();
-            $receiver2->email =config('app.admin_email'); 
-            $receiver2->amount = Payment::CountFeeVXP($payment->amount, $event, true);
+            $receiver2->email = config('app.admin_email');
+            $receiver2->amount = (string)Payment::CountFeeVXP($payment->amount, $event, true);
             $receiver2->primary = false;
-            $receiverList = new ReceiverList([$receiver1, $receiver2]);
+
+            $list = [$receiver1, $receiver2];
+
+            $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('home'));
+
             $payRequest->feesPayer = 'PRIMARYRECEIVER';
 
-
-            $payRequest->fundingConstraint = new FundingConstraint();
-
-            $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
-            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
-            if ($request->get('type') == 'paypal') {
-                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('BALANCE');
-            } else {
-                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('ECHECK');
-            }
             //
             //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
-
 
             $service = new AdaptivePaymentsService();
             try {
@@ -110,6 +102,7 @@ class PayReceipt extends Controller
             $payPalURL = PAYPAL_REDIRECT_URL . '_ap-payment&paykey=' . $token;
 
         });
+
         return response()->json(['redirect' => $payPalURL]);
 
     }
@@ -127,6 +120,7 @@ class PayReceipt extends Controller
                 }
             }
         }
+
         return "";
     }
 
@@ -137,17 +131,17 @@ class PayReceipt extends Controller
         $amounts = json_decode($request->get('amounts', '[]'), true);
         $event = Event::find($request->get('event'));
         $response = [];
-        $mid=1;
+        $mid = 1;
         foreach ($amounts as $amount) {
-            $amount = str_replace(',','',$amount);
+            $amount = str_replace(',', '', $amount);
             $item = [
-                'mid'=>$mid,
-                'vxp' => Payment::CountFeeVXP($amount, $event, true),
-                'cc' => Payment::CountFeeCC($amount, $event, true),
-                'total' => Payment::CountWithFee($amount, $event),
+                'mid'      => $mid,
+                'vxp'      => Payment::CountFeeVXP($amount, $event, true),
+                'cc'       => Payment::CountFeeCC($amount, $event, true),
+                'total'    => Payment::CountWithFee($amount, $event),
                 'donation' => Payment::CountDonation($amount, $event),
             ];
-            $mid=$mid+1;
+            $mid = $mid + 1;
             $response[] = $item;
         }
 
@@ -160,6 +154,7 @@ class PayReceipt extends Controller
     {
         $event = Event::find($request->get('event'));
         $id = $request->get('id');
+
         return view('frontend.another_entry', compact('event', 'id'));
     }
 
