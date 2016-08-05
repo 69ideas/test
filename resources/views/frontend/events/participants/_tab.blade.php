@@ -100,7 +100,9 @@
                 <td>${{ number_format($entity->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($entity->commission, 2) }}</td>
                 <td>${{ number_format($entity->total, 2) }}</td>
-                <td></td>
+                @if ($entity->isCoordinator(auth()->user()))
+                    <td></td>
+                @endif
             </tr>
         @endif
         @if($entity->number_participants != 0 && ($entity->payed_participants->count() >= $entity->number_participants))
