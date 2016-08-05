@@ -1,17 +1,19 @@
 <div class="row">
     <div class="row">
 
-        @if (!isset($event->closed_date))
-            <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('frontend.event.close', 'Close event', [$event], ['class'=>'btn btn-block btn-primary pull-right', 'data-toggle'=>"tooltip", 'data-placement'=>"top", 'title'=>"This will close your event so no one can make any more deposits.  You can reopen afterwards"]) }}
-            </div>
-        @else
-            <div class="col-sm-10">
-                <h1><span class="label label-danger">CLOSED</span></h1>
-            </div>
-            <div class="col-sm-4 col-sm-offset-8">
-                {{ link_to_route('frontend.event.open', 'Open event', [$event], ['class'=>'btn btn-block btn-primary pull-right']) }}
-            </div>
+        @if($event->exists)
+            @if (!isset($event->closed_date))
+                <div class="col-sm-4 col-sm-offset-8">
+                    {{ link_to_route('frontend.event.close', 'Close event', [$event], ['class'=>'btn btn-block btn-primary pull-right', 'data-toggle'=>"tooltip", 'data-placement'=>"top", 'title'=>"This will close your event so no one can make any more deposits.  You can reopen afterwards"]) }}
+                </div>
+            @else
+                <div class="col-sm-10">
+                    <h1><span class="label label-danger">CLOSED</span></h1>
+                </div>
+                <div class="col-sm-4 col-sm-offset-8">
+                    {{ link_to_route('frontend.event.open', 'Open event', [$event], ['class'=>'btn btn-block btn-primary pull-right']) }}
+                </div>
+            @endif
         @endif
     </div>
     <div class="col-sm-12">
