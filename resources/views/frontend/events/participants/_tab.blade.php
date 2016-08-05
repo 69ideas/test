@@ -58,16 +58,16 @@
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
-
-            <th>Refund
-                <small
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Mark payment as refunded">
-                    <i class="fa fa-info-circle"></i>
-                </small>
-            </th>
-
+            @if ($entity->isCoordinator(auth()->user()))
+                <th>Refund
+                    <small
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Mark payment as refunded">
+                        <i class="fa fa-info-circle"></i>
+                    </small>
+                </th>
+            @endif
         </tr>
         </thead>
         <tbody>
