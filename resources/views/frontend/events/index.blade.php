@@ -120,8 +120,8 @@
                         </tr>
                     @endif
                 @empty
-                    <tr>
-                        <td colspan="7" class="bg-info text-center text-bold">
+                    <tr class="bg-info">
+                        <td colspan="7" class="text-center text-bold">
                             Events not found
                         </td>
                     </tr>
