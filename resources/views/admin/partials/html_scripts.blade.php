@@ -14,7 +14,6 @@
 <script src="//cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
 <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 <script src="/tinymce/plugins/responsivefilemanager/plugin.min.js" type="text/javascript"></script>
 <script src="/js/admin.js" type="text/javascript"></script>
