@@ -249,7 +249,6 @@ BA.Events = {
         })
     },
     AnotherEntry: function (e) {
-        //if ($('#another_entry > div').length + 1 < 4) {
         $.get('/another_entry?event=' + $('#another').data('event') + '&id=' + $(this).data('id'), null, function (data) {
             var content = $(data);
             $('#another_entry').append(content);
@@ -263,9 +262,12 @@ BA.Events = {
                 $('#another').hide();
             }
         });
-        //}
         console.log('th');
 
+    },
+
+    DeleteEvent: function (e) {
+        $("input[name='_method']").attr("value", "DELETE");
     },
 
     DeleteAnotherEntry: function (e) {

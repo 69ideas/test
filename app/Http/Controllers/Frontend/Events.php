@@ -99,7 +99,12 @@ class Events extends Controller
         return redirect()->route('event.show',$event)->with('success_message', 'Event was updated');
     }
     public function show(Event $event){
-        return view('frontend.events.show', compact('event'));
+        if (\Auth::check()) {
+            $is_guest = false;
+        } else {
+            $is_guest = true;
+        }
+        return view('frontend.events.show', compact('event', 'is_guest'));
     }
     public function close(Event $event){
         $event->is_close=true;
@@ -132,5 +137,10 @@ class Events extends Controller
                 ->subject($event->short_description);
         });
         return redirect()->route('event.show',$event);
+    }
+
+    public function destroy(Event $event) {
+        $event->delete();
+        return redirect()->route('event.index')->with('success_message', 'Event was successfully deleted');
     }
 }

@@ -92,7 +92,7 @@ class Participants extends Controller
             $participant->payment->save();
 
             return back()->with('success_message',
-                'Participant ' . $name . ' maked as "Panding refund". We will check PayPal and delete or restore payment');
+                'Participant ' . $name . ' maked as "Pending refund". We will check PayPal and delete or restore payment');
         }
     }
 

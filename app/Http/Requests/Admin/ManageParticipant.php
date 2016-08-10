@@ -27,7 +27,15 @@ class ManageParticipant extends Request
             'amount_deposited' => 'required',
             'name' => 'required',
             'email' => 'required',
-            'deposit_date' => 'required',
+            'deposit_date' => 'required|date|after:start_date',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'deposit_date.after' => 'The deposit date must be a date after event\'s start date.',
+            'amount_deposited.required' => 'The amount deposit field is required.',
         ];
     }
 }

@@ -117,9 +117,8 @@
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
                 <div class="col-xs-3">
                     <div class="form-group">
-                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator
-                            Payment
+                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator Payment
                             <small
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -133,7 +132,7 @@
             @endif
 
             <div class="col-xs-3">
-                @if((count($event->participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
                     <div class="form-group">
                         <a href="{{route('payment',[$event])}}"
                            class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>

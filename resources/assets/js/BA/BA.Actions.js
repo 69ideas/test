@@ -21,7 +21,7 @@ BA.Actions = {
         $('.related-payment', context).keyup(BA.Events.RelatedPayment);
         $('.type', context).change(BA.Events.RelatedPayment);
         $('.related-payment', context).keyup();
-
+        $('.delete_event', context).click(BA.Events.DeleteEvent);
         $('.another_entry', context).click(BA.Events.AnotherEntry);
         $('.delete_another_entry', context).click(BA.Events.DeleteAnotherEntry);
         $('.anon', context).click(BA.Events.SwitchAnon);

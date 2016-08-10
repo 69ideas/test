@@ -20,7 +20,7 @@
             <h1>Event # {{$event->event_number}}</h1>
             <h2>{{$event->short_description}}</h2>
             <h3 style="text-align: right">Coordinator: {{$event->user->full_name}} </h3>
-            <h4 style="text-align: right">Coordinar's Email: {{$event->user->email}}</h4>
+            <h4 style="text-align: right">Coordinator's Email: {{$event->user->email}}</h4>
             <div class="box">
                 <div class="box-header with-border">
                     <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -124,3 +124,30 @@
 
 
 @endsection
+@if($is_guest)
+    <script>
+        function close_modal_div() {
+            $('#modal_div').hide()
+        }
+    </script>
+    <div id="modal_div" class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="close_modal_div()">&times;</button>
+                    <h4 class="modal-title">Please login</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You are logged in as a GUEST. Would you like create/login to your account?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{route('login')}}" type="button" class="btn btn-default">Yes</a>
+                    <button type="button" class="btn btn-default" onclick="close_modal_div()">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endif
