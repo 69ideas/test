@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @if(count($event->payed_participants)>=$event->number_participants && !is_null($event->closed_date))
+                            @if(count($event->payed_participants)>=$event->number_participants && !is_null($event->closed_date) && $event->number_participants != 0)
                                 <p style="color:red">Maximum number of participants has been
                                     reached</p>
                             @endif
@@ -87,7 +87,7 @@
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                             </label>
-                            {!! Form::text('number_participants', $event->number_participants, ['class'=>'form-control', 'placeholder'=>'Enter maximum number of Participants']) !!}
+                            {!! Form::text('number_participants', isset($event->number_participants)? $event->number_participants : 0, ['class'=>'form-control', 'placeholder'=>'Enter maximum number of Participants']) !!}
                         </div>
 
                         <div class="form-group">
@@ -111,7 +111,7 @@
 
 
                                  </span>
-                                    {!! Form::text('needable_sum', null, ['placeholder'=>'No set amount','class'=>'form-control']) !!}
+                                    {!! Form::text('needable_sum', 0, ['placeholder'=>'No set amount','class'=>'form-control']) !!}
 
                                 </div>
                             @endif
@@ -227,5 +227,21 @@
                     class="fa fa-angle-double-left"></i>
             Back
         </a>
+        @if (isset($event->id) && ($event->payed_participants->count()==0))
+        <button onclick="return confirm('Event will be deleted. Are you sure?')" class="btn btn-primary pull-right delete_event" style="background: #ff0000; border-color: #ff0000;"><i
+                    class="fa fa-trash"></i>
+            Delete event
+        </button>
+        @endif
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.form-control').keypress(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

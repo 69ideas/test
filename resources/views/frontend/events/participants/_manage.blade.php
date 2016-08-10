@@ -53,6 +53,7 @@
             </div>
         </div>
     </div>
+    {!! Form::hidden('start_date', \Request::get('start_date')) !!}
     {!! Form::hidden('type', \Request::get('type')) !!}
     {!! Form::hidden('id', \Request::get('id')) !!}
     <div class="form-group">

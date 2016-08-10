@@ -58,7 +58,7 @@
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
-
+            @if ($entity->isCoordinator(auth()->user()))
             <th>Refund
                 <small
                         data-toggle="tooltip"
@@ -67,7 +67,7 @@
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
-
+            @endif
         </tr>
         </thead>
         <tbody>
@@ -100,7 +100,9 @@
                 <td>${{ number_format($entity->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($entity->commission, 2) }}</td>
                 <td>${{ number_format($entity->total, 2) }}</td>
+                @if ($entity->isCoordinator(auth()->user()))
                 <td></td>
+                @endif
             </tr>
         @endif
         @if($entity->number_participants != 0 && ($entity->payed_participants->count() >= $entity->number_participants))
@@ -115,9 +117,8 @@
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
                 <div class="col-xs-3">
                     <div class="form-group">
-                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator
-                            Payment
+                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator Payment
                             <small
                                     data-toggle="tooltip"
                                     data-placement="top"
