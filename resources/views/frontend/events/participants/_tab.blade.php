@@ -59,14 +59,14 @@
                 </small>
             </th>
             @if ($entity->isCoordinator(auth()->user()))
-            <th>Refund
-                <small
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Mark payment as refunded">
-                    <i class="fa fa-info-circle"></i>
-                </small>
-            </th>
+                <th>Refund
+                    <small
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Mark payment as refunded">
+                        <i class="fa fa-info-circle"></i>
+                    </small>
+                </th>
             @endif
         </tr>
         </thead>
@@ -101,7 +101,7 @@
                 <td>${{ number_format($entity->commission, 2) }}</td>
                 <td>${{ number_format($entity->total, 2) }}</td>
                 @if ($entity->isCoordinator(auth()->user()))
-                <td></td>
+                    <td></td>
                 @endif
             </tr>
         @endif
