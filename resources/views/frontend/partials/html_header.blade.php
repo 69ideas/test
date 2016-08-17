@@ -29,6 +29,7 @@
 
     <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="/js/jquery.maskedinput.js" type="text/javascript"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
     <script src="/plugins/select2/select2.full.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -70,6 +71,25 @@
             $("#tin").mask("99-9999999");
             $("#ssn").mask("999-99-9999");
         });
+    </script>
+    <script>
+        $(document).ready(function(){
+            var waypoint = new Waypoint({
+                element: document.getElementById('waypoint'),
+                handler: function(direction) {
+                    if (direction == "down") {
+//                        $('#main-header').css("height", "64px");
+                        $('#main-header').addClass('et-fixed-header');
+                        $('#et-top-navigation').css("padding-top", "20px")
+                    } else {
+//                        $('#main-header').css("height", "90px");
+                        $('#main-header').removeClass('et-fixed-header');
+                        $('#et-top-navigation').css("padding-top", "33px")
+                    }
+                },
+                offset: 120
+            })
+        })
     </script>
     <script src="/js/AdminLTE.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
