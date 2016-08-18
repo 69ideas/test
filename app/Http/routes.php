@@ -15,10 +15,10 @@
 
 Route::get('/', ['as' => 'home', 'uses' => 'Frontend\Pages@home']);
 Route::get('login', ['as' => 'login', 'uses' => 'Frontend\AuthController@sign_in']);
-Route::get('success', ['as' => 'success', 'uses' => 'Frontend\AuthController@success']);
 Route::get('repeat', ['as' => 'repeat', 'uses' => 'Frontend\AuthController@repeat']);
 Route::post('login', ['as' => 'login.post', 'uses' => 'Frontend\AuthController@sign_in_post']);
 Route::get('register', ['as' => 'register', 'uses' => 'Frontend\AuthController@register']);
+Route::post('resend_the_link', ['as' => 'resend_the_link', 'uses' => 'Frontend\AuthController@resend_the_link']);
 Route::post('register', ['as' => 'register.post', 'uses' => 'Frontend\AuthController@register_post']);
 Route::get('/activate/{hash}', ['as' => 'activate', 'uses' => 'Frontend\AuthController@activate']);
 Route::get('/event/show/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Pages@event']);

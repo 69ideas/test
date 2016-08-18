@@ -58,10 +58,35 @@
                             page @else  {!! \Auth::user()->email !!} @endif</a></li>
                     @endif
                 </ul>
-                <div class="bars text-right">
-                    <i class="fa fa-bars"></i>
-                </div>
             </nav>
+            <div id="et_mobile_nav_menu">
+                <div class="mobile_nav closed">
+                    <span class="select_page">Select Page</span>
+                    <span class="mobile_menu_bar mobile_menu_bar_toggle">
+                        <i class="fa fa-bars" style="font-size:33px; color: #ffffff; cursor:pointer"></i>
+                    </span>
+                    <ul id="mobile_menu" class="et_mobile_menu"><li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54 et_first_mobile_item"><a href="http://www.quilibetmedia.com/vaultxit/simple/">Simple</a></li>
+                        @foreach($top_pages as $top_page)
+                            <li @if($page!=null) @if($page->seo_url==$top_page->seo_url) class="active"
+                                    @endif @endif >
+                                <a
+                                        href="{{route('page',$top_page->seo_url)}}">{{$top_page->menu_name}} </a></li>
+                        @endforeach
+                        @if (!\Auth::user())
+                            <li class="{{$active_login or ''}}">
+                                <a class="get-started" style="height: 54px;" href="/login">Login/Register</a></li>
+                        @endif
+                        @if (\Auth::user())
+                            <li
+                            ><a href="/logout">Logout</a></li>
+                            <li class="{{$active_event or ''}}"
+                            ><a class="get-started" style="height: 54px;"  href="/event">@if(\Auth::user()->username)Click
+                                    for {!! \Auth::user()->username !!} member
+                                    page @else  {!! \Auth::user()->email !!} @endif</a></li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </header>

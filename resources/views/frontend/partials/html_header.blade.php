@@ -29,7 +29,6 @@
 
     <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="/js/jquery.maskedinput.js" type="text/javascript"></script>
-    <script src="/js/jquery.waypoints.min.js"></script>
     <script src="/plugins/select2/select2.full.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -77,17 +76,19 @@
             var waypoint = new Waypoint({
                 element: document.getElementById('waypoint'),
                 handler: function(direction) {
-                    if (direction == "down") {
+                    if (Waypoint.viewportWidth()>=1008) {
+                        if (direction == "down") {
 //                        $('#main-header').css("height", "64px");
-                        $('#main-header').addClass('et-fixed-header');
-                        $('#et-top-navigation').css("padding-top", "20px")
-                    } else {
+                            $('#main-header').addClass('et-fixed-header');
+                            $('#et-top-navigation').css("padding-top", "20px")
+                        } else {
 //                        $('#main-header').css("height", "90px");
-                        $('#main-header').removeClass('et-fixed-header');
-                        $('#et-top-navigation').css("padding-top", "33px")
+                            $('#main-header').removeClass('et-fixed-header');
+                            $('#et-top-navigation').css("padding-top", "33px")
+                        }
                     }
                 },
-                offset: 120
+                offset: 80
             })
         })
     </script>
@@ -100,7 +101,8 @@
     <script src="/js/vue-admin.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
-
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/custom.js"></script>
     <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
 
 </head>

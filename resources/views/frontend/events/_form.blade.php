@@ -17,9 +17,15 @@
         @endif
     </div>
     <div class="col-sm-12">
-        <h1>Event # {{$event->id}}</h1>
-        <h3 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h3>
-        <h4 style="text-align: right">Coordinar's Email: {{\Auth::user()->email}}</h4>
+        <div class="row">
+            <div class="col-xs-6">
+                <h1>Event # {{$event->id}}</h1>
+            </div>
+            <div class="col-xs-6">
+                <h3 style="text-align: right">Coordinator: {{\Auth::user()->full_name}} </h3>
+                <h4 style="text-align: right">Coordinar's Email: {{\Auth::user()->email}}</h4>
+            </div>
+        </div>
         <div class="box">
             <div class="box-header with-border">
                 <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
@@ -136,10 +142,11 @@
                         </div>
                         <div class="form-group">
                             @if (isset($event->deadline))
-                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label>
+                                Allow Participants to appear as Anonymous? @if( $event->allow_anonymous)   <label>
+                                    Yes </label>@else <label>
                                     No </label> @endif
                             @else
-                                Allow Anonymous?
+                                Allow Participants to appear as Anonymous?
                                 <small
                                         data-toggle="tooltip"
                                         data-placement="top"
@@ -159,9 +166,10 @@
                             @else
                                 Event Fee taken out of Total?
                                 <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="An Option that the Event Fee will be taken out to the total collected.  Otherwise the Coordinator will have to pay it."
+                                        data-toggle="popover"
+                                        data-placement="right"
+                                        title="VXP fees"
+                                        data-content="An Option that the Event Fee will be taken out to the total collected.  Otherwise the Coordinator will have to pay it."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
@@ -177,15 +185,16 @@
                             @else
                                 Credit Card Fees taken out of Total?
                                 <small
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="An Option that the CC Fees will be taken out to the total collected.  Otherwise the participants will have it added when they make their payment"
+                                        data-toggle="popover"
+                                        data-placement="right"
+                                        title="Credit Card Fees"
+                                        data-content="An Option that the CC Fees will be taken out to the total collected.  Otherwise the participants will have it added when they make their payment"
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
                                 <br>
-                                {!!  Form::radio('cc_fees',true) !!} Yes
-                                {!!  Form::radio('cc_fees',false,true) !!} No
+                                {!!  Form::radio('cc_fees',true, true) !!} Yes
+                                {!!  Form::radio('cc_fees',false) !!} No
                             @endif
                         </div>
 
@@ -216,34 +225,42 @@
                             </label>
                             {!! Form::textarea('description', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Description']) !!}
                         </div>
-                        <div class="form-group">
-                            <label>Image</label>
-                            {!! Form::file('image') !!}
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {!! Form::submit($submit_text, ['class'=>'btn btn-primary','style'=>"background: #49658A;"]) !!}
-        <a href="{{ route('event.show',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
-                    class="fa fa-angle-double-left"></i>
-            Back
-        </a>
-        @if (isset($event->id) && ($event->payed_participants->count()==0))
-        <button onclick="return confirm('Event will be deleted. Are you sure?')" class="btn btn-primary pull-right delete_event" style="background: #ff0000; border-color: #ff0000;"><i
-                    class="fa fa-trash"></i>
-            Delete event
-        </button>
-        @endif
+        <div class="row">
+            @if (isset($event->id) && ($event->payed_participants->count()==0))
+                <div class="col-xs-2 col-xs-offset-6">
+                    @else
+                        <div class="col-xs-2 col-xs-offset-8">
+                            @endif
+                            {!! Form::submit($submit_text, ['class'=>'btn btn-primary btn-block','style'=>"background: #49658A;"]) !!}
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="{{ route('event.show',$event) }}" class="btn btn-primary btn-block"
+                               style="background: #49658A;">
+                                Cancel Without Saving
+                            </a>
+                        </div>
+                        @if (isset($event->id) && ($event->payed_participants->count()==0))
+                            <button onclick="return confirm('Event will be deleted. Are you sure?')"
+                                    class="btn btn-primary btn-block delete_event"
+                                    style="background: #ff0000; border-color: #ff0000;"><i
+                                        class="fa fa-trash"></i>
+                                Delete event
+                            </button>
+                        @endif
+                </div>
+        </div>
     </div>
-</div>
 
-<script>
-    $(document).ready(function() {
-        $('.form-control').keypress(function(event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-            }
+    <script>
+        $(document).ready(function () {
+            $('.form-control').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            });
         });
-    });
-</script>
+    </script>

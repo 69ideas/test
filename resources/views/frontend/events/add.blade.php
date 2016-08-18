@@ -11,7 +11,7 @@
     <div class="row">
         &nbsp;
     </div>
-    {!! Form::open(['route'=>['event.store'], 'files' => true]) !!}
+    {!! Form::open(['route'=>['event.store']]) !!}
     @include('frontend.events._form')
     <div class="row">
         &nbsp;

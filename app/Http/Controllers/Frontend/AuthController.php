@@ -112,13 +112,28 @@ class AuthController extends Controller
                 $device->hash = str_random(255);
                 $device->user_id = $user->id;
                 $device->save();
-                \Mail::queue('frontend.emails.auth', compact('request', 'user', 'device'), function (Message $message) use ($user) {
+                \Mail::queue('frontend.emails.auth', compact('user', 'device'), function (Message $message) use ($user) {
                     $message->to($user->email)
                         ->subject('Confirm registration');
                 });
             });
-            return redirect()->route('success');
+            $email = $request->get('email');
+            $isResend = false;
+            return view('frontend.success_registration', compact('email', 'isResend'));
         }
+    }
+
+    public function resend_the_link(Request $request){
+        $user = \App\User::where('email', $request->get('email'))->first();
+        $device = \App\Device::where('user_id', $user->id)->first();
+        $device->hash = str_random(255);
+        $device->save();
+        \Mail::queue('frontend.emails.auth', compact('user', 'device'), function (Message $message) use ($user) {
+            $message->to($user->email)
+                ->subject('Confirm registration');
+        });
+        $isResend = true;
+        return view('frontend.success_registration', compact('email', 'isResend'));
     }
 
     public function activate($hash)
@@ -136,17 +151,6 @@ class AuthController extends Controller
             return redirect()->route('profile');
         }
 
-    }
-
-    public function success()
-    {
-        $text = 'Thank you for registering with VaultXIT.com.  
-        A confirmation email was sent to you containing a link that will activate your account.  
-        Once activated, you can enter your profile information and create an event.  
-        Couldn’t be any easier.  
-        If for some reason you do not get the email, it probably means you entered the wrong email address,
-        so simply re-register and make sure the correct email address was entered.';
-        return view('frontend.success_registration', compact('text'));
     }
 
     public function repeat()
