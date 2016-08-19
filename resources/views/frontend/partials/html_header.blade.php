@@ -71,6 +71,27 @@
             $("#ssn").mask("999-99-9999");
         });
     </script>
+    <script>
+        $(document).ready(function(){
+            var waypoint = new Waypoint({
+                element: document.getElementById('waypoint'),
+                handler: function(direction) {
+                    if (Waypoint.viewportWidth()>=1008) {
+                        if (direction == "down") {
+//                        $('#main-header').css("height", "64px");
+                            $('#main-header').addClass('et-fixed-header');
+                            $('#et-top-navigation').css("padding-top", "20px")
+                        } else {
+//                        $('#main-header').css("height", "90px");
+                            $('#main-header').removeClass('et-fixed-header');
+                            $('#et-top-navigation').css("padding-top", "33px")
+                        }
+                    }
+                },
+                offset: 80
+            })
+        })
+    </script>
     <script src="/js/AdminLTE.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="//cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
@@ -80,7 +101,8 @@
     <script src="/js/vue-admin.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
-
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/custom.js"></script>
     <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
 
 </head>

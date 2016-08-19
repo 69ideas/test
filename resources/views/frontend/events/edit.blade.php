@@ -11,7 +11,7 @@
     <div class="row">
         &nbsp;
     </div>
-    {!! Form::model($event, ['route'=>['event.update', $event], 'method'=>'PATCH', 'files' => true]) !!}
+    {!! Form::model($event, ['route'=>['event.update', $event], 'method'=>'PATCH']) !!}
     @include('frontend.events._form')
     {!! Form::close() !!}
 @stop

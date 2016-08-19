@@ -17,87 +17,80 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <h1>Event # {{$event->event_number}}</h1>
-            <h2>{{$event->short_description}}</h2>
-            <h3 style="text-align: right">Coordinator: {{$event->user->full_name}} </h3>
-            <h4 style="text-align: right">Coordinator's Email: {{$event->user->email}}</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="form-group">{{$event->short_description}}</h1>
+                    <h4 class="form-group">Event # {{$event->event_number}}</h4>
+                </div>
+                <div class="col-sm-6">
+                    <h1 class="form-group" style="text-align: right">Coordinator: {{$event->user->full_name}} </h1>
+                    <h4 class="form-group" style="text-align: right">Coordinator's Email: {{$event->user->email}}</h4>
+                </div>
+            </div>
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="col-md-6"><h3 class="box-title">Event Data</h3></div>
+                    <div class="col-md-6"><h3 class="box-title">{!!  $event->description !!}</h3></div>
                 </div>
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-4">
+                    <div class="row form-group">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Start Date</label>
-                                <p class="form-control-static">@if (isset($event->start_date)){{$event->start_date->format('m/d/Y')}}@endif</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Deadline</label>
-                                <p class="form-control-static">@if (isset($event->deadline)){{$event->deadline->format('m/d/Y')}}@endif</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Event Coordinator</label>
-                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->full_name}}@else
-                                        Not set @endif</p>
-                                <p class="form-control-static">@if (isset($event->user_id)){{$event->user->email}}@else
-                                        Not set @endif</p>
-                            </div>
-                            <div class="form-group">
-                                Allow Anonymous? @if( $event->allow_anonymous)   <label> Yes </label>@else <label>
-                                    No </label> @endif
-                            </div>
-                            <div class="form-group">
-                                Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label>
-                                    No </label> @endif
-                            </div>
-                            <div class="form-group">
-                                Credit Card Fees taken out of Total? @if( $event->cc_fees)   <label> Yes </label>@else
-                                    <label> No </label> @endif
-                            </div>
-                            <div class="form-group">
-                                <label>PayPal E-mail</label>
-                                <p class="form-control-static">{{$event->paypal_email}}</p>
+                                <p class="form-control-static">@if (isset($event->start_date))You can begin
+                                    participating as of: {{$event->start_date->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Short Description</label>
-                                <p class="form-control-static">{{$event->short_description}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <p class="form-control-static">{!!  $event->description!!}</p>
+                                <p class="form-control-static">@if (isset($event->deadline))Submit
+                                    by {{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Maximum number of participants</label>
-                                <p class="form-control-static">@if($event->number_participants!=0){{$event->number_participants}} @else
-                                        No limit @endif</p>
+                                <p class="form-control-static">@if($event->number_participants!=0)Maximum number of participants is {{$event->number_participants}} @else
+                                        Unlimited @endif</p>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Number of Participants</label>
-                                <p class="form-control-static">{{$event->payed_participants->count()}}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Amount per Participant</label>
                                 <p class="form-control-static">@if($event->needable_sum>0)
-                                        ${{$event->needable_sum}} @else No limit @endif</p>
+                                        Amount per Participant is ${{$event->needable_sum}} @else No Set Amount @endif</p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                @if($event->image!='')
-                                    <img src="/{{$event->image}}" style="width: 100%"/>
-                                @else
-                                    <img src="/images/no-image.png" style="width: 100%"/>
-                                @endif
+                                @if( $event->vxp_fees)Vault X fees are to be taken out of your amount
+                                @else VaultX fees will be added to your amount @endif
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @if( $event->cc_fees)Credit Card Fees will be taken out of your amount
+                                @else Credit Card Fee will be added to your amount @endif
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @if( $event->allow_anonymous)You will have the option to appear as anonymous on the form below @endif
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
+            @if(!$event->is_close)
+            <div class="col-xs-3 col-xs-offset-9">
+                @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                    <div class="form-group">
+                        <a href="{{route('payment',[$event])}}"
+                           class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
+                    </div>
+                @endif
+            </div>
+            @endif
+
             @include('frontend.events._tabs')
             @if(\Auth::user()!=null)
                 @if(\Auth::user()->id==$event->user_id)

@@ -33,7 +33,7 @@ class Events extends Controller
         $page_title = 'Adding Event';
         $event = new Event();
         $event->start_date=Carbon::now();
-        $submit_text = "Add Event";
+        $submit_text = "Create Event";
         return view('frontend.events.add', compact('event', 'page_title', 'submit_text'));
     }
     public function store(Requests\Admin\ManageEvent $request){

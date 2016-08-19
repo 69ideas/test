@@ -34,7 +34,7 @@
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
-            <th>Coordinator Collected
+            <th>Cash to Coordinator
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
@@ -112,13 +112,13 @@
         @endif
         </tfoot>
     </table>
-    <div class="row">
+    <div class="row" style="padding-top: 1.5%;">
         @if(!$entity->is_close)
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
                 <div class="col-xs-3">
                     <div class="form-group">
                         <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Coordinator Payment
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash to Coordinator Payment
                             <small
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -131,11 +131,11 @@
                 </div>
             @endif
 
-            <div class="col-xs-3">
+            <div class="col-xs-3 col-xs-offset-6">
                 @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
                     <div class="form-group">
                         <a href="{{route('payment',[$event])}}"
-                           class="btn btn-primary make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
+                           class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
                     </div>
                 @endif
             </div>

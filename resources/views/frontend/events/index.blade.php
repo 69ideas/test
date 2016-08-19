@@ -1,7 +1,9 @@
 @extends('frontend.layout')
 @section('content')
-
-    <div class="row">
+    <div class="row form-group" align="center">
+        <h1>Member page</h1>
+    </div>
+    <div class="row form-group">
         <div class="col-sm-4">
             {{ link_to_route('profile', 'Edit Profile', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can edit your Profile by clicking here ']) }}
         </div>
@@ -14,15 +16,14 @@
     <div class="row">
         &nbsp;
     </div>
+    <div class="row" align="center">
+        <h4>Your events</h4>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             @include('admin.validation.all')
         </div>
     </div>
-    <div class="row">
-        &nbsp;
-    </div>
-
     <div class="row">
         <div class="col-sm-12">
             <table class="searchable table table-bordered table-hover">
