@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="row">
+    <div class="row form-group">
 
         @if($event->exists)
             @if (!isset($event->closed_date))
