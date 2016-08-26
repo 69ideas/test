@@ -16,7 +16,7 @@
 <div class="row et_pb_padd">
     @foreach($bottom_pages as $bottom_page)
         @if(count($bottom_page->pages))
-            <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="et_pb_button_module_wrapper et_pb_module et_pb_button_alignment_center">
                     <a class="et_pb_button et_pb_button_1 et_pb_module et_pb_bg_layout_light"
                        href="{{route ('page',$bottom_page->seo_url)}}">{{$bottom_page->menu_name}}</a>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         @elseif($bottom_page->parent_id==null and !(count($bottom_page->pages)))
-            <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="et_pb_button_module_wrapper et_pb_module et_pb_button_alignment_center">
                     <a class="et_pb_button et_pb_button_1 et_pb_module et_pb_bg_layout_light"
                        href="{{route ('page',$bottom_page->seo_url)}}">{{$bottom_page->menu_name}}</a>

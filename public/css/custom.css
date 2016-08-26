@@ -408,6 +408,7 @@ section {
 /* Basic Styles */
 /* Body */
 body {
+	padding-bottom: 53px!important;
 	color: #666;
 	background-color: #fff;
 	font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif;
@@ -645,6 +646,7 @@ br.clear {
 #et-secondary-menu li,
 #top-menu li {
 	word-wrap: break-word;
+	height: 45%;
 }
 
 /* Accent Color */
@@ -14529,10 +14531,23 @@ body #page-container .et_pb_button_1:hover:after {
 	#logo {
 		margin-top:0;
 	}
+
+	body {
+		padding-bottom: 86px!important;
+	}
+
 	body.et_fixed_nav.et_secondary_nav_enabled #main-header {
 		top:0!important;
 		transition: all 0.4s;
 	}
-}
 
+	body #page-container .et_pb_button_1 {
+		margin: 5% 0!important;
+	}
+}
+@media only screen and (max-width: 1024px) {
+	.et_header_style_left #et-top-navigation, .et_header_style_split #et-top-navigation {
+		padding-top: 15px!important;
+	}
+}
 

@@ -65,7 +65,7 @@
                     <span class="mobile_menu_bar mobile_menu_bar_toggle">
                         <i class="fa fa-bars" style="font-size:33px; color: #ffffff; cursor:pointer"></i>
                     </span>
-                    <ul id="mobile_menu" class="et_mobile_menu"><li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54 et_first_mobile_item"><a href="http://www.quilibetmedia.com/vaultxit/simple/">Simple</a></li>
+                    <ul id="mobile_menu" class="et_mobile_menu">
                         @foreach($top_pages as $top_page)
                             <li @if($page!=null) @if($page->seo_url==$top_page->seo_url) class="active"
                                     @endif @endif >
