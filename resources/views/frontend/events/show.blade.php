@@ -2,6 +2,23 @@
 
 @section('content')
 
+    @if(\Auth::user()!=null)
+        @if($event->payment==null)
+            @if(\Auth::user()->id==$event->user_id)
+                <div class="alert alert-danger">
+                    You have not paid an event yet. <a href="{{route('pay_fee', $event)}}">Pay now.</a>
+                </div>
+            @endif
+
+        @elseif($event->payment->status!='Completed')
+            @if(\Auth::user()->id==$event->user_id)
+                <div class="alert alert-danger">
+                    You have not paid an event yet. <a href="{{route('pay_fee', $event)}}">Pay now.</a>
+                </div>
+            @endif
+        @endif
+    @endif
+
     <div class="row">
         &nbsp;
     </div>
@@ -47,24 +64,20 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static">@if($event->number_participants!=0)Maximum number of participants is {{$event->number_participants}} @else
+                                <p class="form-control-static">@if($event->number_participants!=0)Maximum number of
+                                    participants is {{$event->number_participants}} @else
                                         Unlimited @endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="form-control-static">@if($event->needable_sum>0)
-                                        Amount per Participant is ${{$event->needable_sum}} @else No Set Amount @endif</p>
+                                        Amount per Participant is ${{$event->needable_sum}} @else No Set
+                                        Amount @endif</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                @if( $event->vxp_fees)Vault X fees are to be taken out of your amount
-                                @else VaultX fees will be added to your amount @endif
-                            </div>
-                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 @if( $event->cc_fees)Credit Card Fees will be taken out of your amount
@@ -73,7 +86,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                @if( $event->allow_anonymous)You will have the option to appear as anonymous on the form below @endif
+                                @if( $event->allow_anonymous)You will have the option to appear as anonymous on the form
+                                below @endif
                             </div>
                         </div>
                     </div>
@@ -81,14 +95,15 @@
             </div>
 
             @if(!$event->is_close)
-            <div class="col-xs-3 col-xs-offset-9">
-                @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
-                    <div class="form-group">
-                        <a href="{{route('payment',[$event])}}"
-                           class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>
-                    </div>
-                @endif
-            </div>
+                <div class="col-xs-3 col-xs-offset-9">
+                    @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                        <div class="form-group">
+                            <a href="{{route('payment',[$event])}}"
+                               class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
+                                Payment</a>
+                        </div>
+                    @endif
+                </div>
             @endif
 
             @include('frontend.events._tabs')

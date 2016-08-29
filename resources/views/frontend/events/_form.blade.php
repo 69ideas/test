@@ -159,7 +159,7 @@
                                 {!!  Form::radio('allow_anonymous',false,true) !!} No
                             @endif
                         </div>
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             @if (isset($event->deadline))
                                 Fee taken out of Total? @if( $event->vxp_fees)   <label> Yes </label>@else <label>
                                     No </label> @endif
@@ -177,7 +177,7 @@
                                 {!!  Form::radio('vxp_fees',true,true) !!} Yes
                                 {!!  Form::radio('vxp_fees',false) !!} No
                             @endif
-                        </div>
+                        </div>--}}
                         <div class="form-group">
                             @if (isset($event->deadline))
                                 Credit Card Fees taken out of Total? @if( $event->cc_fees)    <label> Yes </label>@else

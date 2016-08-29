@@ -36,8 +36,11 @@ class PayReceipt extends Controller
             $parts = $request->get('part');
             $payment->name = $parts[0]['name'];
             $payment->email = $parts[0]['email'];
-            $payment->amount = collect($request->get('part'))->sum('amount');
-
+            $payment->amount = collect($request->get('part'))
+                ->map(function ($item,$key){
+                    return str_replace(',','',$item['amount']);
+                })
+             ->sum();
             $payment->method = 'Paypal';
             $payment->status = 'Pending';
             $payment->save();
@@ -58,6 +61,7 @@ class PayReceipt extends Controller
                 $participant->save();
 
                 $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event);
+
                 $participant->deposit_type = 'PayPal';
                 $participant->vxp_fees = Payment::CountFeeVXP($item['amount'], $event);
                 $participant->cc_fees = Payment::CountFeeCC($item['amount'], $event);
@@ -68,22 +72,16 @@ class PayReceipt extends Controller
 
             $receiver1 = new Receiver();
             $receiver1->email = $event->paypal_email;
+
             $receiver1->amount = (string)Payment::CountWithFee($payment->amount, $event);
-            $receiver1->primary = true;
 
-
-            $receiver2 = new Receiver();
-            $receiver2->email = config('app.admin_email');
-            $receiver2->amount = (string)Payment::CountFeeVXP($payment->amount, $event, true);
-            $receiver2->primary = false;
-
-            $list = [$receiver1, $receiver2];
+            $list = [$receiver1];
 
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('home'));
 
-            $payRequest->feesPayer = 'PRIMARYRECEIVER';
+            $payRequest->feesPayer = 'SENDER';
 
             //
             //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
@@ -156,6 +154,54 @@ class PayReceipt extends Controller
         $id = $request->get('id');
 
         return view('frontend.another_entry', compact('event', 'id'));
+    }
+    public function pay_fee(Event $event){
+        $payPalURL = '';
+        \DB::transaction(function () use ($event, &$payPalURL) {
+
+            $payment = new Payment();
+            $payment->name = config('app.admin_email');
+            $payment->email = config('app.admin_email');
+            $payment->amount =  config('app.admin_fees');;
+
+            $payment->method = 'Fees';
+            $payment->status = 'Pending';
+            $payment->save();
+            $event->payment_id=$payment->id;
+            $event->save();
+
+            $receiver2 = new Receiver();
+            $receiver2->email = config('app.admin_email');
+            $receiver2->amount =  config('app.admin_fees');;
+
+            $list = [$receiver2];
+
+            $receiverList = new ReceiverList($list);
+            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
+                'USD', $receiverList, route('home'));
+
+            $payRequest->feesPayer = 'SENDER';
+
+            //
+            //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
+
+            $service = new AdaptivePaymentsService();
+            try {
+                /* wrap API method calls on the service object with a try catch */
+                $response = $service->Pay($payRequest);
+            } catch (\Exception $ex) {
+                echo $this->getDetailedExceptionMessage($ex);
+                exit;
+            }
+            $token = $response->payKey;
+            $payment->paykey = $token;
+            $payment->save();
+            $payPalURL = PAYPAL_REDIRECT_URL . '_ap-payment&paykey=' . $token;
+
+        });
+
+        return redirect($payPalURL);
+
     }
 
 }

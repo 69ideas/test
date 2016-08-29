@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
+         {{--   <div class="form-group">
                 <label>VXP Fees {{$item['mid']}}
                     <small
                             data-toggle="tooltip"
@@ -41,7 +41,7 @@
                 @else
                     {!! Form::text('', 'Not Applicable', ['class'=>'form-control', 'disabled'=>'disabled']) !!}
                 @endif
-            </div>
+            </div>--}}
             <div class="form-group">
                 <label>Total {{$item['mid']}}
                     <small
