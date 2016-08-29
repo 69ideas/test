@@ -30,6 +30,9 @@ class Events extends Controller
         return view('frontend.events.index',compact('events','page_title'));
     }
     public function create(){
+        if (!\Auth::user()->isFeePay()){
+            return redirect()->route('event.index')->with('error_message','You cannot create events while you did not pay for it');
+        }
         $page_title = 'Adding Event';
         $event = new Event();
         $event->start_date=Carbon::now();

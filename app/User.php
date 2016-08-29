@@ -53,5 +53,21 @@ class User extends Authenticatable
             ->orderBy('first_name')
             ->orderBy('last_name');
     }
+
+    public function isFeePay(){
+        $events=Event::where('user_id',\Auth::user()->id)->get();
+        foreach ($events as $event){
+            if ($event->payment==null){
+                return false;
+            }
+            else{
+                if ($event->payment->status=='Completed'){
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
     
 }

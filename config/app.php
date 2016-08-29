@@ -252,6 +252,7 @@ return [
 
     ],
 
-    'admin_email'=>env('APP_ADMIN_EMAIL', 'vaultx-admin@ananas-web.ru')
+    'admin_email'=>env('APP_ADMIN_EMAIL', 'vaultx-admin@ananas-web.ru'),
+    'admin_fees'=>env('APP_ADMIN_FEES', 5)
 
 ];

@@ -9,9 +9,12 @@
         </div>
         <div class="col-sm-4 ">
         </div>
-        <div class="col-sm-4 ">
-            {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
-        </div>
+        @if(\Auth::user()->isFeePay())
+            <div class="col-sm-4 ">
+                {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
+            </div>
+        @endif
+
     </div>
     <div class="row">
         &nbsp;
@@ -115,6 +118,33 @@
                                     >
                                         <i class="fa fa-pencil"></i>
                                     </a>
+
+                                    @if(\Auth::user()!=null)
+                                        @if($event->payment==null)
+                                            @if(\Auth::user()->id==$event->user_id)
+                                                <a href="{{ route('pay_fee', $event) }}"
+                                                   class="btn btn-xs btn-success"
+                                                   data-toggle="tooltip" data-placement="top"
+                                                   title="Pay Fees"
+                                                >
+                                                    <i class="fa fa-dollar"></i>
+                                                </a>
+                                            @endif
+
+                                        @elseif($event->payment->status!='Completed')
+                                            @if(\Auth::user()->id==$event->user_id)
+                                                <a href="{{ route('pay_fee', $event) }}"
+                                                   class="btn btn-xs btn-success"
+                                                   data-toggle="tooltip" data-placement="top"
+                                                   title="Pay Fees"
+                                                >
+                                                    <i class="fa fa-dollar"></i>
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @endif
+
+
                                 @endif
 
                             </td>

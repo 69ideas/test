@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckPayStatus;
 use App\Console\Commands\Refund;
+use App\Console\Commands\SendReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,6 +19,7 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
         CheckPayStatus::class,
         Refund::class,
+        SendReminder::class,
     ];
 
     /**
@@ -33,5 +35,7 @@ class Kernel extends ConsoleKernel
 
          $schedule->command('paypal:refund')
                   ->everyFiveMinutes();
+        $schedule->command('paypal:fees')
+            ->weekly();
     }
 }

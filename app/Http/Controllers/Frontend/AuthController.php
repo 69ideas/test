@@ -47,6 +47,7 @@ class AuthController extends Controller
                     $device->hash = str_random(255);
                     $device->user_id = \Auth::id();
                     $device->save();
+                    $email=$user->email;
                     \Auth::logout();
                     \Mail::queue('frontend.emails.repeat', compact('request', 'email', 'device', 'user'), function (Message $message) use ($user) {
                         $message->to($user->email)
@@ -156,7 +157,7 @@ class AuthController extends Controller
     public function repeat()
     {
         $text = 'You are trying to log in from another location. Please check your mail and confirm its location.';
-        return view('frontend.success_registration', compact('text'));
+        return view('frontend.repeat_activate', compact('text'));
     }
     public function open_forgot(){
         return view('frontend.forgot');

@@ -23,9 +23,9 @@ class PayRequest extends Request
      */
     public function rules()
     { return [
-        'part.*.name' => 'required|max:255',
+        'part.*.name' => 'required_if:part.*.anonymous,|max:255',
         'part.*.amount' => 'required',
-        'part.*.email' => 'email|required|confirmed',
+        'part.*.email' => 'email|required_if:part.*.anonymous,|confirmed',
     ];
     }
 
@@ -35,8 +35,8 @@ class PayRequest extends Request
             'part.*.amount.required' => 'The amount field is required',
             'part.*.email.confirmed'  => 'The email confirmation does not match',
             'part.*.email.email'  => 'The email must be a valid email address',
-            'part.*.email.required' => 'The email field is required',
-            'part.*.name.required' => 'The name field is required',
+            'part.*.email.required_if' => 'The email field is required',
+            'part.*.name.required_if' => 'The name field is required',
             'part.*.name.max' => 'Maximum 255 symbols',
         ];
     }

@@ -25,6 +25,7 @@ Route::get('/event/show/{slug}', ['as' => 'show.event', 'uses' => 'Frontend\Page
 Route::get('/article/show/{slug}', ['as' => 'show.article', 'uses' => 'Frontend\Pages@article']);
 Route::resource('tifas_event', 'Frontend\TIFASEvents');
 Route::get('/payment/{event}', ['as' => 'payment', 'uses' => 'Frontend\Pages@open_payment']);
+Route::get('/pay_fee/{event}', ['as' => 'pay_fee', 'uses' => 'PayReceipt@pay_fee']);
 Route::post('/payment/{event}', ['as' => 'post.payment', 'uses' => 'PayReceipt@doAction']);
 Route::get('error', ['as' => 'error', 'uses' => 'Frontend\Pages@home']);
 Route::get('success1', ['as' => 'success1', 'uses' => 'Frontend\Pages@home']);

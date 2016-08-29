@@ -168,4 +168,10 @@ class Event extends Model implements SluggableInterface
 
         return $this->user_id == $user->id;
     }
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class)
+            ->where('status','<>','Failed');
+    }
+
 }
