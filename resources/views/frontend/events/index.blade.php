@@ -2,6 +2,10 @@
 @section('content')
     <div class="row form-group" align="center">
         <h1>Member page</h1>
+        <hr style="border: none; /* Убираем границу */
+    background-color: #bb0000; /* Цвет линии */
+    color: #bb0000; /* Цвет линии для IE6-7 */
+    height: 5px;">
     </div>
     <div class="row form-group">
         <div class="col-sm-4">
@@ -12,6 +16,10 @@
         @if(\Auth::user()->isFeePay())
             <div class="col-sm-4 ">
                 {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
+            </div>
+            @else
+            <div class="col-sm-4 ">
+                <a href="#" class='btn btn-block btn-success pull-right' data-toggle="tooltip" data-placement="top" disabled="" title='You need to clear outstanding balance before you can create new event'>Create New Event</a>
             </div>
         @endif
 
@@ -88,6 +96,7 @@
                         </small>
                     </th>
                     <th>Action</th>
+                    <th>Info about outstanding payment</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -131,7 +140,7 @@
                                                 </a>
                                             @endif
 
-                                        @elseif($event->payment->status!='Completed')
+                                        @elseif($event->payment->status!='Completed' && $event->payment->status!='Pending')
                                             @if(\Auth::user()->id==$event->user_id)
                                                 <a href="{{ route('pay_fee', $event) }}"
                                                    class="btn btn-xs btn-success"
@@ -147,6 +156,16 @@
 
                                 @endif
 
+                            </td>
+                            <td> @if(\Auth::user()!=null)
+                                    @if(\Auth::user()->id==$event->user_id)
+                                        @if (isset($event->payment )){{$event->payment->status}}
+                                        @else Not paid yet
+                                        @endif
+                                    @endif
+                                     @else
+                                    Not Applicable
+                                @endif
                             </td>
                         </tr>
                     @endif

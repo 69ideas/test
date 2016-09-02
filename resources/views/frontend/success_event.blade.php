@@ -1,7 +1,6 @@
-@include('frontend.partials.html_header')
-<body>
-<div class="container">
-    @include('frontend.partials.header')
+@extends('frontend.layout')
+
+@section('content')
     <div class="login-box">
         <div class="login-logo">
             <a href="/">Vault-X.</a>
@@ -27,7 +26,6 @@
         </div>
         <!-- /.login-box-body -->
     </div>
-</div>
 
 <div class="row">
     &nbsp;
@@ -41,8 +39,4 @@
 <div class="row">
     &nbsp;
 </div>
-
-@include('frontend.partials.footer')
-
-</body>
-</html>
+@endsection

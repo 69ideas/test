@@ -33,18 +33,18 @@ class Payment extends Model
         }
 */
         if (!$event->cc_fees) {
-            $t2 = round($amount * 0.029, 2) + 0.3;
+            $t1 = round($amount * 0.029, 2) + 0.3;
         } else {
             $t2 = 0;
         }
-
-        return round($t1 + $t2 + $amount, 2);
+        $total=$t1 + $t2;
+        return round($total, 2);
     }
 
     public static function CountDonation($amount, $event)
     {
-        $t1 = $amount;
-        $t2 = $amount;
+        $t1 = 0;
+        $t2 = 0;
        /* if ($event->vxp_fees) {
             $t1 = round(max(0.2, $amount * 0.005), 2);
         } else {
@@ -52,11 +52,12 @@ class Payment extends Model
         }*/
 
         if ($event->cc_fees) {
-            $t2 = round($amount * 0.029, 2) + 0.3;
+            $t1 = round($amount * 0.029, 2) + 0.3;
         } else {
             $t2 = 0;
         }
-        return round($amount - $t1 - $t2, 2);
+        $total=((double)$amount - $t1 - $t2);
+        return round($total, 2);
     }
 
 

@@ -24,6 +24,12 @@ class Events extends Controller
         view()->share('page', null);
     }
     public function index(){
+        if (\Auth::user()) {
+            if (!\Auth::user()->filled) {
+                \Auth::logout();
+                return redirect()->route('home');
+            }
+        }
         $events = \App\Event::orderBy('created_at', 'DESC')
             ->get();
         $page_title = 'Events';

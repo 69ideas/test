@@ -73,7 +73,7 @@ class PayReceipt extends Controller
             $receiver1 = new Receiver();
             $receiver1->email = $event->paypal_email;
 
-            $receiver1->amount = (string)Payment::CountWithFee($payment->amount, $event);
+            $receiver1->amount = $payment->amount;
 
             $list = [$receiver1];
 
@@ -81,8 +81,12 @@ class PayReceipt extends Controller
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('home'));
 
-            $payRequest->feesPayer = 'SENDER';
-
+           if ($event->cc_fees){
+                $payRequest->feesPayer = 'SENDER';
+            }
+            else{
+                $payRequest->feesPayer = 'EACHRECEIVER';
+            }
             //
             //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
 
@@ -179,8 +183,10 @@ class PayReceipt extends Controller
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('home'));
-
             $payRequest->feesPayer = 'SENDER';
+
+
+
 
             //
             //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');

@@ -243,6 +243,7 @@
                                 Cancel Without Saving
                             </a>
                         </div>
+                        <div class="col-xs-2">
                         @if (isset($event->id) && ($event->payed_participants->count()==0))
                             <button onclick="return confirm('Event will be deleted. Are you sure?')"
                                     class="btn btn-primary btn-block delete_event"
@@ -251,6 +252,7 @@
                                 Delete event
                             </button>
                         @endif
+                        </div>
                 </div>
         </div>
     </div>
