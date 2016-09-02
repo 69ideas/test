@@ -56,6 +56,9 @@ class User extends Authenticatable
 
     public function isFeePay(){
         $events=Event::where('user_id',\Auth::user()->id)->get();
+        if (count($events)==0){
+            return true;
+        }
         foreach ($events as $event){
             if ($event->payment==null){
                 return false;

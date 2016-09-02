@@ -126,10 +126,11 @@ class AuthController extends Controller
 
     public function resend_the_link(Request $request){
         $user = \App\User::where('email', $request->get('email'))->first();
+        $email=$user->email;
         $device = \App\Device::where('user_id', $user->id)->first();
         $device->hash = str_random(255);
         $device->save();
-        \Mail::queue('frontend.emails.auth', compact('user', 'device'), function (Message $message) use ($user) {
+        \Mail::queue('frontend.emails.auth', compact('user', 'device','email'), function (Message $message) use ($user) {
             $message->to($user->email)
                 ->subject('Confirm registration');
         });

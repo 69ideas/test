@@ -97,7 +97,7 @@
             @if(!$event->is_close)
                 <div class="col-xs-3 col-xs-offset-9">
                     @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
-                        <div class="form-group">
+                        <div class="form-group" >
                             <a href="{{route('payment',[$event])}}"
                                class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
                                 Payment</a>

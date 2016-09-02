@@ -8,6 +8,10 @@
                 <div class="box-body">
                     <div class="row form-group" align="center">
                         <h2>Member profile page</h2>
+                        <hr style="border: none; /* Убираем границу */
+    background-color: #bb0000; /* Цвет линии */
+    color: #bb0000; /* Цвет линии для IE6-7 */
+    height: 5px;">
                     </div>
                     {!! Form::model($user, ['route'=>['profile.post'], 'method'=>'PATCH']) !!}
                     <div class="col-md-6">

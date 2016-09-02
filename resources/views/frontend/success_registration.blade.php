@@ -33,7 +33,7 @@ et_pb_pagebuilder_layout et_right_sidebar chrome">
                         @if (!$isResend)
                         {!! Form::open(['route'=>['resend_the_link']] ) !!}
                         {!! Form::hidden('email', $email) !!}
-                        <button type="submit">Click here to resend the link</button>
+                        <button class='btn btn block btn-primary' type="submit">Click here to resend the link</button>
                         {!! Form::close() !!}
                         @else
                             <p>Link was send.</p>
