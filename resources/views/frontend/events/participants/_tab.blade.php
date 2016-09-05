@@ -30,7 +30,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="Commission of VaultX">
+                        title="The amount collected on VaultX">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
@@ -105,7 +105,7 @@
                 @endif
             </tr>
         @endif
-        @if($entity->number_participants != 0 && ($entity->payed_participants->count() >= $entity->number_participants))
+        @if($entity->number_participants != 0 && ($entity->payed_participants->count() >= $entity->number_participants) && $event->allow_anonymous)
             <tr>
                 <td colspan="8"><p style="color:red">Maximum number of participants has been reached</p></td>
             </tr>
@@ -132,7 +132,7 @@
             @endif
 
             <div class="col-xs-3 col-xs-offset-9">
-                @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date) && $event->allow_anonymous)
                     <div class="form-group">
                         <a href="{{route('payment',[$event])}}"
                            class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a Payment</a>

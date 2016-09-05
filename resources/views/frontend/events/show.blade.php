@@ -100,7 +100,7 @@
 
             @if(!$event->is_close)
                 <div class="col-xs-3 col-xs-offset-9">
-                    @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))
+                    @if((count($event->payed_participants)<$event->number_participants || $event->number_participants==0)&& is_null($event->closed_date) && $event->allow_anonymous)
                         <div class="form-group" >
                             <a href="{{route('payment',[$event])}}"
                                class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
@@ -142,7 +142,7 @@
             $('#modal_div').hide()
         }
     </script>
-    <div id="modal_div" class="modal" role="dialog" style="display: block;">
+    <div id="modal_div" class="modal" role="dialog" style="display: block; z-index:100500">
         <div class="modal-dialog">
 
             <!-- Modal content-->
