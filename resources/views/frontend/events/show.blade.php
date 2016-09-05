@@ -52,28 +52,27 @@
                     <div class="row form-group">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static">@if (isset($event->start_date))You can begin
-                                    participating as of: {{$event->start_date->format('m/d/Y')}}@endif</p>
+                                <p class="form-control-static">@if (isset($event->start_date)) <strong> You can begin
+                                    participating as of:</strong> {{$event->start_date->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static">@if (isset($event->deadline))Submit
-                                    by {{$event->deadline->format('m/d/Y')}}@endif</p>
+                                <p class="form-control-static">@if (isset($event->deadline))<strong> Submit
+                                    by </strong>{{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static">@if($event->number_participants!=0)Maximum number of
-                                    participants is {{$event->number_participants}} @else
-                                        Unlimited @endif</p>
+                                <p class="form-control-static"><strong> Maximum number of
+                                    participants is </strong>@if($event->number_participants!=0) {{$event->number_participants}} @else
+                                        "Unlimited" @endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static">@if($event->needable_sum>0)
-                                        Amount per Participant is ${{$event->needable_sum}} @else No Set
-                                        Amount @endif</p>
+                                <p class="form-control-static"> <strong> Amount per Participant is </strong>
+                                    @if($event->needable_sum>0)${{$event->needable_sum}} @else "No Set Amount" @endif</p>
                             </div>
                         </div>
                     </div>
@@ -88,6 +87,11 @@
                             <div class="form-group">
                                 @if( $event->allow_anonymous)You will have the option to appear as anonymous on the form
                                 below @endif
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Paypal Email</strong><br>{{$event->paypal_email}}
                             </div>
                         </div>
                     </div>

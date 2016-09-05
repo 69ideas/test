@@ -172,13 +172,13 @@ class AuthController extends Controller
             $url = str_random(50);
             $user->reset_password=$url;
             $user->save();
-            \Mail::queue('frontend.emails.reset_password', compact('request', 'user', 'url'), function (Message $message) use ($user) {
+            $email=$user->email;
+            \Mail::queue('frontend.emails.reset_password', compact('request', 'user', 'url','email'), function (Message $message) use ($user) {
                 $message->to($user->email)
                     ->subject('Reset password');
             });
         }
-        $text = 'Please check your e-mail';
-        return view('frontend.success_registration', compact('text'));
+        return view('frontend.success_reset', compact('text','email'));
     }
     public function reset($url, Request $request)
     {
