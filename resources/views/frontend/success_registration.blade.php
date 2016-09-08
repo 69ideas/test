@@ -36,7 +36,7 @@ et_pb_pagebuilder_layout et_right_sidebar chrome">
                         <button class='btn btn block btn-primary' type="submit">Click here to resend the link</button>
                         {!! Form::close() !!}
                         @else
-                            <p>Link was send.</p>
+                            <p>Link was sent.</p>
                         @endif
                         <div class="row">
                             &nbsp;
