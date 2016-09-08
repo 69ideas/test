@@ -82,10 +82,10 @@ class PayReceipt extends Controller
                 'USD', $receiverList, route('home'));
 
            if ($event->cc_fees){
-                $payRequest->feesPayer = 'SENDER';
+               $payRequest->feesPayer = 'EACHRECEIVER';
             }
             else{
-                $payRequest->feesPayer = 'EACHRECEIVER';
+                $payRequest->feesPayer = 'SENDER';
             }
             //
             //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');

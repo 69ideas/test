@@ -1087,7 +1087,7 @@ body.admin-bar.et_fixed_nav.et_secondary_nav_enabled #main-header {
 
 #top-header {
 	height:33px;
-	z-index: 10000;
+	z-index: 98;
 	color: #fff;
 	font-size: 12px;
 	line-height: 13px;
@@ -1114,7 +1114,7 @@ body.admin-bar.et_fixed_nav.et_secondary_nav_enabled #main-header {
 	height: 90px;
 	transition:0.4s;
 	position: fixed;
-	z-index: 99999;
+	z-index: 99;
 	top: 0;
 	width: 100%;
 	background-color: #fff;
