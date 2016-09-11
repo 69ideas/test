@@ -13,15 +13,11 @@
         </div>
         <div class="col-sm-4 ">
         </div>
-        @if(\Auth::user()->isFeePay())
+
             <div class="col-sm-4 ">
                 {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
             </div>
-            @else
-            <div class="col-sm-4 ">
-                <a href="#" class='btn btn-block btn-success pull-right' data-toggle="tooltip" data-placement="top" disabled="" title='You need to clear outstanding balance before you can create new event'>Create New Event</a>
-            </div>
-        @endif
+
 
     </div>
     <div class="row">
@@ -96,7 +92,7 @@
                         </small>
                     </th>
                     <th>Action</th>
-                    <th>Info about outstanding payment</th>
+                    <th>Outstanding balance</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -129,18 +125,21 @@
                                     </a>
 
                                     @if(\Auth::user()!=null)
-                                        @if($event->payment==null)
+                                        @if($event->CountFees()==0)
+                                        @elseif($event->CountFees()>0 && $event->payment!=null)
                                             @if(\Auth::user()->id==$event->user_id)
-                                                <a href="{{ route('pay_fee', $event) }}"
-                                                   class="btn btn-xs btn-success"
-                                                   data-toggle="tooltip" data-placement="top"
-                                                   title="Pay Fees"
-                                                >
-                                                    <i class="fa fa-dollar"></i>
-                                                </a>
+                                                @if ($event->payment->status=='Pending')
+                                                    <a href="{{ route('pay_fee', $event) }}"
+                                                       class="btn btn-xs btn-success" disabled=""
+                                                       data-toggle="tooltip" data-placement="top"
+                                                       title="Your payment status is 'Pending'"
+                                                    >
+                                                        <i class="fa fa-dollar"></i>
+                                                    </a>
+                                            @endif
                                             @endif
 
-                                        @elseif($event->payment->status!='Completed' && $event->payment->status!='Pending')
+                                        @else
                                             @if(\Auth::user()->id==$event->user_id)
                                                 <a href="{{ route('pay_fee', $event) }}"
                                                    class="btn btn-xs btn-success"
@@ -159,12 +158,9 @@
                             </td>
                             <td> @if(\Auth::user()!=null)
                                     @if(\Auth::user()->id==$event->user_id)
-                                        @if (isset($event->payment )){{$event->payment->status}}
-                                        @else Not paid yet
-                                        @endif
+                                       {{$event->CountFees()}}
+                                        @else Not applicable
                                     @endif
-                                     @else
-                                    Not Applicable
                                 @endif
                             </td>
                         </tr>

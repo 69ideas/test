@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Admin\Participants;
 use App\Traits\ImageCast;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\SluggableInterface;
@@ -172,6 +173,20 @@ class Event extends Model implements SluggableInterface
     {
         return $this->belongsTo(Payment::class)
             ->where('status','<>','Failed');
+    }
+
+    public function CountFees(){
+        $payments=Payment::where('event_id',$this->id)->where('status','Completed')->get();
+        $sum=0;
+        foreach ($payments as $payment){
+            if ($payment->method=='Fees'){
+                $sum=$sum-$payment->amount;
+            }
+            else{
+                $sum=$sum+ round(max(0.2, $payment->amount * 0.005), 2);
+            }
+        }
+        return $sum;
     }
 
 }

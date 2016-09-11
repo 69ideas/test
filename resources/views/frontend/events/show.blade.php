@@ -5,15 +5,26 @@
     @if(\Auth::user()!=null)
         @if($event->payment==null)
             @if(\Auth::user()->id==$event->user_id)
+
+
+
+
                 <div class="alert alert-danger">
-                    You have not paid an event yet. <a href="{{route('pay_fee', $event)}}">Pay now.</a>
+                    Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
+                        now.</a>
                 </div>
+
             @endif
 
+        @elseif($event->payment->status=='Pending')
+            <div class="alert alert-info">
+                Your outstanding balance status is 'Pending'.
+            </div>
         @elseif($event->payment->status!='Completed')
             @if(\Auth::user()->id==$event->user_id)
                 <div class="alert alert-danger">
-                    You have not paid an event yet. <a href="{{route('pay_fee', $event)}}">Pay now.</a>
+                    Your outstanding balance is $ {{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
+                        now.</a>
                 </div>
             @endif
         @endif
@@ -53,26 +64,28 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="form-control-static">@if (isset($event->start_date)) <strong> You can begin
-                                    participating as of:</strong> {{$event->start_date->format('m/d/Y')}}@endif</p>
+                                        participating as of:</strong> {{$event->start_date->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="form-control-static">@if (isset($event->deadline))<strong> Submit
-                                    by </strong>{{$event->deadline->format('m/d/Y')}}@endif</p>
+                                        by </strong>{{$event->deadline->format('m/d/Y')}}@endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="form-control-static"><strong> Maximum number of
-                                    participants is </strong>@if($event->number_participants!=0) {{$event->number_participants}} @else
+                                        participants
+                                        is </strong>@if($event->number_participants!=0) {{$event->number_participants}} @else
                                         "Unlimited" @endif</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="form-control-static"> <strong> Amount per Participant is </strong>
-                                    @if($event->needable_sum>0)${{$event->needable_sum}} @else "No Set Amount" @endif</p>
+                                <p class="form-control-static"><strong> Amount per Participant is </strong>
+                                    @if($event->needable_sum>0)${{$event->needable_sum}} @else "No Set Amount" @endif
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -100,13 +113,23 @@
 
             @if(!$event->is_close)
                 <div class="col-xs-3 col-xs-offset-9">
-                    @if(
-                    ((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)) ||  $event->allow_anonymous)
-                        <div class="form-group" >
-                            <a href="{{route('payment',[$event])}}"
-                               class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
-                                Payment</a>
-                        </div>
+                    @if($is_guest)
+                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
+                            <div class="form-group">
+                                <a href="{{route('payment',[$event])}}"
+                                   class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
+                                    Payment</a>
+                            </div>
+                        @endif
+                    @else
+                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
+                            <div class="form-group">
+                                <a href="{{route('payment',[$event])}}"
+                                   class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
+                                    Payment</a>
+                            </div>
+                        @endif
+
                     @endif
                 </div>
             @endif
