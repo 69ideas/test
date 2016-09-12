@@ -43,6 +43,7 @@ class PayReceipt extends Controller
              ->sum();
             $payment->method = 'Paypal';
             $payment->status = 'Pending';
+            $payment->event_id=$event->id;
             $payment->save();
             foreach ($parts as $item) {
                 $participant = new Participant();
@@ -166,24 +167,25 @@ class PayReceipt extends Controller
             $payment = new Payment();
             $payment->name = config('app.admin_email');
             $payment->email = config('app.admin_email');
-            $payment->amount =  config('app.admin_fees');;
+            $payment->amount =  $event->CountFees();
 
             $payment->method = 'Fees';
             $payment->status = 'Pending';
+            $payment->event_id=$event->id;
             $payment->save();
             $event->payment_id=$payment->id;
             $event->save();
 
             $receiver2 = new Receiver();
             $receiver2->email = config('app.admin_email');
-            $receiver2->amount =  config('app.admin_fees');;
+            $receiver2->amount =  $event->CountFees();
 
             $list = [$receiver2];
 
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('home'));
-            $payRequest->feesPayer = 'SENDER';
+            $payRequest->feesPayer = 'EACHRECEIVER';
 
 
 

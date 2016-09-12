@@ -26,12 +26,11 @@ class Payment extends Model
     {
         $t1 = $amount;
         $t2 = $amount;
-       /* if (!$event->vxp_fees) {
+       if (!$event->vxp_fees) {
             $t1 = round(max(0.2, $amount * 0.005), 2);
         } else {
             $t1 = 0;
         }
-*/
         if (!$event->cc_fees) {
             $t1 = round($amount * 0.029, 2) + 0.3;
         } else {
@@ -45,14 +44,14 @@ class Payment extends Model
     {
         $t1 = 0;
         $t2 = 0;
-       /* if ($event->vxp_fees) {
+        if ($event->vxp_fees) {
             $t1 = round(max(0.2, $amount * 0.005), 2);
         } else {
             $t1 = 0;
-        }*/
+        }
 
         if ($event->cc_fees) {
-            $t1 = round($amount * 0.029, 2) + 0.3;
+            $t2 = round($amount * 0.029, 2) + 0.3;
         } else {
             $t2 = 0;
         }
@@ -77,5 +76,8 @@ class Payment extends Model
         }
         return round($cc,2);
     }
-
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
