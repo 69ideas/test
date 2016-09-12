@@ -55,6 +55,8 @@ class User extends Authenticatable
     }
 
     public function isFeePay(){
+        return true;
+
         $events=Event::where('user_id',\Auth::user()->id)->get();
         $isOk = true;
         foreach ($events as $event){
@@ -62,7 +64,7 @@ class User extends Authenticatable
                 $isOk = false;
             }
             else{
-                if ($event->payment->status=='Completed'){
+                if ($event->payment->status == 'Completed'){
                     return true;
                 }
             }

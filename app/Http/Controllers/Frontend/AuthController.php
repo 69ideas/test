@@ -43,18 +43,19 @@ class AuthController extends Controller
                 \DB::transaction(function () use ($userdata, $user, $device) {
                     $device = new Device();
                     $device->ip = \Request::ip();
-                    $device->confirmed = false;
+                    //$device->confirmed = false;
+                    $device->confirmed = true;
                     $device->hash = str_random(255);
                     $device->user_id = \Auth::id();
                     $device->save();
                     $email=$user->email;
-                    \Auth::logout();
-                    \Mail::queue('frontend.emails.repeat', compact('request', 'email', 'device', 'user'), function (Message $message) use ($user) {
-                        $message->to($user->email)
-                            ->subject('Confirm your email');
-                    });
+                    //\Auth::logout();
+                    //\Mail::queue('frontend.emails.repeat', compact('request', 'email', 'device', 'user'), function (Message $message) use ($user) {
+                    //    $message->to($user->email)
+                    //        ->subject('Confirm your email');
+                    //});
                 });
-                return redirect()->route('repeat');
+                //return redirect()->route('repeat');
             }
             else{
                 if (!$device->confirmed){
