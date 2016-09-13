@@ -17,6 +17,11 @@ class Pages extends Controller
     public function home()
     {
         //$events = Event::where('is_show', 1)->get();
+        if (\Auth::user()) {
+            if (!\Auth::user()->filled) {
+                \Auth::logout();
+            }
+        }
         $active = 'active';
         $photos = Photo::orderBy('sort_order')->get();
         $page = Page::where('hidden_name', 'home')->first();

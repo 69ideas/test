@@ -170,7 +170,7 @@
                             {!! Form::close() !!}
                         </div>
                         <div class="col-xs-3">
-                            <a href="/" class="btn btn-primary btn-block" style="background: #49658A;">Leave without changes</a>
+                            <a href="{{route('home')}}" class="btn btn-primary btn-block" style="background: #49658A;">Leave without changes</a>
                         </div>
                     </div>
                 </div>
