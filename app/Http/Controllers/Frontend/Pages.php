@@ -65,7 +65,12 @@ class Pages extends Controller
         $page = null;
         $prev = Event::orderBy('created_at', 'decs')->where('created_at', '<', $event->created_at)->first();
         $next = Event::orderBy('created_at', 'asc')->where('created_at', '>', $event->created_at)->first();
-        return view('frontend.event', compact('event', 'prev', 'next', 'page'));
+        if (\Auth::check()) {
+            $is_guest = false;
+        } else {
+            $is_guest = true;
+        }
+        return view('frontend.events.show', compact('event', 'prev', 'next', 'page','is_guest'));
     }
 
     public function blog($page, Request $request, $url)

@@ -87,6 +87,9 @@ class Events extends Controller
 
     }
     public function edit(Event $event){
+        if (\Auth::user()->id!=$event->user_id){
+            return redirect()->route('home');
+        }
         $page_title = 'Editing Event';
         $coordinators=[null => '--Not set--'] + User::orderByName()->get()->pluck('full_name','id')->all();
         $submit_text = "Save changes";
@@ -141,7 +144,8 @@ class Events extends Controller
     public function send_email(Requests\SendEmailRequest $request){
         $email=$request->get('email');
         $event=Event::find($request->get('id'));
-        \Mail::queue('frontend.emails.send_event', compact('event','email'), function (Message $message) use ($email,$event) {
+        $user=\Auth::user();
+        \Mail::queue('frontend.emails.send_event', compact('event','email','user'), function (Message $message) use ($email,$event) {
             $message->to($email)
                 ->subject($event->short_description);
         });

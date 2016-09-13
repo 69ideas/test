@@ -115,10 +115,10 @@
     <div class="row" style="padding-top: 1.5%;">
         @if(!$entity->is_close)
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
-                <div class="col-xs-3">
-                    <div class="form-group">
-                        <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash to Coordinator Payment
+
+                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
+                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash
+                            to Coordinator Payment
                             <small
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -127,30 +127,20 @@
                                 <i class="fa fa-info-circle"></i>
                             </small>
                         </a>
-                    </div>
-                </div>
+                    @endif
+                    @if($is_guest)
+                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
+                                <a href="{{route('payment',[$event])}}"
+                                   class="btn btn-primary make-payment alignright "><i class="fa fa-paypal"></i> Make a
+                                    Payment</a>
+                        @endif
+                    @else
+                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
+                                <a href="{{route('payment',[$event])}}"
+                                   class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
+                                    Payment</a>
+                        @endif
             @endif
-
-            <div class="col-xs-3 col-xs-offset-9">
-                @if($is_guest)
-                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
-                        <div class="form-group" >
-                            <a href="{{route('payment',[$event])}}"
-                               class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
-                                Payment</a>
-                        </div>
-                    @endif
-                @else
-                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
-                        <div class="form-group" >
-                            <a href="{{route('payment',[$event])}}"
-                               class="btn btn-primary btn-block make-payment"><i class="fa fa-paypal"></i> Make a
-                                Payment</a>
-                        </div>
-                    @endif
-
-                @endif
-            </div>
         @endif
     </div>
 </div>
