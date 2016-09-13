@@ -91,11 +91,11 @@
                             {!!  Form::radio('allow_anonymous',true) !!} Yes
                             {!!  Form::radio('allow_anonymous',false,true) !!} No
                         </div>
-                       {{-- <div class="form-group">
+                        <div class="form-group">
                             Event Fee taken out of Total?<br>
                             {!!  Form::radio('vxp_fees',true,true) !!} Yes
                             {!!  Form::radio('vxp_fees',false) !!} No
-                        </div>--}}
+                        </div>
                         <div class="form-group">
                             Credit Card Fees taken out of Total?<br>
                             {!!  Form::radio('cc_fees',true) !!} Yes
