@@ -31,10 +31,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('paypal')
-                  ->everyFiveMinutes();
+                  ->everyMinute();
 
          $schedule->command('paypal:refund')
-                  ->everyFiveMinutes();
+                  ->everyMinute();
         $schedule->command('paypal:fees')
             ->weekly();
     }

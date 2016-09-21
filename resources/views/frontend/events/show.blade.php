@@ -3,12 +3,8 @@
 @section('content')
 
     @if(\Auth::user()!=null)
-        @if($event->payment==null)
+        @if($event->payment==null || $event->CountFees()<0)
             @if(\Auth::user()->id==$event->user_id)
-
-
-
-
                 <div class="alert alert-danger">
                     Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
                         now.</a>
