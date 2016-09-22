@@ -26,17 +26,17 @@ class Payment extends Model
     {
         $t1 = $amount;
         $t2 = $amount;
-       if (!$event->vxp_fees) {
-            $t1 = round(max(0.2, $amount * 0.005), 2);
+       if (!$event->vxp_fees && !$event->cc_fees) {
+           $t1 = round(max(0.2, $amount * 0.005), 2);
         } else {
             $t1 = 0;
         }
         if (!$event->cc_fees) {
-            $t1 = round($amount * 0.029, 2) + 0.3;
+            $t2 = round($amount * 0.029, 2) + 0.3;
         } else {
             $t2 = 0;
         }
-        $total=$t1 + $t2;
+        $total=$amount+$t1 + $t2;
         return round($total, 2);
     }
 

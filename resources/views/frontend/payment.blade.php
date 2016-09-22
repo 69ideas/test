@@ -39,6 +39,11 @@
     <div class="form-group">
         <h4>Participant #1</h4>
     </div>
+    <div class="form-group">
+        <label>What are you using to make this payment? </label>
+        {!!  Form::radio('type','credit card',true,['class'=>'type']) !!} Credit Card
+        {!!  Form::radio('type','paypal', false,['id'=>'type','class'=>'type']) !!} PayPal
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -125,11 +130,6 @@
 
 </div>
 
-<div class="form-group">
-    <label>What are you using to make this payment? </label>
-    {!!  Form::radio('type','credit card',true,['class'=>'type']) !!} Credit Card
-    {!!  Form::radio('type','paypal', false,['id'=>'type','class'=>'type']) !!} PayPal
-</div>
 
 <div id="total_payment">
 

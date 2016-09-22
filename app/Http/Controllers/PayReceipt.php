@@ -37,13 +37,13 @@ class PayReceipt extends Controller
             $payment->name = $parts[0]['name'];
             $payment->email = $parts[0]['email'];
             $payment->amount = collect($request->get('part'))
-                ->map(function ($item,$key){
-                    return str_replace(',','',$item['amount']);
+                ->map(function ($item, $key) {
+                    return str_replace(',', '', $item['amount']);
                 })
-             ->sum();
+                ->sum();
             $payment->method = 'Paypal';
             $payment->status = 'Pending';
-            $payment->event_id=$event->id;
+            $payment->event_id = $event->id;
             $payment->save();
             foreach ($parts as $item) {
                 $participant = new Participant();
@@ -63,7 +63,7 @@ class PayReceipt extends Controller
 
                 $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event);
 
-                $participant->deposit_type = 'PayPal';
+                $participant->deposit_type = 'Credit Card';
                 $participant->vxp_fees = Payment::CountFeeVXP($item['amount'], $event);
                 $participant->cc_fees = Payment::CountFeeCC($item['amount'], $event);
                 $participant->coordinator_collected = Payment::CountDonation($item['amount'], $event);
@@ -80,12 +80,11 @@ class PayReceipt extends Controller
 
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
-                'USD', $receiverList, route('home'));
+                'USD', $receiverList, route('check', $payment->id));
 
-           if ($event->cc_fees){
-               $payRequest->feesPayer = 'EACHRECEIVER';
-            }
-            else{
+            if ($event->cc_fees) {
+                $payRequest->feesPayer = 'EACHRECEIVER';
+            } else {
                 $payRequest->feesPayer = 'SENDER';
             }
             //
@@ -136,16 +135,25 @@ class PayReceipt extends Controller
         $response = [];
         $mid = 1;
         foreach ($amounts as $amount) {
-            $amount = str_replace(',', '', $amount);
-            $item = [
-                'mid'      => $mid,
-                'vxp'      => Payment::CountFeeVXP($amount, $event, true),
-                'cc'       => Payment::CountFeeCC($amount, $event, true),
-                'total'    => Payment::CountWithFee($amount, $event),
-                'donation' => Payment::CountDonation($amount, $event),
-            ];
-            $mid = $mid + 1;
-            $response[] = $item;
+            if ($amount != 0) {
+                $amount = str_replace(',', '', $amount);
+                $item = [
+                    'mid' => $mid,
+                    'vxp' => Payment::CountFeeVXP($amount, $event, true),
+                    'cc' => Payment::CountFeeCC($amount, $event, true),
+                    'total' => Payment::CountWithFee($amount, $event),
+                    'donation' => Payment::CountDonation($amount, $event),
+                ];
+                if ($request->get('type') == 'false' && $event->cc_fees == false) {
+
+                    $item['donation'] = $item['donation'] + $item['cc'];
+                    $item['cc'] = 0;
+
+                }
+
+                $mid = $mid + 1;
+                $response[] = $item;
+            }
         }
 
         return view('frontend.total_payment',
@@ -160,34 +168,34 @@ class PayReceipt extends Controller
 
         return view('frontend.another_entry', compact('event', 'id'));
     }
-    public function pay_fee(Event $event){
+
+    public function pay_fee(Event $event)
+    {
         $payPalURL = '';
         \DB::transaction(function () use ($event, &$payPalURL) {
 
             $payment = new Payment();
             $payment->name = config('app.admin_email');
             $payment->email = config('app.admin_email');
-            $payment->amount =  $event->CountFees();
+            $payment->amount = $event->CountFees();
 
             $payment->method = 'Fees';
             $payment->status = 'Pending';
-            $payment->event_id=$event->id;
+            $payment->event_id = $event->id;
             $payment->save();
-            $event->payment_id=$payment->id;
+            $event->payment_id = $payment->id;
             $event->save();
 
             $receiver2 = new Receiver();
             $receiver2->email = config('app.admin_email');
-            $receiver2->amount =  $event->CountFees();
+            $receiver2->amount = $event->CountFees();
 
             $list = [$receiver2];
 
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
-                'USD', $receiverList, route('home'));
-            $payRequest->feesPayer = 'EACHRECEIVER';
-
-
+                'USD', $receiverList, route('check', $payment->id));
+            $payRequest->feesPayer = 'EACHRECEIVER  ';
 
 
             //
@@ -211,5 +219,31 @@ class PayReceipt extends Controller
         return redirect($payPalURL);
 
     }
+
+    public function check($id)
+    {
+        $payment = \App\Payment::find($id);
+        $requestEnvelope = new \PayPal\Types\Common\RequestEnvelope("en_US");
+        $paymentDetailsReq = new \PayPal\Types\AP\PaymentDetailsRequest($requestEnvelope);
+        $paymentDetailsReq->payKey = $payment->paykey;
+        $service = new \PayPal\Service\AdaptivePaymentsService();
+        $response = $service->PaymentDetails($paymentDetailsReq);
+        if ($response->status == 'COMPLETED') {
+            $payment->status = 'Completed';
+            $payment->save();
+        } elseif (in_array($response->status, ['ERROR', 'EXPIRED'])) {
+            $payment->status = 'Failed';
+            $payment->save();
+        } elseif (in_array($response->status, ['REVERSALERROR', 'INCOMPLETE'])) {
+            $email = config('app.admin_email');
+            \Mail::queue('frontend.emails.failed', compact('event', 'email'),
+                function (\Illuminate\Mail\Message $message) use ($email) {
+                    $message->to($email)
+                        ->subject('Whops!');
+                });
+        }
+        return redirect()->route('event.index');
+    }
+
 
 }

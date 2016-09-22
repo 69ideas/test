@@ -243,7 +243,7 @@ BA.Events = {
         var t = $('.related-payment').map(function (key, item) {
             return $(item).val()
         }).toArray();
-        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') + '&amounts=' + JSON.stringify(t), null, function (data) {
+        BA.Bindings.CurrentAmountRequest = $.get('/payment_total?event=' + $('#amount').data('event') +'&type='+$('.type')[0].checked+ '&amounts=' + JSON.stringify(t), null, function (data) {
             $('#total_payment').html(data);
             BA.Bindings.CurrentAmountRequest = null;
         })
