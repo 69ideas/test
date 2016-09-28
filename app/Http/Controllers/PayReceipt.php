@@ -60,21 +60,28 @@ class PayReceipt extends Controller
                 $participant->deposit_date = Carbon::now();
                 $participant = $participant->payment()->associate($payment);
                 $participant->save();
-
-                $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event);
-
-                $participant->deposit_type = 'Credit Card';
+                if ($request->get('type') == 'paypal') {
+                    $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event, true);
+                    $participant->cc_fees = 0;
+                    $participant->deposit_type = 'PayPal';
+                } else {
+                    $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event, false);
+                    $participant->cc_fees = Payment::CountFeeCC($item['amount'], $event);
+                    $participant->deposit_type = 'Credit Card';
+                }
                 $participant->vxp_fees = Payment::CountFeeVXP($item['amount'], $event);
-                $participant->cc_fees = Payment::CountFeeCC($item['amount'], $event);
-                $participant->coordinator_collected = Payment::CountDonation($item['amount'], $event);
+                $participant->coordinator_collected = $participant->amount_deposited - $participant->vxp_fees - $participant->cc_fees;
                 $participant->save();
             }
 
 
             $receiver1 = new Receiver();
             $receiver1->email = $event->paypal_email;
-
-            $receiver1->amount = $payment->amount;
+            if ($request->get('type') == 'paypal') {
+                $receiver1->amount = Payment::CountWithFee($payment->amount, $event, true);
+            } else {
+                $receiver1->amount = Payment::CountWithFee($payment->amount, $event, false);
+            };
 
             $list = [$receiver1];
 
@@ -82,13 +89,15 @@ class PayReceipt extends Controller
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('check', $payment->id));
 
-            if ($event->cc_fees) {
-                $payRequest->feesPayer = 'EACHRECEIVER';
-            } else {
-                $payRequest->feesPayer = 'SENDER';
+
+            $payRequest->feesPayer = 'EACHRECEIVER';
+
+            if ($request->get('type') == 'paypal') {
+                $payRequest->fundingConstraint = new FundingConstraint();
+                $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
+                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
+                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[]  = new FundingTypeInfo('BALANCE');
             }
-            //
-            //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
 
             $service = new AdaptivePaymentsService();
             try {
@@ -140,17 +149,19 @@ class PayReceipt extends Controller
                 $item = [
                     'mid' => $mid,
                     'vxp' => Payment::CountFeeVXP($amount, $event, true),
-                    'cc' => Payment::CountFeeCC($amount, $event, true),
-                    'total' => Payment::CountWithFee($amount, $event),
-                    'donation' => Payment::CountDonation($amount, $event),
+                    'total' => Payment::CountWithFee($amount, $event, false),
+                    'cc' => Payment::CountFeeCC(Payment::CountWithFee($amount, $event, false), $event, true),
                 ];
-                if ($request->get('type') == 'false' && $event->cc_fees == false) {
-
-                    $item['donation'] = $item['donation'] + $item['cc'];
-                    $item['cc'] = 0;
+                if ($request->get('type') == 'false') {
+                    $item = [
+                        'mid' => $mid,
+                        'vxp' => Payment::CountFeeVXP($amount, $event, true),
+                        'cc' => 0,
+                        'total' => Payment::CountWithFee($amount, $event, true),
+                    ];
 
                 }
-
+                $item['donation'] = $item['total'] - $item['vxp'] - $item['cc'];
                 $mid = $mid + 1;
                 $response[] = $item;
             }
@@ -177,7 +188,7 @@ class PayReceipt extends Controller
             $payment = new Payment();
             $payment->name = config('app.admin_email');
             $payment->email = config('app.admin_email');
-            $payment->amount = $event->CountFees();
+            $payment->amount = abs($event->CountFees());
 
             $payment->method = 'Fees';
             $payment->status = 'Pending';
@@ -188,14 +199,14 @@ class PayReceipt extends Controller
 
             $receiver2 = new Receiver();
             $receiver2->email = config('app.admin_email');
-            $receiver2->amount = $event->CountFees();
+            $receiver2->amount = abs($event->CountFees());
 
             $list = [$receiver2];
 
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
                 'USD', $receiverList, route('check', $payment->id));
-            $payRequest->feesPayer = 'EACHRECEIVER  ';
+            $payRequest->feesPayer = 'EACHRECEIVER';
 
 
             //

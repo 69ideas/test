@@ -183,7 +183,7 @@ class Event extends Model implements SluggableInterface
                 $sum=$sum-$payment->amount;
             }
             else{
-                $sum=$sum+ round(max(0.2, $payment->amount * 0.005), 2);
+                $sum=$sum+ ($payment->participant->vxp_fees+0.3)/(1-0.029);
             }
         }
         return $sum;

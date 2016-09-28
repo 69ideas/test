@@ -22,40 +22,56 @@ class Payment extends Model
         return $amount;
     }
 
-    public static function CountWithFee($amount, $event)
+    public static function CountWithFee($amount, $event, $paypal=false)
     {
-        $t1 = $amount;
-        $t2 = $amount;
-       if (!$event->vxp_fees && !$event->cc_fees) {
-           $t1 = round(max(0.2, $amount * 0.005), 2);
-        } else {
-            $t1 = 0;
+        if($paypal==true){
+            if ($event->vxp_fees){
+                $total=$amount;
+            }
+            else{
+                $total=$amount+round(max(0.2, $amount * 0.005), 2);
+            }
         }
-        if (!$event->cc_fees) {
-            $t2 = round($amount * 0.029, 2) + 0.3;
-        } else {
-            $t2 = 0;
+        else{
+        if ($event->cc_fees){
+            if ($event->vxp_fees){
+                $total=$amount;
+            }
+            else{
+                $total=$amount+round(max(0.2, $amount * 0.005), 2);
+            }
         }
-        $total=$amount+$t1 + $t2;
+        else{
+            if ($event->vxp_fees){
+                $total=($amount+0.3)/(1-0.029);
+            }
+            else{
+                $total=($amount+max(0.2, $amount * 0.005)+0.3)/(1-0.029);
+            }
+        }
+        }
         return round($total, 2);
     }
 
-    public static function CountDonation($amount, $event)
+    public static function CountDonation($amount, $event,$paypal=false)
     {
-        $t1 = 0;
-        $t2 = 0;
-        if ($event->vxp_fees) {
-            $t1 = round(max(0.2, $amount * 0.005), 2);
-        } else {
-            $t1 = 0;
-        }
+        if ($event->cc_fees){
+           if ($event->vxp_fees){
+               $total=$amount;
+           }
+           else{
+               $total=$amount+round(max(0.2, $amount * 0.005), 2);
+           }
+       }
+       else{
+           if ($event->vxp_fees){
+               $total=($amount+0.3)/(1-0.029);
+           }
+           else{
+               $total=($amount+max(0.2, $amount * 0.005)+0.3)/(1-0.029);
+           }
+       }
 
-        if ($event->cc_fees) {
-            $t2 = round($amount * 0.029, 2) + 0.3;
-        } else {
-            $t2 = 0;
-        }
-        $total=((double)$amount - $t1 - $t2);
         return round($total, 2);
     }
 

@@ -2,28 +2,12 @@
 
 @section('content')
 
-    @if(\Auth::user()!=null)
-        @if($event->payment==null || $event->CountFees()<0)
-            @if(\Auth::user()->id==$event->user_id)
+    @if($event->isCoordinator(\Auth::user()) && $event->CountFees()>0)
                 <div class="alert alert-danger">
                     Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
                         now.</a>
                 </div>
 
-            @endif
-
-        @elseif($event->payment->status=='Pending')
-            <div class="alert alert-info">
-                Your outstanding balance status is 'Pending'.
-            </div>
-        @elseif($event->payment->status!='Completed')
-            @if(\Auth::user()->id==$event->user_id)
-                <div class="alert alert-danger">
-                    Your outstanding balance is $ {{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
-                        now.</a>
-                </div>
-            @endif
-        @endif
     @endif
 
     <div class="row">

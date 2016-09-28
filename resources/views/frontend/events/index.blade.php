@@ -14,9 +14,9 @@
         <div class="col-sm-4 ">
         </div>
 
-            <div class="col-sm-4 ">
-                {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
-            </div>
+        <div class="col-sm-4 ">
+            {{ link_to_route('event.create', 'Create New Event', [], ['class'=>'btn btn-block btn-success pull-right','data-toggle'=>"tooltip", 'data-placement'=>"top",'title'=>'You can create a new Event by clicking here']) }}
+        </div>
 
 
     </div>
@@ -115,7 +115,7 @@
                             <td>@if(isset($event->closed_date)){{ $event->closed_date->format('m/d/Y')}} @else
                                     Open @endif</td>
                             <td>
-                                @if ($event->user_id==\Auth::user()->id)
+                                @if ($event->isCoordinator(\Auth::user()) )
                                     <a href="{{ route('event.edit', $event) }}"
                                        class="btn btn-xs btn-primary"
                                        data-toggle="tooltip" data-placement="top"
@@ -124,43 +124,21 @@
                                         <i class="fa fa-pencil"></i>
                                     </a>
 
-                                    @if(\Auth::user()!=null)
-                                        @if($event->CountFees()==0)
-                                        @elseif($event->CountFees()>0 && $event->payment!=null)
-                                            @if(\Auth::user()->id==$event->user_id)
-                                                @if ($event->payment->status=='Pending')
-                                                    <a href="{{ route('pay_fee', $event) }}"
-                                                       class="btn btn-xs btn-success" disabled=""
-                                                       data-toggle="tooltip" data-placement="top"
-                                                       title="Your payment status is 'Pending'"
-                                                    >
-                                                        <i class="fa fa-dollar"></i>
-                                                    </a>
-                                            @endif
-                                            @endif
-
-                                        @else
-                                            @if(\Auth::user()->id==$event->user_id)
-                                                <a href="{{ route('pay_fee', $event) }}"
-                                                   class="btn btn-xs btn-success"
-                                                   data-toggle="tooltip" data-placement="top"
-                                                   title="Pay Fees"
-                                                >
-                                                    <i class="fa fa-dollar"></i>
-                                                </a>
-                                            @endif
-                                        @endif
+                                    @if($event->CountFees()>0)
+                                        <a href="{{ route('pay_fee', $event) }}"
+                                           class="btn btn-xs btn-success"
+                                           data-toggle="tooltip" data-placement="top"
+                                           title="Pay Fees"
+                                        >
+                                            <i class="fa fa-dollar"></i>
+                                        </a>
                                     @endif
-
-
                                 @endif
 
                             </td>
-                            <td> @if(\Auth::user()!=null)
-                                    @if(\Auth::user()->id==$event->user_id)
-                                       {{$event->CountFees()}}
-                                        @else Not applicable
-                                    @endif
+                            <td> @if($event->isCoordinator(\Auth::user()))
+                                        {{$event->CountFees()}}
+                                    @else Not applicable
                                 @endif
                             </td>
                         </tr>
