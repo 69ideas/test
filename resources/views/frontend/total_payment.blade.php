@@ -20,7 +20,7 @@
                     @if($item['cc']!=0)
                         {!! Form::text('', '$'.number_format($item['cc'],2), ['class'=>'form-control', 'disabled'=>'disabled']) !!}
                     @else
-                        {!! Form::text('', 'Not Applicable', ['class'=>'form-control', 'disabled'=>'disabled']) !!}
+                        {!! Form::text('', '$0.00', ['class'=>'form-control', 'disabled'=>'disabled']) !!}
                     @endif
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     @if($item['vxp']!=0)
                         {!! Form::text('', '$'.number_format($item['vxp'],2), ['class'=>'form-control', 'disabled'=>'disabled']) !!}
                     @else
-                        {!! Form::text('', 'Not Applicable', ['class'=>'form-control', 'disabled'=>'disabled']) !!}
+                        {!! Form::text('', '$0.00', ['class'=>'form-control', 'disabled'=>'disabled']) !!}
                     @endif
                 </div>
                 <div class="form-group">
