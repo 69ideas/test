@@ -86,7 +86,7 @@ class PayReceipt extends Controller
             $list = [$receiver1];
 
             $receiverList = new ReceiverList($list);
-            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
+            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('check', $payment->id),
                 'USD', $receiverList, route('check', $payment->id));
 
 
@@ -183,12 +183,14 @@ class PayReceipt extends Controller
     public function pay_fee(Event $event)
     {
         $payPalURL = '';
+
         \DB::transaction(function () use ($event, &$payPalURL) {
 
             $payment = new Payment();
             $payment->name = config('app.admin_email');
             $payment->email = config('app.admin_email');
-            $payment->amount = abs($event->CountFees());
+
+            $payment->amount =abs($event->CountFees()) ;
 
             $payment->method = 'Fees';
             $payment->status = 'Pending';
@@ -204,9 +206,14 @@ class PayReceipt extends Controller
             $list = [$receiver2];
 
             $receiverList = new ReceiverList($list);
-            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('error'),
+            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('check', $payment->id),
                 'USD', $receiverList, route('check', $payment->id));
             $payRequest->feesPayer = 'EACHRECEIVER';
+
+            $payRequest->fundingConstraint = new FundingConstraint();
+            $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
+            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
+            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[]  = new FundingTypeInfo('BALANCE');
 
 
             //
