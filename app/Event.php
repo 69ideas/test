@@ -84,7 +84,10 @@ class Event extends Model implements SluggableInterface
     {
         return $this->belongsTo(User::class);
     }
-
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
     protected $dates = ['start_date', 'closed_date', 'deadline'];
 
     public function setStartDateAttribute($value = null)

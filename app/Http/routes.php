@@ -52,6 +52,7 @@ Route::group(["middleware" => ['auth']], function () {
     Route::get('/event/{event}/open', ['as' => 'frontend.event.open', 'uses' => 'Frontend\Events@open']);
     Route::get('/event/send', ['as' => 'frontend.event.send', 'uses' => 'Frontend\Events@send']);
     Route::post('/event/send', ['as' => 'post.send.email', 'uses' => 'Frontend\Events@send_email']);
+    Route::post('/comment', ['as' => 'comment', 'uses' => 'Frontend\Comments@store']);
     Route::resource('event', 'Frontend\Events');
     Route::get('logout', 'Frontend\AuthController@sign_out');
 });
