@@ -84,7 +84,10 @@ class Event extends Model implements SluggableInterface
     {
         return $this->belongsTo(User::class);
     }
-
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
     protected $dates = ['start_date', 'closed_date', 'deadline'];
 
     public function setStartDateAttribute($value = null)
@@ -186,7 +189,7 @@ class Event extends Model implements SluggableInterface
                 $sum=$sum+ ($payment->participant->vxp_fees+0.3)/(1-0.029);
             }
         }
-        return $sum;
+        return round($sum,2);
     }
 
 }

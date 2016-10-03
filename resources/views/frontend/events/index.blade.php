@@ -137,7 +137,7 @@
 
                             </td>
                             <td> @if($event->isCoordinator(\Auth::user()))
-                                        {{$event->CountFees()}}
+                                        {{number_format($event->CountFees(),2)}}
                                     @else Not applicable
                                 @endif
                             </td>

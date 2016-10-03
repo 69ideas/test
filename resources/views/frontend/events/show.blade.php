@@ -7,9 +7,12 @@
                     Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
                         now.</a>
                 </div>
+    @else
+        <div class="alert alert-success">
+            Your outstanding balance is clear.</a>
+        </div>
 
     @endif
-
     <div class="row">
         &nbsp;
     </div>
@@ -114,6 +117,9 @@
             @endif
 
             @include('frontend.events._tabs')
+        @if (count($event->participants()->where('user_id',\Auth::user()->id)->get()) || $event->user_id==\Auth::user()->id)
+            @include('frontend.events.comments')
+        @endif
             @if(\Auth::user()!=null)
                 @if(\Auth::user()->id==$event->user_id)
                     <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
