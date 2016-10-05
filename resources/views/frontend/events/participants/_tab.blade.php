@@ -30,7 +30,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="The amount collected on VaultX">
+                        title="VaultX fees are .5%, no less than 20 cents.">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
@@ -46,7 +46,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="CC Fee">
+                        title="We use PayPal to process credit card.  PayPal fees are 2.9% plus 30 cents.">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
