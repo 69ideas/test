@@ -15,8 +15,8 @@ et_pb_pagebuilder_layout et_right_sidebar chrome">
                     </div>
                     <!-- /.login-logo -->
                     <div class="login-box-body" align="center">
-                        <p>You successfully filled you profile</p>
-                        <p>Now You can create events</p>
+                        <p>You successfully filled your profile</p>
+                        <p>Now you can create events</p>
                         <br>
                         <div class="row">
                             &nbsp;<a href="{{route('event.index')}}" class="btn btn-block btn-primary">Start!</a>

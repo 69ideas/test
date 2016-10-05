@@ -116,7 +116,7 @@
         @if(!$entity->is_close)
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
 
-                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
+                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date->yesterday()}}"
                            class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash
                             to Coordinator Payment
                             <small
