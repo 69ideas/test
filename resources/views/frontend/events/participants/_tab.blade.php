@@ -30,7 +30,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="The amount collected on VaultX">
+                        title="VaultX fees are .5%, no less than 20 cents.">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
@@ -46,7 +46,7 @@
                 <small
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="CC Fee">
+                        title="We use PayPal to process credit card.  PayPal fees are 2.9% plus 30 cents.">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
@@ -116,7 +116,7 @@
         @if(!$entity->is_close)
             @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
 
-                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date}}"
+                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date->yesterday()}}"
                            class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash
                             to Coordinator Payment
                             <small

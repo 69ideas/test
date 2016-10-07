@@ -7,11 +7,6 @@
                     Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
                         now.</a>
                 </div>
-    @else
-        <div class="alert alert-success">
-            Your outstanding balance is clear.</a>
-        </div>
-
     @endif
     <div class="row">
         &nbsp;

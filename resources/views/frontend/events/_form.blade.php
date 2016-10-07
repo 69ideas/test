@@ -169,7 +169,7 @@
                                         data-toggle="popover"
                                         data-placement="right"
                                         title="VXP fees"
-                                        data-content="An Option that the Event Fee will be taken out to the total collected.  Otherwise the Coordinator will have to pay it."
+                                        data-content="VaultX fees are .5%, no less than 20 cents.  You can either choose to have them taken out of the total or add them to each payment."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
@@ -188,7 +188,7 @@
                                         data-toggle="popover"
                                         data-placement="right"
                                         title="Credit Card Fees"
-                                        data-content="An Option that the CC Fees will be taken out to the total collected.  Otherwise the participants will have it added when they make their payment"
+                                        data-content="We use PayPal to process credit card.  PayPal fees are 2.9% plus 30 cents.  You can either choose to have them taken out of the total or add them to each payment."
                                 >
                                     <i class="fa fa-info-circle"></i>
                                 </small>
