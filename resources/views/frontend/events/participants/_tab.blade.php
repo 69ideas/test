@@ -26,14 +26,6 @@
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
-           <th>VaultX Collected
-                <small
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="VaultX fees are .5%, no less than 20 cents.">
-                    <i class="fa fa-info-circle"></i>
-                </small>
-            </th>
             <th>Cash to Coordinator
                 <small
                         data-toggle="tooltip"
@@ -47,6 +39,14 @@
                         data-toggle="tooltip"
                         data-placement="top"
                         title="We use PayPal to process credit card.  PayPal fees are 2.9% plus 30 cents.">
+                    <i class="fa fa-info-circle"></i>
+                </small>
+            </th>
+            <th>VaultX Collected
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="VaultX fees are .5%, no less than 20 cents.">
                     <i class="fa fa-info-circle"></i>
                 </small>
             </th>
@@ -76,9 +76,9 @@
                 <td>@if (isset($participant->deposit_date)){{$participant->deposit_date->format('m/d/Y')}}@endif</td>
                 <td>@if(isset($participant->user_id)){{$participant->user->full_name}}@else {{$participant->name}} @endif</td>
                 <td>{{ $participant->deposit_type }}</td>
-                <td>${{ number_format($participant->vxp_fees, 2) }}</td>
                 <td>${{ number_format($participant->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($participant->cc_fees, 2) }}</td>
+                <td>${{ number_format($participant->vxp_fees, 2) }}</td>
                 <td>${{ number_format($participant->amount_deposited, 2) }}</td>
                 @if ($entity->isCoordinator(auth()->user()))
                     <td><a href="{!! route('participant.refund', [$participant]) !!}">Refund</a></td>
@@ -112,35 +112,50 @@
         @endif
         </tfoot>
     </table>
-    <div class="row" style="padding-top: 1.5%;">
-        @if(!$entity->is_close)
-            @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
+    <div class="col-sm-12">
+        <div class="row form-group" style="padding-top: 2.5%;">
+            @if(!$entity->is_close)
+                @if ($entity->isCoordinator(auth()->user()) && ((count($event->payed_participants)<$event->number_participants) || ($event->number_participants==0 && is_null($event->closed_date))))
 
-                <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date->yesterday()}}"
-                           class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash
-                            to Coordinator Payment
-                            <small
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Payments made to coordinator in cash"
-                            >
-                                <i class="fa fa-info-circle"></i>
-                            </small>
-                        </a>
+                    <a href="/participant/create?type={{get_class($entity)}}&id={{$entity->id}}&needable_sum={{$event->needable_sum}}&start_date={{$event->start_date->yesterday()}}"
+                       class="btn btn-primary add-participant"><i class="glyphicon glyphicon-plus"></i>Enter a Cash
+                        to Coordinator Payment
+                        <small
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Payments made to coordinator in cash"
+                        >
+                            <i class="fa fa-info-circle"></i>
+                        </small>
+                    </a>
+                @endif
+                @if($is_guest)
+                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
+                        <a href="{{route('payment',[$event])}}"
+                           class="btn btn-primary make-payment alignright "><i class="fa fa-paypal"></i> Make a
+                            Payment</a>
                     @endif
-                    @if($is_guest)
-                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
-                                <a href="{{route('payment',[$event])}}"
-                                   class="btn btn-primary make-payment alignright "><i class="fa fa-paypal"></i> Make a
-                                    Payment</a>
-                        @endif
-                    @else
-                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
-                                <a href="{{route('payment',[$event])}}"
-                                   class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
-                                    Payment</a>
-                        @endif
+                @else
+                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
+                        <a href="{{route('payment',[$event])}}"
+                           class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
+                            Payment</a>
+                    @endif
+                @endif
             @endif
-        @endif
+        </div>
+        <div class="row">
+            <label style="padding-top: 0.5%;">Remaining Vaultx Balance :</label>
+            <a class="btn btn-primary pull-right" href="#" onclick="return false;">
+                Clear VaultX Balance
+                <small
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Please clear your VaultX balance through a VaultX transfer"
+                >
+                    <i class="fa fa-info-circle"></i>
+                </small></a>
+            <hr>
+        </div>
     </div>
 </div>
