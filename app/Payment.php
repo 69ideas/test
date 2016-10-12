@@ -22,76 +22,58 @@ class Payment extends Model
         return $amount;
     }
 
-    public static function CountWithFee($amount, $event, $paypal=false)
+    public static function CountWithFee($amount, $event, $paypal = false)
     {
-        if($paypal==true){
-            if ($event->vxp_fees){
-                $total=$amount;
-            }
-            else{
-                $total=$amount+round(max(0.2, $amount * 0.005), 2);
-            }
-        }
-        else{
-        if ($event->cc_fees){
-            if ($event->vxp_fees){
-                $total=$amount;
-            }
-            else{
-                $total=$amount+round(max(0.2, $amount * 0.005), 2);
-            }
-        }
-        else{
-            if ($event->vxp_fees){
-                $total=($amount+0.3)/(1-0.029);
-            }
-            else{
-                $total=($amount+max(0.2, $amount * 0.005)+0.3)/(1-0.029);
-            }
-        }
-        }
-        return round($total, 2);
+        $total = $amount;
+        $total += self::CountFeeCC($amount, $event, false, $paypal);
+        $total += self::CountFeeVXP($amount, $event, false, $paypal);
+
+        return $total;
     }
 
-    public static function CountDonation($amount, $event,$paypal=false)
+    public static function CountDonation($amount, $event, $paypal = false)
     {
-        if ($event->cc_fees){
-           if ($event->vxp_fees){
-               $total=$amount;
-           }
-           else{
-               $total=$amount+round(max(0.2, $amount * 0.005), 2);
-           }
-       }
-       else{
-           if ($event->vxp_fees){
-               $total=($amount+0.3)/(1-0.029);
-           }
-           else{
-               $total=($amount+max(0.2, $amount * 0.005)+0.3)/(1-0.029);
-           }
-       }
+        $total = self::CountWithFee($amount, $event, $paypal);
+        $total -= self::CountFeeCC($amount, $event, true, $paypal);
+        $total -= self::CountFeeVXP($amount, $event, true);
 
         return round($total, 2);
     }
 
 
-    public static function CountFeeVXP($amount, $event, $force = false){
+    public static function CountFeeVXP($amount, $event, $force = false, $paypal = false)
+    {
         if (!$event->vxp_fees || $force) {
             $vxp = round(max(0.2, $amount * 0.005), 2);
         } else {
             $vxp = 0;
         }
-        return round($vxp,2);
+        return round($vxp, 2);
     }
-    public static function CountFeeCC($amount, $event, $force = false){
-        if (!$event->cc_fees || $force) {
-            $cc = round($amount * 0.029, 2) + 0.3;
-        } else {
-            $cc = 0;
+
+    public static function CountRealFeeVXP($amount, $event, $force = false, $paypal = false)
+    {
+        $paidByCustomer = self::CountWithFee($amount, $event, $paypal);
+        $actualPayPalFee = self::PPFee($paidByCustomer);
+        $actualDonation = self::CountDonation($amount, $event, $paypal);
+
+        return round($paidByCustomer - $actualDonation - $actualPayPalFee, 2);
+    }
+
+    public static function CountFeeCC($amount, $event, $force = false, $paypal = false)
+    {
+        if ((!$paypal && !$event->cc_fees) || $force) {
+            return self::PPFee($amount);
         }
-        return round($cc,2);
+
+        return round(0, 2);
     }
+
+    protected static function PPFee($amount)
+    {
+        return round($amount * 0.029 + 0.3, 2);
+    }
+
     public function event()
     {
         return $this->belongsTo(Event::class);

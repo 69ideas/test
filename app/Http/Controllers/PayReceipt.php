@@ -31,72 +31,66 @@ class PayReceipt extends Controller
     public function doAction(Requests\PayRequest $request, Event $event)
     {
         $payPalURL = '';
-        \DB::transaction(function () use ($request, $event, &$payPalURL) {
+        \DB::transaction(function () use ($request, &$event, &$payPalURL) {
+            $parts = collect($request->get('part'));
+
             $payment = new Payment();
-            $parts = $request->get('part');
-            $payment->name = $parts[0]['name'];
-            $payment->email = $parts[0]['email'];
-            $payment->amount = collect($request->get('part'))
-                ->map(function ($item, $key) {
-                    return str_replace(',', '', $item['amount']);
-                })
-                ->sum();
+
+            $payment->name = $parts->first()['name'];
+            $payment->email = $parts->first()['email'];
+            $payment->amount = 0; // will be calculated later
             $payment->method = 'Paypal';
             $payment->status = 'Pending';
             $payment->event_id = $event->id;
             $payment->save();
-            foreach ($parts as $item) {
+
+            $parts->each(function ($participantInfo) use (&$request, &$payment, &$event) {
                 $participant = new Participant();
-                if (array_get($item, 'anonymous', false) == true) {
+
+                if (array_get($participantInfo, 'anonymous', false)) {
                     $participant->name = 'Anonymous';
                 } else {
-                    $participant->name = $item['name'];
-                    $participant->email = $item['email'];
-                    if (\Auth::user()) {
-                        $participant->user_id = \Auth::user()->id;
+                    $participant->name = $participantInfo['name'];
+                    $participant->email = $participantInfo['email'];
+                    if (auth()->user()) {
+                        $participant->user_id = auth()->id();
                     }
                 }
+
                 $participant->participantable()->associate($event);
                 $participant->deposit_date = Carbon::now();
-                $participant = $participant->payment()->associate($payment);
+                $participant->payment()->associate($payment);
                 $participant->save();
-                if ($request->get('type') == 'paypal') {
-                    $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event, true);
-                    $participant->cc_fees = 0;
-                    $participant->deposit_type = 'PayPal';
-                } else {
-                    $participant->amount_deposited = Payment::CountWithFee($item['amount'], $event, false);
-                    $participant->cc_fees = Payment::CountFeeCC($item['amount'], $event);
-                    $participant->deposit_type = 'Credit Card';
-                }
-                $participant->vxp_fees = Payment::CountFeeVXP($item['amount'], $event);
-                $participant->coordinator_collected = $participant->amount_deposited - $participant->vxp_fees - $participant->cc_fees;
+
+                $isPayPal = $request->get('type') == 'paypal';
+                $participant->amount_deposited = Payment::CountWithFee($participantInfo['amount'], $event, $isPayPal);
+                $participant->cc_fees = Payment::CountFeeCC($participantInfo['amount'], $event, false, $isPayPal);
+                $participant->deposit_type = $isPayPal ? 'PayPal' : 'Credit Card';
+                $participant->vxp_fees = Payment::CountRealFeeVXP($participantInfo['amount'], $event);
+                $vxFee = Payment::CountFeeVXP($participantInfo['amount'], $event);
+                $participant->coordinator_collected = $participant->amount_deposited - $vxFee - $participant->cc_fees;
                 $participant->save();
-            }
+                $payment->amount += $participant->amount_deposited;
+
+            });
+
+            $payment->save();
 
 
             $receiver1 = new Receiver();
             $receiver1->email = $event->paypal_email;
-            if ($request->get('type') == 'paypal') {
-                $receiver1->amount = Payment::CountWithFee($payment->amount, $event, true);
-            } else {
-                $receiver1->amount = Payment::CountWithFee($payment->amount, $event, false);
-            };
+            $receiver1->amount = $payment->amount;
 
-            $list = [$receiver1];
-
-            $receiverList = new ReceiverList($list);
-            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('check', $payment->id),
-                'USD', $receiverList, route('check', $payment->id));
-
+            $backUrl = route('check', $payment->id);
+            $receiverList = new ReceiverList([$receiver1]);
+            $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', $backUrl, 'USD', $receiverList, $backUrl);
 
             $payRequest->feesPayer = 'EACHRECEIVER';
 
             if ($request->get('type') == 'paypal') {
                 $payRequest->fundingConstraint = new FundingConstraint();
                 $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
-                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
-                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[]  = new FundingTypeInfo('BALANCE');
+                $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = [new FundingTypeInfo('BALANCE')];
             }
 
             $service = new AdaptivePaymentsService();
@@ -115,10 +109,9 @@ class PayReceipt extends Controller
         });
 
         return response()->json(['redirect' => $payPalURL]);
-
     }
 
-    function getDetailedExceptionMessage($ex)
+    protected function getDetailedExceptionMessage($ex)
     {
         if ($ex instanceof PPConnectionException) {
             return "Error connecting to " . $ex->getUrl();
@@ -135,40 +128,27 @@ class PayReceipt extends Controller
         return "";
     }
 
-    public
-    function payment_total(
-        Request $request
-    ) {
+    public function payment_total(Request $request)
+    {
         $amounts = json_decode($request->get('amounts', '[]'), true);
         $event = Event::find($request->get('event'));
-        $response = [];
-        $mid = 1;
-        foreach ($amounts as $amount) {
-            if ($amount != 0) {
-                $amount = str_replace(',', '', $amount);
+
+        $response = collect($amounts)->reject(function ($amount) {
+            return $amount == 0;
+        })
+            ->map(function ($amount, $key) use ($event, $request) {
                 $item = [
-                    'mid' => $mid,
-                    'vxp' => Payment::CountFeeVXP($amount, $event, true),
-                    'total' => Payment::CountWithFee($amount, $event, false),
-                    'cc' => Payment::CountFeeCC(Payment::CountWithFee($amount, $event, false), $event, true),
+                    'mid'   => $key + 1,
+                    'vxp'   => Payment::CountFeeVXP($amount, $event, true),
+                    'total' => Payment::CountWithFee($amount, $event, $request->input('type') == 'false'),
+                    'cc'    => $request->input('type') != 'false' ? Payment::CountFeeCC($amount, $event, true) : 0,
                 ];
-                if ($request->get('type') == 'false') {
-                    $item = [
-                        'mid' => $mid,
-                        'vxp' => Payment::CountFeeVXP($amount, $event, true),
-                        'cc' => 0,
-                        'total' => Payment::CountWithFee($amount, $event, true),
-                    ];
 
-                }
                 $item['donation'] = $item['total'] - $item['vxp'] - $item['cc'];
-                $mid = $mid + 1;
-                $response[] = $item;
-            }
-        }
 
-        return view('frontend.total_payment',
-            compact('response'));
+                return $item;
+            })->all();
+        return view('frontend.total_payment', compact('response'));
     }
 
 
@@ -190,7 +170,7 @@ class PayReceipt extends Controller
             $payment->name = config('app.admin_email');
             $payment->email = config('app.admin_email');
 
-            $payment->amount =abs($event->CountFees()) ;
+            $payment->amount = abs($event->CountFees());
 
             $payment->method = 'Fees';
             $payment->status = 'Pending';
@@ -208,20 +188,14 @@ class PayReceipt extends Controller
             $receiverList = new ReceiverList($list);
             $payRequest = new PayRequest(new RequestEnvelope("en_US"), 'PAY', route('check', $payment->id),
                 'USD', $receiverList, route('check', $payment->id));
-            $payRequest->feesPayer = 'EACHRECEIVER';
+            $payRequest->feesPayer = 'SENDER';
 
             $payRequest->fundingConstraint = new FundingConstraint();
             $payRequest->fundingConstraint->allowedFundingType = new FundingTypeList();
-            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = array();
-            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[]  = new FundingTypeInfo('BALANCE');
-
-
-            //
-            //$payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo[] = new FundingTypeInfo('CREDITCARD');
+            $payRequest->fundingConstraint->allowedFundingType->fundingTypeInfo = [new FundingTypeInfo('BALANCE')];
 
             $service = new AdaptivePaymentsService();
             try {
-                /* wrap API method calls on the service object with a try catch */
                 $response = $service->Pay($payRequest);
             } catch (\Exception $ex) {
                 echo $this->getDetailedExceptionMessage($ex);
@@ -254,7 +228,7 @@ class PayReceipt extends Controller
             $payment->save();
         } elseif (in_array($response->status, ['REVERSALERROR', 'INCOMPLETE'])) {
             $email = config('app.admin_email');
-            \Mail::queue('frontend.emails.failed', compact('event', 'email'),
+            \Mail::queue('frontend.emails.failed', compact( 'email'),
                 function (\Illuminate\Mail\Message $message) use ($email) {
                     $message->to($email)
                         ->subject('Whops!');

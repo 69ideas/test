@@ -20,14 +20,15 @@ class Participants extends Controller
 
         $participant->deposit_date = Carbon::now();
         $needable_sum = \Request::get('needable_sum');
-        $users = [null => '--Not set--'] + User:: where('filled', 1)->orderByName()->get()->pluck('full_name', 'id')->all();
+        $users = [null => '--Not set--'] + User:: where('filled', 1)->orderByName()->get()->pluck('full_name',
+                'id')->all();
 
 
         return [
             'error_code' => 0,
             'title'      => 'Add participant',
             'content'    => view('frontend.events.participants.add',
-                compact('deposit_date', 'participant', 'users', 'page_title', 'needable_sum')
+                compact('participant', 'users', 'page_title', 'needable_sum')
             )->render(),
         ];
     }

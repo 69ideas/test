@@ -17,7 +17,7 @@ class Event extends Model implements SluggableInterface
     use SluggableTrait;
     protected $sluggable = [
         'build_from' => 'short_description',
-        'on_update' => true,
+        'on_update'  => true,
     ];
 
     public static function boot()
@@ -30,8 +30,7 @@ class Event extends Model implements SluggableInterface
                     return is_null($participant->email);
                 })
                 ->unique('email')
-                ->each(function (Participant $participant) use ($event)
-                {
+                ->each(function (Participant $participant) use ($event) {
 
                     $email = $participant->email;
                     \Mail::queue('frontend.emails.change', compact('event', 'participant'),
@@ -40,7 +39,7 @@ class Event extends Model implements SluggableInterface
                                 ->subject('Event was changed');
                         });
                 });
-            
+
         });
     }
 
@@ -77,17 +76,19 @@ class Event extends Model implements SluggableInterface
         'start_date',
         'short_description',
         'allow_anonymous',
-        'paypal_email'
+        'paypal_email',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
+
     protected $dates = ['start_date', 'closed_date', 'deadline'];
 
     public function setStartDateAttribute($value = null)
@@ -116,12 +117,13 @@ class Event extends Model implements SluggableInterface
         return $this->morphMany(Participant::class, 'participantable');
 
     }
+
     public function payed_participants()
     {
         return $this->morphMany(Participant::class, 'participantable')
-            ->where(function(Builder $builder){
+            ->where(function (Builder $builder) {
                 $builder->whereNull('payment_id')
-                    ->orWhereHas('payment', function (Builder $builder){
+                    ->orWhereHas('payment', function (Builder $builder) {
                         $builder->where('status', 'Completed');
                     });
             });
@@ -167,29 +169,31 @@ class Event extends Model implements SluggableInterface
 
     public function isCoordinator($user)
     {
-        if(is_null($user))
+        if (is_null($user)) {
             return false;
+        }
 
         return $this->user_id == $user->id;
     }
+
     public function payment()
     {
         return $this->belongsTo(Payment::class)
-            ->where('status','<>','Failed');
+            ->where('status', '<>', 'Failed');
     }
 
-    public function CountFees(){
-        $payments=Payment::where('event_id',$this->id)->where('status','Completed')->get();
-        $sum=0;
-        foreach ($payments as $payment){
-            if ($payment->method=='Fees'){
-                $sum=$sum-$payment->amount;
-            }
-            else{
-                $sum=$sum+ ($payment->participant->vxp_fees+0.3)/(1-0.029);
+    public function CountFees()
+    {
+        $payments = Payment::where('event_id', $this->id)->where('status', 'Completed')->get();
+        $sum = 0;
+        foreach ($payments as $payment) {
+            if ($payment->method == 'Fees') {
+                $sum -= $payment->amount;
+            } else {
+                $sum += $payment->participant->vxp_fees;
             }
         }
-        return round($sum,2);
+        return round($sum, 2);
     }
 
 }
