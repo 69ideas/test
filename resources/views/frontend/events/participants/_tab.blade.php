@@ -146,6 +146,8 @@
         </div>
         <div class="row">
             <label style="padding-top: 0.5%;">Remaining Vaultx Balance :</label>
+
+            @if ($entity->isCoordinator(auth()->user()))
             <a class="btn btn-primary pull-right" href="#" onclick="return false;">
                 Clear VaultX Balance
                 <small
@@ -155,6 +157,8 @@
                 >
                     <i class="fa fa-info-circle"></i>
                 </small></a>
+            @endif
+
             <hr>
         </div>
     </div>

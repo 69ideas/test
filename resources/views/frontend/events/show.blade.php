@@ -3,10 +3,10 @@
 @section('content')
 
     @if($event->isCoordinator(\Auth::user()) && $event->CountFees()>0)
-                <div class="alert alert-danger">
-                    Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
-                        now.</a>
-                </div>
+        <div class="alert alert-danger">
+            Your outstanding balance is ${{$event->CountFees()}}. <a href="{{route('pay_fee', $event)}}">Pay
+                now.</a>
+        </div>
     @endif
     <div class="row">
         &nbsp;
@@ -90,49 +90,51 @@
             </div>
 
             @if(!$event->is_close)
-                    @if($is_guest)
-                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
-                            <div class="form-group">
-                                <a href="{{route('payment',[$event])}}"
-                                   class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
-                                    Payment</a>
-                            </div>
-                        @endif
-                    @else
-                        @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
-                            <div class="form-group">
-                                <a href="{{route('payment',[$event])}}"
-                                   class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
-                                    Payment</a>
-                            </div>
-                        @endif
-
+                @if($is_guest)
+                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date))&&$event->allow_anonymous)
+                        <div class="form-group">
+                            <a href="{{route('payment',[$event])}}"
+                               class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
+                                Payment</a>
+                        </div>
                     @endif
-                </div>
-            @endif
+                @else
+                    @if(((count($event->payed_participants) < $event->number_participants || $event->number_participants==0)&& is_null($event->closed_date)))
+                        <div class="form-group">
+                            <a href="{{route('payment',[$event])}}"
+                               class="btn btn-primary make-payment alignright"><i class="fa fa-paypal"></i> Make a
+                                Payment</a>
+                        </div>
+                    @endif
 
-            @include('frontend.events._tabs')
-        @if (count($event->participants()->where('user_id',\Auth::user()->id)->get()) || $event->user_id==\Auth::user()->id)
-            @include('frontend.events.comments')
-        @endif
-            @if(\Auth::user()!=null)
-                @if(\Auth::user()->id==$event->user_id)
-                    <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
-                                class="fa fa-pencil"></i>
-                        Edit
-                    </a>
-                    <a href="/event/send?id={{$event->id}}"
-                       class="btn btn-primary send-event" style="background: #49658A;"><i class="fa fa-envelope-o"></i>
-                        Email Invite
-                    </a>
-
-                    <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
-                                class="fa fa-angle-double-left"></i>
-                        Back
-                    </a>
                 @endif
-            @endif
         </div>
+        @endif
+
+        @include('frontend.events._tabs')
+        @if(\Auth::user()!=null)
+            @if (count($event->participants()->where('user_id',\Auth::user()->id)->get()) || $event->user_id==\Auth::user()->id)
+                @include('frontend.events.comments')
+            @endif
+        @endif
+        @if(\Auth::user()!=null)
+            @if(\Auth::user()->id==$event->user_id)
+                <a href="{{ route('event.edit',$event) }}" class="btn btn-primary" style="background: #49658A;"><i
+                            class="fa fa-pencil"></i>
+                    Edit
+                </a>
+                <a href="/event/send?id={{$event->id}}"
+                   class="btn btn-primary send-event" style="background: #49658A;"><i class="fa fa-envelope-o"></i>
+                    Email Invite
+                </a>
+
+                <a href="{{ route('event.index') }}" class="btn btn-primary" style="background: #49658A;"><i
+                            class="fa fa-angle-double-left"></i>
+                    Back
+                </a>
+            @endif
+        @endif
+    </div>
     </div>
     <div class="row">
         &nbsp;
