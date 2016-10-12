@@ -70,19 +70,25 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                @if( $event->cc_fees)Credit Card Fees will be taken out of your amount
+                                @if($event->cc_fees)Credit Card Fees will be taken out of your amount
                                 @else Credit Card Fee will be added to your amount @endif
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                @if( $event->allow_anonymous)You will have the option to appear as anonymous on the form
-                                below @endif
+                                @if($event->vxp_fees)Vault X Fee wil be taken out of your amount
+                                @else Vault X Fee wil be added to your amount @endif
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <strong>Paypal Email</strong><br>{{$event->paypal_email}}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @if($event->allow_anonymous)You will have the option to appear as anonymous on the form
+                                below @endif
                             </div>
                         </div>
                     </div>
