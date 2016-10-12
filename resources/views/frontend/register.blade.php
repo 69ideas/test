@@ -11,6 +11,33 @@ et_pb_pagebuilder_layout et_right_sidebar chrome">
     <div id="et-main-area">
         <div id="main-content">
             <div class="container">
+                <script>
+                    function hide_modal_div() {
+                        $('#modal_div').hide()
+                    }
+                    function show_modal_div() {
+                        $('#modal_div').show()
+                    }
+                </script>
+                <div id="modal_div" class="modal" role="dialog" style="z-index:100500">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick="hide_modal_div()">&times;</button>
+                                <h4 class="modal-title">Profile sample</h4>
+                            </div>
+                            <div class="modal-body" align="center">
+                                <img src="/images/profile_sample.png">
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn btn-primary" onclick="hide_modal_div()">Close</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="row" style="padding: 2% 0 10%;">
                     <div class="col-lg-3 col-lg-offset-1 col-md-4 visible-md visible-lg" style="padding-top: 15%;">
                         <h3 align="center">Registration Steps</h3>
@@ -21,7 +48,7 @@ et_pb_pagebuilder_layout et_right_sidebar chrome">
                             <li>Fill out the profile information</li>
                         </ol>
                         </p>
-                        <a href="#" style="font-size: 10px;">Click here to see sample profile information</a>
+                        <a href="#" onclick="show_modal_div()" style="font-size: 10px;">Click here to see sample profile information</a>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="form-group" align="center">
