@@ -9,35 +9,44 @@ class Participant extends Model
 {
     use TTabbed;
     protected $fillable = [
-        'user_id','deposit_type', 'amount_deposited', 'deposit_date',
+        'user_id',
+        'deposit_type',
+        'amount_deposited',
+        'deposit_date',
     ];
     protected $dates = ['deposit_date'];
 
     public function setDepositDateAttribute($value = null)
     {
-        $this->attributes['deposit_date'] = is_object($value) ? $value : \Carbon\Carbon::createFromFormat('m/d/Y', $value);
+        $this->attributes['deposit_date'] = is_object($value) ? $value : \Carbon\Carbon::createFromFormat('m/d/Y',
+            $value);
     }
 
     public function formDepositDateAttribute($value)
     {
         return $value->format('m/d/Y');
     }
+
     public function participantable()
     {
         return $this->morphTo();
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function payment(){
+
+    public function payment()
+    {
         return $this->belongsTo(Payment::class);
     }
 
     public function getFullNameAttribute()
     {
-        if ($this->name != "") return $this->name;
-        elseif ($this->user_id != null) {
+        if ($this->name != "") {
+            return $this->name;
+        } elseif ($this->user_id != null) {
             return $this->user->full_name;
         } else {
             return $this->email;
@@ -50,47 +59,56 @@ class Participant extends Model
         return ($this->deposit_type == 'Cash');
     }
 
-    public function  getVaultXCollectedAttribute()
+    public function getVxpFeesCountedAttribute()
     {
-        //return ($this->amount_deposited - $this->vxp_fees * $this->commission) * !$this->is_hands_payment;
-        return 0.2;
+        if ($this->is_hands_payment) {
+            return 0;
+        }
+
+        if ($this->participantable->vxp_fees) {
+            return 0;
+        }
+
+        return max(($this->amount_deposited - $this->cc_fees)/1.005*0.005, 0.2);
     }
 
-   /* public function  getCoordinatorCollectedAttribute()
-    {
-       $event=Event::where('id',$this->participantable_id)->first();
+    /* public function  getCoordinatorCollectedAttribute()
+     {
+        $event=Event::where('id',$this->participantable_id)->first();
 
-        $amount=$this->amount_deposited;
-        if ($event->vxp_fees) {
-            $amount -= 0.15;
-        }
+         $amount=$this->amount_deposited;
+         if ($event->vxp_fees) {
+             $amount -= 0.15;
+         }
 
-        if ($event->cc_fees) {
-            $amount *= (1 - 0.032);
-        }
-        return $amount;
-        //return ($this->amount_deposited - $this->commission );
+         if ($event->cc_fees) {
+             $amount *= (1 - 0.032);
+         }
+         return $amount;
+         //return ($this->amount_deposited - $this->commission );
 
-    }*/
+     }*/
 
-    public function  getCommissionAttribute()
+    public function getCommissionAttribute()
     {
         return (0.032 * $this->amount_deposited);
     }
 
-    public function  getTotalAttribute()
+    public function getTotalAttribute()
     {
         return $this->amount_deposited;
     }
 
     public function getEmailAttribute($value)
     {
-        if($value != null)
+        if ($value != null) {
             return $value;
+        }
 
-        if($this->user == null)
+        if ($this->user == null) {
             return null;
-        else
+        } else {
             return $this->user->email;
+        }
     }
 }

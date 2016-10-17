@@ -112,7 +112,7 @@
             @endif
 
             @include('frontend.events._tabs')
-        @if (count($event->participants()->where('user_id',\Auth::user()->id)->get()) || $event->user_id==\Auth::user()->id)
+        @if (count($event->participants()->where('user_id', \Auth::id())->get()) || $event->user_id == \Auth::id())
             @include('frontend.events.comments')
         @endif
             @if(\Auth::user()!=null)

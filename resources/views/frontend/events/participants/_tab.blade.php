@@ -78,7 +78,7 @@
                 <td>{{ $participant->deposit_type }}</td>
                 <td>${{ number_format($participant->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($participant->cc_fees, 2) }}</td>
-                <td>${{ number_format($participant->vxp_fees, 2) }}</td>
+                <td>${{ number_format($participant->vxp_fees_counted, 2) }}</td>
                 <td>${{ number_format($participant->amount_deposited, 2) }}</td>
                 @if ($entity->isCoordinator(auth()->user()))
                     <td><a href="{!! route('participant.refund', [$participant]) !!}">Refund</a></td>
@@ -98,7 +98,7 @@
                 <td colspan="3" style="text-align: right">Total:</td>
                 <td>${{ number_format($entity->coordinator_collected, 2) }}</td>
                 <td>${{ number_format($entity->commission, 2) }}</td>
-                <td>${{ number_format($entity->vault_x_collected, 2) }}</td>
+                <td>${{ number_format($entity->payed_participants->sum('vxp_fees_counted'), 2) }}</td>
                 <td>${{ number_format($entity->total, 2) }}</td>
                 @if ($entity->isCoordinator(auth()->user()))
                     <td></td>
