@@ -59,17 +59,13 @@ class Participant extends Model
         return ($this->deposit_type == 'Cash');
     }
 
-    public function getVxpFeesCountedAttribute()
+    public function getVxpFeesCountedAttribute($value)
     {
         if ($this->is_hands_payment) {
             return 0;
         }
 
-        if ($this->participantable->vxp_fees) {
-            return 0;
-        }
-
-        return max(($this->amount_deposited - $this->cc_fees)/1.005*0.005, 0.2);
+        return round($value, 2g);
     }
 
     /* public function  getCoordinatorCollectedAttribute()

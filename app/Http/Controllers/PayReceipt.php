@@ -64,11 +64,11 @@ class PayReceipt extends Controller
 
                 $isPayPal = $request->get('type') == 'paypal';
                 $participant->amount_deposited = Payment::CountWithFee($participantInfo['amount'], $event, $isPayPal);
-                $participant->cc_fees = Payment::CountFeeCC($participantInfo['amount'], $event, false, $isPayPal);
+                $participant->cc_fees = Payment::CountFeeCC($participantInfo['amount'], $event, true, $isPayPal);
                 $participant->deposit_type = $isPayPal ? 'PayPal' : 'Credit Card';
                 $participant->vxp_fees = Payment::CountRealFeeVXP($participantInfo['amount'], $event);
-                $vxFee = Payment::CountFeeVXP($participantInfo['amount'], $event);
-                $participant->coordinator_collected = $participant->amount_deposited - $vxFee - $participant->cc_fees;
+                $participant->vxp_fees_counted = Payment::CountFeeVXP($participantInfo['amount'], $event, true);
+                $participant->coordinator_collected = $participant->amount_deposited - $participant->vxp_fees_counted - $participant->cc_fees;
                 $participant->save();
                 $payment->amount += $participant->amount_deposited;
 
