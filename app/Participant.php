@@ -65,7 +65,7 @@ class Participant extends Model
             return 0;
         }
 
-        return round($value, 2g);
+        return round($value, 2);
     }
 
     /* public function  getCoordinatorCollectedAttribute()
