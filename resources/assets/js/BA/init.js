@@ -8,3 +8,4 @@ $(function () {
     BA.Actions.init($('body'))
 });
 tinymce.init(BA.Options.wysiwyg);
+tinymce.init(BA.Options.wysiwyg1);
