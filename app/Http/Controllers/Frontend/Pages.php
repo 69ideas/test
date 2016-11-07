@@ -41,7 +41,7 @@ class Pages extends Controller
             'faq' => 'faq',
             'find event' => 'finding_event',
             'secure' => 'home',
-            'blog' => 'blog'
+            //'blog' => 'blog'
         ];
 
         if (isset($actions[$page->hidden_name])) {
