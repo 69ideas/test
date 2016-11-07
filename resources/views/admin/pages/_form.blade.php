@@ -8,7 +8,7 @@
                 </div>
                 <div class="form-group">
                     <label>Text</label>
-                    {!! Form::textarea('content', null, ['class'=>'wysiwyg form-control', 'placeholder'=>'Enter Text']) !!}
+                    {!! Form::textarea('content', null, ['class'=>'wysiwyg-admin form-control', 'placeholder'=>'Enter Text']) !!}
                 </div>
                 <div class="form-group">
                     <label>Category Meta Title</label>
